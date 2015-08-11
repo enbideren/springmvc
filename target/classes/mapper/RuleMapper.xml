@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.springmvc.dao.RuleDao">
+	<!-- 部门对象 -->
+	<resultMap id="TRule" type="cn.springmvc.model.TRule">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<id column="name" property="name" jdbcType="VARCHAR" />
+		<id column="dateEntered" property="dateEntered" jdbcType="VARCHAR" />
+		<id column="dateModified" property="dateModified" jdbcType="VARCHAR" />
+		<id column="sceneId" property="sceneId" jdbcType="VARCHAR" />
+		<id column="condition" property="condition" jdbcType="VARCHAR" />
+		<id column="action" property="action" jdbcType="VARCHAR" />
+		<id column="enabled" property="enabled" jdbcType="VARCHAR" />
+		<id column="begin" property="begin" jdbcType="VARCHAR" />
+		<id column="end" property="end" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="TAction" type="cn.springmvc.model.TAction">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<id column="name" property="name" jdbcType="VARCHAR" />
+		<id column="dateEntered" property="dateEntered" jdbcType="VARCHAR" />
+		<id column="dateModified" property="dateModified" jdbcType="VARCHAR" />
+		<id column="typeId" property="typeId" jdbcType="VARCHAR" />
+		<id column="description" property="description" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="TActionMeta" type="cn.springmvc.model.TActionMeta">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<id column="name" property="name" jdbcType="VARCHAR" />
+		<id column="methodC" property="methodC" jdbcType="VARCHAR" />
+		<id column="description" property="description" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="TActionMetaVariable" type="cn.springmvc.model.TActionMetaVariable">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<id column="name" property="name" jdbcType="VARCHAR" />
+		<id column="identify" property="identify" jdbcType="VARCHAR" />
+		<id column="actionMetaId" property="actionMetaId" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="VariableUnicom" type="cn.springmvc.model.TActionMetaVariable">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<id column="name" property="name" jdbcType="VARCHAR" />
+		<id column="identify" property="identify" jdbcType="VARCHAR" />
+		<id column="actionMetaId" property="actionMetaId" jdbcType="VARCHAR" />
+		<association property="tActionVariable" javaType="cn.springmvc.model.TActionVariable">
+			<id column="id" property="id" jdbcType="VARCHAR" />
+			<id column="actionId" property="actionId" jdbcType="VARCHAR" />
+			<id column="variableId" property="variableId" jdbcType="VARCHAR" />
+			<id column="variableValue" property="variableValue" jdbcType="VARCHAR" />
+		</association>
+	</resultMap>
+	<resultMap id="TActionVariable" type="cn.springmvc.model.TActionMetaVariable">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<id column="actionId" property="actionId" jdbcType="VARCHAR" />
+		<id column="variableId" property="variableId" jdbcType="VARCHAR" />
+		<id column="variableValue" property="variableValue" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="TEntity" type="cn.springmvc.model.TEntity">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<id column="name" property="name" jdbcType="VARCHAR" />
+		<id column="identify" property="identify" jdbcType="VARCHAR" />
+		<id column="packageC" property="packageC" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="TScene" type="cn.springmvc.model.TScene">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<id column="name" property="name" jdbcType="VARCHAR" />
+		<id column="identify" property="identify" jdbcType="VARCHAR" />
+	</resultMap>
+	<insert id="saveRule" parameterType="cn.springmvc.model.TRule">
+		insert into t_dept(name,dateEntered,dateModified,sceneId,
+			condition,action,enabled,begin,end
+		) values(
+			#{name},now(),now(),#{sceneId},#{condition},#{action},
+			#{enabled},#{begin},#{end})
+	</insert>
+
+	<insert id="saveAction" parameterType="cn.springmvc.model.TAction">
+		insert into t_dept(name,dateEntered,dateModified,typeId,description
+		) values(#{name},now(),now(),#{dateModified},#{typeId},#{description})
+	</insert>
+	
+	<!-- 根据itemId查询item信息 -->
+	<select id="getItemInfoById" resultType="Map"  parameterType="Integer">
+		select entity.name as entityName,item.name as itemName
+		from t_entity entity,t_entity_item item 
+		where item.typeId = entity.id and item.id = #{id}
+	</select>
+
+	<!-- 根据actionId查询action信息 -->
+	<select id="getActionById" resultMap="TAction"  parameterType="Integer">
+		select * from t_action where actionId = #{actionId}
+	</select>
+
+	<!-- 根据actiontypeId查询action类型信息 -->
+	<select id="getActionMetaById" resultMap="TActionMeta"  parameterType="Integer">
+		select * from t_action_meta where typeId = #{typeId}
+	</select>
+
+	<!-- 根据actiontypeId查询action类型信息 -->
+	<select id="getRuleById" resultMap="TRule"  parameterType="Integer">
+		select * from t_rule where ruleId = #{ruleId}
+	</select>
+	
+	<!-- 删除规则 -->
+	<delete id="deleteRule" parameterType="cn.springmvc.model.TRule">
+		delete from t_rule where id = #{id}
+	</delete>
+	
+	<!-- 根据规则主键更新规则enabled状态 -->
+	<update id="updateEnabledRule" parameterType="cn.springmvc.model.TRule">
+		update t_rule set 
+			enabled=#{enabled}
+		where id = #{id}
+	</update>
+	
+	<!-- 根据动作id删除动作 -->
+	<delete id="deleteActionByActionId" parameterType="int">
+		delete from t_action where id = #{id}
+	</delete>
+
+	<!-- 根据规则id删除规则 -->
+	<delete id="deleteRuleById" parameterType="int">
+		delete from t_rule where id = #{id}
+	</delete>
+	
+	<!-- 保存动作与变量表的中间关联 -->
+	<insert id="saveActionVariable" parameterType="cn.springmvc.model.TActionVariable">
+		insert into t_action_variable(actionId,variableId,variableValue
+		) values(#{actionId},#{variableId},#{variableValue})
+	</insert>
+	
+	<!-- 根据meta主键查找TActionMetaVariable中符合的item -->
+	<select id="getActionVariableList"  resultMap="VariableUnicom" parameterType="Map">
+		select variable.*,middle.* from t_action_meta_variable variable,t_action_variable middle 
+		where middle.actionId = #{actionId} and 
+		middle.variableId = variable.id and variable.actionMetaId = #{metaId}
+	</select>
+	
+	<!-- 根据actionId查询对应的条件类型 -->
+	<select id="getActionMetaByActionId" resultMap="TActionMeta" parameterType="Integer">
+		select meta.* from t_action_meta meta,t_action action where action.typeId = meta.id and action.id = #{id}
+	</select>
+
+	<!-- 根据场景id得到场景对应的实体信息 -->
+	<select id="getEntityOfSceneById" resultMap="TEntity" parameterType="Integer">
+		select  entity.* 
+		from t_scene scene,t_scene_entity middle,t_entity entity 
+		where scene.id = middle.sceneId and entity.id = middle.entityId and scene.id = #{sceneId} group by(entity.id)
+	</select>
+	
+	<!-- 根据场景id得到场景信息 -->
+	<select id="getSceneById" resultMap="TScene" parameterType="Integer">
+		select * from t_scene scene where scene.id = #{id}
+	</select>
+	
+</mapper>

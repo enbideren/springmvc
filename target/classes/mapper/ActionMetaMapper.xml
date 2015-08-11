@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.springmvc.dao.ActionMetaDao">
+	<!-- 部门对象 -->
+	<resultMap id="TAction" type="cn.springmvc.model.TAction">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<id column="name" property="name" jdbcType="VARCHAR" />
+		<id column="dateEntered" property="dateEntered" jdbcType="VARCHAR" />
+		<id column="dateModified" property="dateModified" jdbcType="VARCHAR" />
+		<id column="typeId" property="typeId" jdbcType="VARCHAR" />
+		<id column="description" property="description" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="TActionMeta" type="cn.springmvc.model.TActionMeta">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<id column="name" property="name" jdbcType="VARCHAR" />
+		<id column="methodC" property="methodC" jdbcType="VARCHAR" />
+		<id column="description" property="description" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="TActionMetaVariable" type="cn.springmvc.model.TActionMetaVariable">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<id column="name" property="name" jdbcType="VARCHAR" />
+		<id column="identify" property="identify" jdbcType="VARCHAR" />
+		<id column="actionMetaId" property="actionMetaId" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="TActionVariable" type="cn.springmvc.model.TActionMetaVariable">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<id column="actionId" property="actionId" jdbcType="VARCHAR" />
+		<id column="variableId" property="variableId" jdbcType="VARCHAR" />
+		<id column="variableValue" property="variableValue" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- 保存动作类型 -->
+	<insert id="saveActionMeta" parameterType="cn.springmvc.model.TActionMeta">
+		insert into t_action_meta(
+			name,
+			methodC,
+			description
+		) values
+			(
+				#{name},
+				#{methodC},
+				#{description}
+			)
+	</insert>
+	<!-- 根据id查询动作类型 -->
+	<select id="getActionMetaById" resultMap="TActionMeta" parameterType="Integer">
+		select * from t_action_meta c where  c.id = #{id}
+	</select>
+	
+	<update id="updateActionMeta" parameterType="cn.springmvc.model.TActionMeta">
+		update t_action_meta set 
+			id=#{id},
+			name=#{name},
+			methodC=#{methodC},
+			description=#{description},
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteActionMeta" parameterType="Integer">
+		delete from t_action_meta where id = #{id}
+	</delete>
+	
+	<delete id="deleteActionMetaVariable" parameterType="Integer">
+		delete from t_action_meta_variable where id = #{id}
+	</delete>
+	
+	<!-- 根据actionid查询动作以及动作元对象 -->	
+	<select id="getActionAndMetaByIdAction" resultType="TAction" parameterType="Integer">
+		select action.* from t_action action,t_action_meta meta where action.typeId = meta.id and action.id = #{actionId}
+	</select>
+	<select id="getActionAndMetaByIdActionMeta" resultType="TActionMeta" parameterType="Integer">
+		select meta.* from t_action action,t_action_meta meta where action.typeId = meta.id and action.id = #{actionId}
+	</select>
+	
+	<!-- 添加动作类型变量 -->
+	<insert id="saveActionMetaVariable" parameterType="cn.springmvc.model.TActionMetaVariable">
+		insert into t_action_meta_variable(
+			name,
+			identify,
+			actionMetaId
+		) values
+			(
+				#{name},
+				#{identify},
+				#{actionMetaId}
+			)
+	</insert>
+	
+	<select id="getActionMetaVariableById" parameterType="int"  resultMap="TActionMeta">
+		select * from t_action_meta_variable where actionMetaId = #{id}
+	</select>
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+        <!-- 命名空间 -->
+    <typeAliases>
+         <typeAlias alias="User" type="cn.springmvc.model.User"/> 
+         <typeAlias alias="TAction" type="cn.springmvc.model.TAction"/> 
+         <typeAlias alias="TActionMeta" type="cn.springmvc.model.TActionMeta"/> 
+         <typeAlias alias="TActionMetaVariable" type="cn.springmvc.model.TActionMetaVariable"/> 
+         <typeAlias alias="TActionVariable" type="cn.springmvc.model.TActionVariable"/> 
+         <typeAlias alias="TRule" type="cn.springmvc.model.TRule"/> 
+         <typeAlias alias="TestUser" type="com.hxrainbow.rule.model.TestUser"/> 
+         <typeAlias alias="TestLog" type="com.hxrainbow.rule.model.TestLog"/> 
+    </typeAliases>
+
+    <!-- 映射map -->
+    <mappers>
+    </mappers>
+</configuration>

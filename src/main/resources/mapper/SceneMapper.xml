@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.springmvc.dao.SceneDao">
+	<!-- 部门对象 -->
+	<resultMap id="TScene" type="cn.springmvc.model.TScene">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<id column="name" property="name" jdbcType="VARCHAR" />
+		<id column="identify" property="identify" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="TEntity" type="cn.springmvc.model.TEntity">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<id column="name" property="name" jdbcType="VARCHAR" />
+		<id column="identify" property="identify" jdbcType="VARCHAR" />
+		<id column="packageC" property="packageC" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="TRule" type="cn.springmvc.model.TRule">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<id column="name" property="name" jdbcType="VARCHAR" />
+		<id column="dateEntered" property="dateEntered" jdbcType="VARCHAR" />
+		<id column="dateModified" property="dateModified" jdbcType="VARCHAR" />
+		<id column="sceneId" property="sceneId" jdbcType="VARCHAR" />
+		<id column="condition" property="condition" jdbcType="VARCHAR" />
+		<id column="action" property="action" jdbcType="VARCHAR" />
+		<id column="enabled" property="enabled" jdbcType="VARCHAR" />
+		<id column="begin" property="begin" jdbcType="VARCHAR" />
+		<id column="end" property="end" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="TSceneEntity" type="cn.springmvc.model.TSceneEntity">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<id column="entityId" property="entityId" jdbcType="VARCHAR" />
+		<id column="sceneId" property="sceneId" jdbcType="VARCHAR" />
+		<id column="entityIdArr" property="entityIdArr" jdbcType="VARCHAR" />
+		<id column="entityName" property="entityName" jdbcType="VARCHAR" />
+	</resultMap>
+	<!-- 保存场景信息 -->
+	<insert id="saveScene" parameterType="cn.springmvc.model.TScene">
+		insert into t_scene(name,identify) values (#{name},#{identify})
+	</insert>
+	
+	<!-- 根据实体id查询实体  -->
+	<select id="getSceneById" resultMap="TScene" parameterType="Integer">
+		select * from t_scene c where  c.id = #{id}
+	</select>
+
+	<!-- 根据标识查询场景  -->
+	<select id="getSceneByIdentify" resultMap="TEntity" parameterType="String">
+		select * from t_scene where identify = #{identify}
+	</select>
+	
+	<!-- 更新实体 -->
+	<update id="updateScene" parameterType="cn.springmvc.model.TScene">
+		update t_scene set 
+			name=#{name},
+			identify=#{identify}
+		where id = #{id}
+	</update>
+	
+	<!-- 删除场景 -->
+	<delete id="deleteScene" parameterType="Integer">
+		delete from t_scene where id = #{id}
+	</delete>
+	
+	<!-- 删除实体场景 -->
+	<delete id="deleteSceneEntity" parameterType="Map">
+		delete from  t_scene_entity where sceneId = #{sceneId} and entityId = #{entityId}
+	</delete>
+	
+	<!-- 根据场景id删除场景的中间表信息 -->
+	<delete id="deleteSceneEntityByEntityId" parameterType="Integer">
+		delete from  t_scene_entity where entityId = #{entityId}
+	</delete>
+	
+	<!-- 得到场景对应的实体  -->
+	<select id="getEntityOfScene" resultMap="TEntity" parameterType="Integer">
+		select entity.* from t_scene_entity middle,t_entity entity 
+		where middle.entityId = entity.id and middle.sceneId = #{entityId}
+	</select>
+	
+	<!-- 保存场景实体 -->
+	<insert id="saveSceneEntity" parameterType="Map">
+		insert into 
+		t_scene_entity(entityId,sceneId) 
+		values (#{entityId},#{sceneId})
+	</insert>
+	
+	<!-- 查询全部实体  -->
+	<select id="getEntity" resultMap="TEntity">
+		select * from t_entity
+	</select>
+
+	<!-- 根据场景标识查询实体信息  -->
+	<select id="getEntityOfSceneByIdentity" resultMap="TEntity" parameterType="String">
+	select entity.* from t_scene scene,t_scene_entity as middle,t_entity entity  
+  where scene.id = middle.sceneId and entity.id = middle.entityId and scene.identify = #{identify}  GROUP BY(entity.id)
+	</select>
+
+	<!-- 根据场景标识获取可用的规则信息  -->
+	<select id="getEnabledRuleBySceneIdentity" resultMap="TRule" parameterType="String">
+		select rule.* 
+		from t_scene scene,t_rule rule 
+		where rule.sceneId = scene.id and rule.enabled =1 and scene.identify = #{identify}
+	</select>
+
+	<!-- 查询场景实体中间表中的 个数根据sceneId，entityId  -->
+	<select id="listEntityScene" resultMap="TSceneEntity" parameterType="Map">
+		select TS.id from t_scene_entity TS where TS.sceneId = #{sceneId} and TS.entityId = #{entityId}
+	</select>
+	
+</mapper>

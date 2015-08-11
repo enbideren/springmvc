@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxrainbow.rule.operating.dao.TestUserDao">
+  <resultMap id="TestUser" type="com.hxrainbow.rule.model.TestUser">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="point" jdbcType="VARCHAR" property="point" />
+  </resultMap>
+  <resultMap id="TestLog" type="com.hxrainbow.rule.model.TestLog">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="reason" jdbcType="VARCHAR" property="reason" />
+    <result column="point" jdbcType="VARCHAR" property="point" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="createDate" jdbcType="VARCHAR" property="createDate" />
+    <result column="userId" jdbcType="VARCHAR" property="userId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, point
+  </sql>
+  
+  <select id="User" resultMap="TestUser">
+    select 
+    <include refid="Base_Column_List" />
+    from test_user
+  </select>
+  
+  <insert id="saveUser" parameterType="com.hxrainbow.rule.model.TestUser">
+    insert into test_user (name,point)
+    values ( #{name}, 
+      #{point}      )
+  </insert>
+  
+  <select id="getUserByUsername" parameterType="java.lang.String" resultMap="TestUser">
+    select 
+    <include refid="Base_Column_List" />
+    from test_user where name = #{name}
+  </select>
+
+  <select id="getPointByUser" parameterType="java.lang.String" resultMap="TestUser">
+    select 
+    <include refid="Base_Column_List" />
+    from test_user where name = #{name}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from test_user
+    where EmployeeID = #{employeeid}
+  </delete>
+  
+  <update id="update"  parameterType="com.hxrainbow.rule.model.TestUser">
+     update test_user t set t.point = #{idcardnr} 
+     where t.id = #{employeeid}
+  </update>
+  
+  <insert id="savePointLog" parameterType="com.hxrainbow.rule.model.TestLog">
+    insert into test_log (reason,point,description,createDate,userId)
+    values ( 
+    	#{reason}, 
+    	#{point}, 
+    	#{description}, 
+    	#{createDate}, 
+     	#{userId}
+     	 )
+  </insert>
+  
+  <select id="getLogList" parameterType="java.lang.Integer" resultMap="TestLog">
+    select * from test_log where userId = #{userId} order by createDate desc
+  </select>
+  
+</mapper>

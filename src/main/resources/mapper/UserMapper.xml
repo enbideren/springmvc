@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.springmvc.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="cn.springmvc.model.User">
+    <id column="EmployeeID" jdbcType="VARCHAR" property="employeeid" />
+    <result column="IDCardNr" jdbcType="VARCHAR" property="idcardnr" />
+    <result column="Name" jdbcType="VARCHAR" property="name" />
+    <result column="Gender" jdbcType="VARCHAR" property="gender" />
+    <result column="PhoneNumber" jdbcType="VARCHAR" property="phonenumber" />
+    <result column="Department" jdbcType="VARCHAR" property="department" />
+    <result column="EmpWorkingStatus" jdbcType="VARCHAR" property="empworkingstatus" />
+    <result column="Empphoto" jdbcType="VARCHAR" property="empphoto" />
+    <result column="JobPost" jdbcType="VARCHAR" property="jobpost" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    EmployeeID, IDCardNr, Name, Gender, PhoneNumber, Department, EmpWorkingStatus, Empphoto, 
+    JobPost
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where EmployeeID = #{employeeid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from user
+    where EmployeeID = #{employeeid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.springmvc.model.User">
+    insert into user (EmployeeID, IDCardNr, Name, 
+      Gender, PhoneNumber, Department, 
+      EmpWorkingStatus, Empphoto, JobPost
+      )
+    values (#{employeeid,jdbcType=VARCHAR}, #{idcardnr,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=VARCHAR}, #{phonenumber,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, 
+      #{empworkingstatus,jdbcType=VARCHAR}, #{empphoto,jdbcType=VARCHAR}, #{jobpost,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.springmvc.model.User">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="employeeid != null">
+        EmployeeID,
+      </if>
+      <if test="idcardnr != null">
+        IDCardNr,
+      </if>
+      <if test="name != null">
+        Name,
+      </if>
+      <if test="gender != null">
+        Gender,
+      </if>
+      <if test="phonenumber != null">
+        PhoneNumber,
+      </if>
+      <if test="department != null">
+        Department,
+      </if>
+      <if test="empworkingstatus != null">
+        EmpWorkingStatus,
+      </if>
+      <if test="empphoto != null">
+        Empphoto,
+      </if>
+      <if test="jobpost != null">
+        JobPost,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="employeeid != null">
+        #{employeeid,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardnr != null">
+        #{idcardnr,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenumber != null">
+        #{phonenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="empworkingstatus != null">
+        #{empworkingstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="empphoto != null">
+        #{empphoto,jdbcType=VARCHAR},
+      </if>
+      <if test="jobpost != null">
+        #{jobpost,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.springmvc.model.User">
+    update user
+    <set>
+      <if test="idcardnr != null">
+        IDCardNr = #{idcardnr,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        Name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        Gender = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenumber != null">
+        PhoneNumber = #{phonenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        Department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="empworkingstatus != null">
+        EmpWorkingStatus = #{empworkingstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="empphoto != null">
+        Empphoto = #{empphoto,jdbcType=VARCHAR},
+      </if>
+      <if test="jobpost != null">
+        JobPost = #{jobpost,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where EmployeeID = #{employeeid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.springmvc.model.User">
+    update user
+    set IDCardNr = #{idcardnr,jdbcType=VARCHAR},
+      Name = #{name,jdbcType=VARCHAR},
+      Gender = #{gender,jdbcType=VARCHAR},
+      PhoneNumber = #{phonenumber,jdbcType=VARCHAR},
+      Department = #{department,jdbcType=VARCHAR},
+      EmpWorkingStatus = #{empworkingstatus,jdbcType=VARCHAR},
+      Empphoto = #{empphoto,jdbcType=VARCHAR},
+      JobPost = #{jobpost,jdbcType=VARCHAR}
+    where EmployeeID = #{employeeid,jdbcType=VARCHAR}
+  </update>
+</mapper>

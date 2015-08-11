@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.springmvc.dao.SceneEntityDao">
+	<!-- 部门对象 -->
+	<resultMap id="TSceneEntity" type="cn.springmvc.model.TSceneEntity">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<id column="entityId" property="entityId" jdbcType="VARCHAR" />
+		<id column="sceneId" property="sceneId" jdbcType="VARCHAR" />
+		<id column="entityIdArr" property="entityIdArr" jdbcType="VARCHAR" />
+		<id column="entityName" property="entityName" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- 根据部门id获取当前部门信息 -->
+	<select id="findEntityList" resultType="Map" parameterType="int">
+		SELECT e.id,e.name,e.identify,e.package_c,t.scene_id>0 checked  
+		FROM t_entity e left join t_scene_entity t on (e.id=t.entity_id and t.scene_id=#{sid})
+	</select>
+	
+	<delete id="deleteEntityList" parameterType="int">
+		delete from t_scene_entity where scene_id=#{scene_id}
+	</delete>
+	
+	<insert id="saveSceneEntity" parameterType="Map">
+		insert into t_scene_entity (entity_id,scene_id) values(#{entity_id},#{scene_id})
+	</insert>
+	
+</mapper>
