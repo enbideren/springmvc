@@ -2,7 +2,12 @@ package cn.springmvc.service;
 
 import cn.springmvc.model.TEntity;
 import cn.springmvc.util.BasePage;
-
+/**
+ * 
+ * @author JZR
+ * @version 1.0
+ * @created 2015-08-12
+ */
 public interface EntityService {
 
 	/**

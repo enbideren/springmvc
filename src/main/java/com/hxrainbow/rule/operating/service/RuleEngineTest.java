@@ -11,8 +11,13 @@ import cn.springmvc.model.TRule;
 import cn.springmvc.service.IRuleEngine;
 import cn.springmvc.util.RuleEngineException;
 
-import com.hxrainbow.Member;
-
+import com.hxrainbow.rule.model.Member;
+/**
+ * 
+ * @author JZR
+ * @version 1.0
+ * @created 2015-08-12
+ */
 public class RuleEngineTest {
 
 	private static IRuleEngine ruleEngine;
@@ -32,7 +37,7 @@ public class RuleEngineTest {
 	public void insertRuleCondition(){
 		TRule rule = new TRule();
 		rule.setId(27);
-		rule.setCondition("33");
+		rule.setConditionC("33");
 		//StringBuffer ss = ruleEngine.insertRuleCondition(new StringBuffer(),rule);
 		//System.out.println(ss.toString());
 	}

@@ -14,6 +14,12 @@ import cn.springmvc.model.TEntityItem;
 import cn.springmvc.service.EntityItemService;
 import cn.springmvc.util.BasePage;
 import cn.springmvc.util.StringKit;
+/**
+ * 
+ * @author JZR
+ * @version 1.0
+ * @created 2015-08-12
+ */
 @Service("entityItemService")
 @Transactional
 public class EntityItemServiceImpl implements EntityItemService{

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.springmvc.dao.EntityDao">
+	<!-- 部门对象 -->
+	<resultMap id="TEntity" type="cn.springmvc.model.TEntity">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<id column="name" property="name" jdbcType="VARCHAR" />
+		<id column="identify" property="identify" jdbcType="VARCHAR" />
+		<id column="packageC" property="packageC" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- 保存实体 -->
+	<insert id="saveEntity" parameterType="cn.springmvc.model.TEntity">
+		insert into t_entity(name,identify,packageC) values(#{name},#{identify},#{packageC})
+	</insert>
+	
+	<!-- 根据实体id查询实体 -->
+	<select id="getEntityById" resultMap="TEntity" parameterType="Integer">
+		select * from t_entity c where  c.id = #{id}
+	</select>
+	
+	<!-- 根据标识查询实体 -->
+	<select id="getEntityByIdentify" resultMap="TEntity" parameterType="String">
+		select * from t_entity c where c.identify = #{identify} 
+	</select>
+	
+	<!-- 更新实体 -->
+	<update id="updateEntity" parameterType="cn.springmvc.model.TEntity">
+		update t_entity set 
+			name=#{name},
+			identify=#{identify},
+			packageC=#{packageC}
+		where id = #{id}
+	</update>
+	
+	<!-- 删除实体 -->
+	<delete id="deleteEntity" parameterType="Integer">
+		delete from t_entity where id = #{id}
+	</delete>
+	
+</mapper>

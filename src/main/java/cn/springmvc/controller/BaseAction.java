@@ -1,13 +1,12 @@
 package cn.springmvc.controller;
 
-import java.io.PrintWriter;
-
-import javax.servlet.http.HttpServletResponse;
-
-import org.codehaus.jackson.map.ObjectMapper;
-
 import cn.springmvc.util.BasePage;
-
+/**
+ * 
+ * @author JZR
+ * @version 1.0
+ * @created 2015-08-12
+ */
 public abstract class BaseAction  {
 
 

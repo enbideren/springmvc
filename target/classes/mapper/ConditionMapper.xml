@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.springmvc.dao.ConditionDao">
+	<!-- 部门对象 -->
+	<resultMap id="TCondition" type="cn.springmvc.model.TCondition">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<id column="name" property="name" jdbcType="VARCHAR" />
+		<id column="dateEntered" property="dateEntered" jdbcType="VARCHAR" />
+		<id column="dateModified" property="dateModified" jdbcType="VARCHAR" />
+		<id column="typeId" property="typeId" jdbcType="VARCHAR" />
+		<id column="conditionC" property="conditionC" jdbcType="VARCHAR" />
+		<id column="description" property="description" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="TEntity" type="cn.springmvc.model.TEntity">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<id column="name" property="name" jdbcType="VARCHAR" />
+		<id column="identify" property="identify" jdbcType="VARCHAR" />
+		<id column="packageC" property="packageC" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="TEntityUnicom" type="cn.springmvc.model.TEntity">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<id column="name" property="name" jdbcType="VARCHAR" />
+		<id column="identify" property="identify" jdbcType="VARCHAR" />
+		<id column="packageC" property="packageC" jdbcType="VARCHAR" />
+		<association property="tEntityItem" javaType="cn.springmvc.model.TEntityItem">
+			<id column="id" property="id" jdbcType="VARCHAR" />
+			<id column="name" property="name" jdbcType="VARCHAR" />
+			<id column="field" property="field" jdbcType="VARCHAR" />
+			<id column="typeId" property="typeId" jdbcType="VARCHAR" />
+			<id column="description" property="description" jdbcType="VARCHAR" />
+		</association>
+	</resultMap>
+	<resultMap id="TEntityItem" type="cn.springmvc.model.TEntityItem">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<id column="name" property="name" jdbcType="VARCHAR" />
+		<id column="field" property="field" jdbcType="VARCHAR" />
+		<id column="typeId" property="typeId" jdbcType="VARCHAR" />
+		<id column="description" property="description" jdbcType="VARCHAR" />
+	</resultMap>
+	<!-- 保存实体场景类 -->
+	<insert id="saveCondition" parameterType="TCondition">
+		insert into t_condition(
+			name,
+			dateEntered,
+			dateModified,
+			typeId,
+			conditionC,
+			description
+		) values
+			(
+				#{name},
+				#{dateEntered},
+				#{dateModified}
+				#{typeId},
+				#{conditionC},
+				#{description}
+			)
+	</insert>
+	<!-- 根据id查询动作类型 -->
+	<select id="getEntityById" resultMap="TEntity" parameterType="int">
+		select * from t_entity c where  c.id = #{id}
+	</select>
+	<!-- 根据标识查询场景 -->
+	<select id="getSceneByIdentify" resultMap="TEntity" parameterType="String">
+		select * from t_scene where identify = #{identify}
+	</select>
+	
+	<update id="updateEntity" parameterType="cn.springmvc.model.TEntity">
+		update t_action_meta set 
+			id=#{id},
+			name=#{name},
+			identify=#{identify},
+			packageC=#{packageC},
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteScene" parameterType="int">
+		delete from t_scene where id = #{id}
+	</delete>
+	
+	<delete id="deleteSceneEntity" parameterType="int">
+		delete from t_scene_entity where id = #{id}
+	</delete>
+	
+	<delete id="deleteCondition" parameterType="int">
+		delete from t_condition where id = #{id}
+	</delete>
+	
+	<!-- 得到实体列表 -->	
+	<select id="getEntityList" resultType="TEntity">
+		select * from  t_entity
+	</select>
+	
+	<!-- 根据itemName和typeId得到属性id -->
+	<select id="getCondition" resultType="int" parameterType="Map">
+		select id from t_entity_item where typeId = #{typeId} and name = #{name}
+	</select>
+	<!-- 根据实体名称和实体属性 -->
+	<select id="getItemByEntityAndItem" resultMap="TEntityItem" parameterType="Map">
+		select item from t_entity entity,t_entity_item item where item.typeId = entity.id and item.name = #{itemNname} and entity.name = #{entityName}
+	</select>
+	<!-- 根据条件id查询条件 -->
+	<select id="getConditionById" resultMap="TCondition" parameterType="Integer">
+		select * from t_condition where  id = #{id}
+	</select>
+	<!-- 根据实体条目id得到实体以及实体属性-->
+	<select id="getItemAndEntityByItemId" parameterType="Integer"  resultMap="TEntityUnicom">
+		select entity.*,item.* from t_entity entity,t_entity_item item where item.typeId = entity.id and item.id=#{id}
+	</select>
+</mapper>

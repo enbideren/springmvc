@@ -7,7 +7,12 @@ import cn.springmvc.model.TAction;
 import cn.springmvc.model.TActionMeta;
 import cn.springmvc.model.TActionMetaVariable;
 
-
+/**
+ * 
+ * @author JZR
+ * @version 1.0
+ * @created 2015-08-12
+ */
 public interface ActionMetaDao {
 	/**
 	 * 根据指定的hql语句去查询对应的营销活动，并返回list

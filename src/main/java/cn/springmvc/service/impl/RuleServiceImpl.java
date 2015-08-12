@@ -32,8 +32,12 @@ import cn.springmvc.util.BasePage;
 import cn.springmvc.util.DroolsUtil;
 import cn.springmvc.util.RuleEngineException;
 import cn.springmvc.util.StringKit;
-
-
+/**
+ * 
+ * @author JZR
+ * @version 1.0
+ * @created 2015-08-12
+ */
 @Service("ruleService")
 @Transactional
 public class RuleServiceImpl implements RuleService {
@@ -63,16 +67,16 @@ public class RuleServiceImpl implements RuleService {
 	@Override
 	public int addRule(TRule rule,List<String> actionList){
 		
-		String conditionInfo = rule.getCondition();
+		String conditionInfo = rule.getConditionC();
 		if(StringKit.isNotEmpty(conditionInfo)){
 			TCondition condition = new TCondition();
-			condition.setDescription(rule.getCondition());
+			condition.setDescription(rule.getConditionC());
 			//实体属性处理
 			conditionInfo = replaceParam(conditionInfo);
 			//动态参数处理 -- 暂不做处理
-			condition.setCondition(conditionInfo);//设置实体条件信息
+			condition.setConditionC(conditionInfo);//设置实体条件信息
 			Integer conditionId = conditionDao.saveCondition(condition);
-			rule.setCondition(conditionId.toString());
+			rule.setConditionC(conditionId.toString());
 		}
 		
 		//动作处理
@@ -151,16 +155,16 @@ public class RuleServiceImpl implements RuleService {
 		basePage.setRecordNum(ruleDao.findTotalCount(hql.insert(0, "select count(*) ").toString()).intValue());
 		
 		for(TRule rule : ruleList){
-			String conditionId = rule.getCondition();
+			String conditionId = rule.getConditionC();
 			
 			//有条件
 			if(StringKit.isNotEmpty(conditionId)){
 				TCondition conditionObj = conditionDao.getConditionById(Integer.parseInt(conditionId));
-				String condition = conditionObj.getCondition();
+				String condition = conditionObj.getConditionC();
 				condition = replaceParamToShow(condition);
-				rule.setCondition(condition);
+				rule.setConditionC(condition);
 			}else{
-				rule.setCondition("");
+				rule.setConditionC("");
 			}
 			
 			String action = rule.getAction();
@@ -212,12 +216,12 @@ public class RuleServiceImpl implements RuleService {
 	@Transactional(propagation=Propagation.NOT_SUPPORTED,readOnly=true)
 	public TRule getRuleById(Integer ruleId){
 		TRule rule = ruleDao.getRuleById(ruleId);
-		String conditionId = rule.getCondition();
+		String conditionId = rule.getConditionC();
 		if(StringKit.isNotEmpty(conditionId)){
 			TCondition conditionObj = conditionDao.getConditionById(Integer.parseInt(conditionId));
-			String condition = conditionObj.getCondition();
+			String condition = conditionObj.getConditionC();
 			condition = replaceParamToShow(condition);
-			rule.setCondition(condition);
+			rule.setConditionC(condition);
 		}
 		
 		return rule;
@@ -297,7 +301,10 @@ public class RuleServiceImpl implements RuleService {
 				log.error("分拆条件时出错,具体出错方位为：解析实体属性{}",item);
 				return null;
 			}
-			TEntityItem itemObj = conditionDao.getItemByEntityAndItem(arr[0],arr[1]);
+			Map map = new HashMap();
+			map.put("entityName", arr[0]);
+			map.put("itmeName", arr[1]);
+			TEntityItem itemObj = conditionDao.getItemByEntityAndItem(map);
 			conditionInfo = conditionInfo.replace(item,itemObj.getId()+"");
 		}
 		return conditionInfo;
@@ -334,15 +341,15 @@ public class RuleServiceImpl implements RuleService {
 	public Integer updateRule(TRule rule,List<String> actionList){
 		ruleDao.deleteRuleById(rule.getId());
 		
-		String conditionInfo = rule.getCondition();
+		String conditionInfo = rule.getConditionC();
 		TCondition condition = new TCondition();
-		condition.setDescription(rule.getCondition());
+		condition.setDescription(rule.getConditionC());
 		//实体属性处理
 		conditionInfo = replaceParam(conditionInfo);
 		//动态参数处理 -- 暂不做处理
-		condition.setCondition(conditionInfo);//设置实体条件信息
+		condition.setConditionC(conditionInfo);//设置实体条件信息
 		Integer conditionId = conditionDao.saveCondition(condition);
-		rule.setCondition(conditionId.toString());
+		rule.setConditionC(conditionId.toString());
 		
 		if(actionList == null || actionList.size() == 0 || StringKit.isEmpty(actionList.get(0))){
 			rule.setAction("");
@@ -403,7 +410,7 @@ public class RuleServiceImpl implements RuleService {
 	public void deleteRule(Integer ruleId){
 		TRule rule = ruleDao.getRuleById(ruleId);
 		//删除条件
-		String conditionIdStr = rule.getCondition();
+		String conditionIdStr = rule.getConditionC();
 		conditionDao.deleteCondition(Integer.parseInt(conditionIdStr));
 		//删除动作
 		String actionIdStr = rule.getAction();
@@ -455,10 +462,10 @@ public class RuleServiceImpl implements RuleService {
 		droolRuleStr.append("import").append("  ").append("java.lang.String").append(";").append("\n");
 		droolRuleStr.append("rule test").append("\n");
 		droolRuleStr.append("when").append("\n");
-		if(StringKit.isEmpty(rule.getCondition())){
+		if(StringKit.isEmpty(rule.getConditionC())){
 			droolRuleStr.append("eval( true )").append("\n");
 		}else{
-			String condition = conditionDao.getConditionById(Integer.parseInt(rule.getCondition())).getCondition();
+			String condition = conditionDao.getConditionById(Integer.parseInt(rule.getConditionC())).getConditionC();
 			String conditionTmp = condition;
 			conditionTmp = conditionTmp.replaceAll("\\|\\|", "&&");
 			conditionTmp = conditionTmp.replaceAll("\\)", "");
@@ -487,9 +494,8 @@ public class RuleServiceImpl implements RuleService {
 					
 					if(i == 0){
 						String entityItemId = list.get(i);
-						Object[] obj = conditionDao.getItemAndEntityByItemId(Integer.parseInt(entityItemId));
-						TEntity entity = (TEntity)obj[0];
-						TEntityItem entityItem = (TEntityItem)obj[1];
+						TEntity entity = conditionDao.getItemAndEntityByItemId(Integer.parseInt(entityItemId));
+						TEntityItem entityItem = entity.gettEntityItem();
 						
 						String clazz = entity.getEntityClazz();
 						

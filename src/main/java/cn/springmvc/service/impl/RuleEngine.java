@@ -38,9 +38,9 @@ import cn.springmvc.util.StringKit;
 /**
  * 规则引擎核心
  * 
- * @author guolei
+ * @author JZR
  * @version 1.0
- * @created 2013-4-18
+ * @created 2015-08-12
  */
 @Service("ruleEngine")
 @Transactional(propagation=Propagation.NOT_SUPPORTED,readOnly=true)
@@ -143,7 +143,7 @@ public class RuleEngine implements IRuleEngine {
 		for(Iterator<String> it=set.iterator();it.hasNext();){
 		   droolRuleStr.append("import").append("  ").append(it.next()).append(";").append("\n");
 		  }
-		droolRuleStr.append("import").append("  ").append("com.hxrainbow.rule.operating.service.IAction").append(";").append("\n");
+		droolRuleStr.append("import").append("  ").append("cn.springmvc.service.IAction").append(";").append("\n");
 		return droolRuleStr;
 	}
 	/**
@@ -203,10 +203,10 @@ public class RuleEngine implements IRuleEngine {
 			droolRuleStr.append("$action").append(actionId).append(":").append("IAction()").append("\n");
 		}
 		//1.拿到规则的条件
-		if(StringKit.isEmpty(rule.getCondition())){
+		if(StringKit.isEmpty(rule.getConditionC())){
 			droolRuleStr.append("eval( true )").append("\n");
 		}else{
-			String condition = conditionDao.getConditionById(Integer.parseInt(rule.getCondition())).getCondition();
+			String condition = conditionDao.getConditionById(Integer.parseInt(rule.getConditionC())).getConditionC();
 			String conditionTmp = condition;
 			conditionTmp = conditionTmp.replaceAll("\\|\\|", "&&");
 			conditionTmp = conditionTmp.replaceAll("\\)", "");
@@ -232,9 +232,8 @@ public class RuleEngine implements IRuleEngine {
 					
 					if(i == 0){
 						String entityItemId = list.get(i);
-						Object[] obj = conditionDao.getItemAndEntityByItemId(Integer.parseInt(entityItemId));
-						TEntity entity = (TEntity)obj[0];
-						TEntityItem entityItem = (TEntityItem)obj[1];
+						TEntity entity = conditionDao.getItemAndEntityByItemId(Integer.parseInt(entityItemId));
+						TEntityItem entityItem = entity.gettEntityItem();
 						
 						String clazz = entity.getEntityClazz();
 						
@@ -298,9 +297,8 @@ public class RuleEngine implements IRuleEngine {
 					if(tempList.size() > 0){//动态变量处理
 						StringBuffer dynamicAction = new StringBuffer();
 						for(String temp : tempList){
-							Object[] itemArr = conditionDao.getItemAndEntityByItemId(Integer.parseInt(temp));
-							TEntity entity = (TEntity)itemArr[0];
-							TEntityItem entityItem = (TEntityItem)itemArr[1];
+							TEntity entity = conditionDao.getItemAndEntityByItemId(Integer.parseInt(temp));
+							TEntityItem entityItem = entity.gettEntityItem();
 							dynamicAction.append("$").append(entity.getIdentify()).append(".").append(getMethodByProperty(entityItem.getField())).append("()");
 							value = value.replace("$" + temp + "$", dynamicAction.toString());
 						}

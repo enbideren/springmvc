@@ -7,10 +7,10 @@ import cn.springmvc.util.RuleEngineException;
 
 /**
  * 规则引擎核心
- * 
- * @author guolei
+ *
+ * @author JZR
  * @version 1.0
- * @created 2013-4-18
+ * @created 2015-08-12
  */
 public interface IRuleEngine {
 

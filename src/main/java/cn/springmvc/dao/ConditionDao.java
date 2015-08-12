@@ -1,6 +1,7 @@
 package cn.springmvc.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import cn.springmvc.model.TCondition;
 import cn.springmvc.model.TEntity;
@@ -9,9 +10,9 @@ import cn.springmvc.model.TEntityItem;
 /**
  * 实体dao接口层
  * 
- * @author guolei
+ * @author JZR
  * @version 1.0
- * @created 2013-4-9
+ * @created 2015-08-12
  */
 public interface ConditionDao {
 	/**
@@ -108,7 +109,7 @@ public interface ConditionDao {
 	 * @version 1.0
 	 * @created 2013-4-15
 	 */
-	public Integer getCondition(Integer typeId, String itemName);
+	public Integer getCondition(Map map);
 	/**
 	 * 根据实体名称和实体属性
 	 * 
@@ -118,7 +119,7 @@ public interface ConditionDao {
 	 * @version 1.0
 	 * @created 2013-4-16
 	 */
-	public TEntityItem getItemByEntityAndItem(String entityName, String itmeName);
+	public TEntityItem getItemByEntityAndItem(Map map);
 	/**
 	 * 根据条件id查询条件
 	 * 
@@ -149,7 +150,7 @@ public interface ConditionDao {
 	 * @version 1.0
 	 * @created 2013-4-18
 	 */
-	public Object[] getItemAndEntityByItemId(Integer entityItemId);
+	public TEntity getItemAndEntityByItemId(Integer entityItemId);
 	/**
 	 * 根据条件id删除条件
 	 * 

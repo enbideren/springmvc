@@ -11,9 +11,9 @@ import cn.springmvc.model.TSceneEntity;
 /**
  * 实体dao接口层
  * 
- * @author guolei
+ * @author JZR
  * @version 1.0
- * @created 2013-4-9
+ * @created 2015-08-12
  */
 public interface SceneDao {
 	/**

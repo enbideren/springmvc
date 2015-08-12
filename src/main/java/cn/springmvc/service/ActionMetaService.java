@@ -5,7 +5,12 @@ import java.util.List;
 import cn.springmvc.model.TActionMeta;
 import cn.springmvc.model.TActionMetaVariable;
 import cn.springmvc.util.BasePage;
-
+/**
+ * 
+ * @author JZR
+ * @version 1.0
+ * @created 2015-08-12
+ */
 public interface ActionMetaService {
 	/**
 	 * 根据页数列出系统中的实体

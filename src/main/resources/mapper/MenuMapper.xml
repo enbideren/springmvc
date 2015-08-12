@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.springmvc.dao.MenuDao">
+	<!-- 部门对象 -->
+	<resultMap id="Menu" type="cn.springmvc.model.Menu">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<id column="name" property="name" jdbcType="VARCHAR" />
+		<id column="url" property="url" jdbcType="VARCHAR" />
+		<id column="image" property="image" jdbcType="VARCHAR" />
+		<id column="parentId" property="parentId" jdbcType="VARCHAR" />
+		<id column="sequence" property="sequence" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="MenuNode" type="cn.springmvc.model.MenuNode">
+		<id column="name" property="name" jdbcType="VARCHAR" />
+		<id column="value" property="value" jdbcType="VARCHAR" />
+		<id column="check" property="check" jdbcType="VARCHAR" />
+		<id column="parentId" property="parentId" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- 根据父部门id获取子部门列表 -->
+	<select id="getMenuList" resultMap="Menu" parameterType="String">
+		select m.id,m.name,m.url,m.image,m.parentId    
+		from t_menu m,t_role r,t_role_menu rm    
+		where rm.roleId=r.id and rm.menuId=m.id and r.name=#{name} order by m.sequence
+	</select>
+	
+	<select id="getRoleMenuList" resultMap="MenuNode" parameterType="int">
+		select m.id,m.name,rm.roleId>0 role,m.parentId  
+		from t_menu m left join t_role_menu rm 
+		on m.id=rm.menuId  and rm.roleId= #{id} order by m.parentId,m.sequence
+	</select>
+
+	<select id="getMenuChildren" resultMap="Menu">
+		select max(sequence) from t_menu menu where menu.parentId = 2
+	</select>
+	
+	<insert id="save" parameterType="cn.springmvc.model.Menu">
+		<if test="id == 0">
+			insert into t_menu(name,url,image,parentId,sequence) values
+		(   #{name},
+			#{url},
+			#{image},
+			#{parentId},
+			#{sequence}
+		)
+		</if>
+		<if test="id != 0">
+			update t_menu set 
+			name=#{name},
+			url=#{url},
+			image=#{image},
+			parentId=#{parentId},
+			sequence=#{sequence}
+		where id = #{id}
+		</if>
+	</insert>
+	
+	<insert id="saveMenuRole" parameterType="String">
+		INSERT INTO t_role_menu(roleId,menuId) 
+		SELECT id,(SELECT id FROM t_menu menu WHERE menu.name=#{name}) 
+		FROM t_role
+	</insert>
+	
+	<update id="deleteMenu" parameterType="String">
+		DELETE a,b FROM t_role_menu a JOIN t_menu b ON a.menuId=b.id WHERE b.name =#{name}
+	</update>
+	
+</mapper>

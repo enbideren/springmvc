@@ -21,7 +21,12 @@ import cn.springmvc.model.TSceneEntity;
 import cn.springmvc.service.SceneService;
 import cn.springmvc.util.BasePage;
 import cn.springmvc.util.StringKit;
-
+/**
+ * 
+ * @author JZR
+ * @version 1.0
+ * @created 2015-08-12
+ */
 @Service("sceneService")
 @Transactional
 public class SceneServiceImpl implements SceneService {

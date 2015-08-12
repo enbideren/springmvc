@@ -1,24 +1,24 @@
 package cn.springmvc.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
  * 实体
  *
- * @author guolei
+ * @author JZR
  * @version 1.0
- * @created 2013-4-9 上午10:46:46
- * @history 
- * @see
+ * @created 2015-08-12
  */
-public class TEntity{
+public class TEntity implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private Integer id;//主键
 	private String name;//实体名称(显示名称)
 	private String identify;//实体标识
 	private String packageC;//包名
 	private List<TEntityItem> prorperties=new ArrayList<TEntityItem>();
+	private TEntityItem tEntityItem;
 	public Integer getId() {
 		return id;
 	}
@@ -52,6 +52,12 @@ public class TEntity{
 	public String getEntityClazz(){
 		int index =  packageC.lastIndexOf(".");
 		return packageC.substring(index+1);
+	}
+	public TEntityItem gettEntityItem() {
+		return tEntityItem;
+	}
+	public void settEntityItem(TEntityItem tEntityItem) {
+		this.tEntityItem = tEntityItem;
 	}
 	
 }

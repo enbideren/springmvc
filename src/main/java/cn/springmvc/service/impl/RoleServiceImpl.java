@@ -9,6 +9,12 @@ import org.springframework.stereotype.Repository;
 import cn.springmvc.dao.RoleDao;
 import cn.springmvc.model.Role;
 import cn.springmvc.service.RoleService;
+/**
+ * 
+ * @author JZR
+ * @version 1.0
+ * @created 2015-08-12
+ */
 @Repository("roleService")
 public class RoleServiceImpl implements RoleService {
 

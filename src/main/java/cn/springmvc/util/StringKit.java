@@ -8,9 +8,9 @@ import java.util.regex.Pattern;
 /**
  * 字符串工具类
  * 
- * @author guolei
+ * @author JZR
  * @version 1.0
- * @created 2013-4-9
+ * @created 2015-08-12
  */
 public class StringKit {
 

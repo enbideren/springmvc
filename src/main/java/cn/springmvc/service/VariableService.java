@@ -7,9 +7,9 @@ import cn.springmvc.model.TVariable;
 /**
  * 变量操作接口类
  * 
- * @author guolei
+ * @author JZR
  * @version 1.0
- * @created 2013-4-15
+ * @created 2015-08-12
  */
 public interface VariableService {
 

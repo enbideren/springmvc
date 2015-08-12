@@ -13,12 +13,17 @@ import cn.springmvc.controller.BaseAction;
 import cn.springmvc.service.IRuleEngine;
 
 import com.caucho.hessian.client.HessianProxyFactory;
-import com.hxrainbow.Member;
+import com.hxrainbow.rule.model.Member;
 import com.hxrainbow.rule.model.TestLog;
 import com.hxrainbow.rule.model.TestUser;
 import com.hxrainbow.rule.operating.service.TestUserService;
 
-
+/**
+ * 
+ * @author JZR
+ * @version 1.0
+ * @created 2015-08-12
+ */
 @Controller
 @RequestMapping("/")
 public class LoginAction extends BaseAction{

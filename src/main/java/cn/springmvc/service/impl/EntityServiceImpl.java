@@ -13,7 +13,12 @@ import cn.springmvc.model.TEntity;
 import cn.springmvc.service.EntityService;
 import cn.springmvc.util.BasePage;
 import cn.springmvc.util.StringKit;
-
+/**
+ * 
+ * @author JZR
+ * @version 1.0
+ * @created 2015-08-12
+ */
 @Service("entityService")
 @Transactional
 public class EntityServiceImpl implements EntityService {

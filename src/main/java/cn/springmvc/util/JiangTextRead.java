@@ -3,7 +3,12 @@ package cn.springmvc.util;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-
+/**
+ * 
+ * @author JZR
+ * @version 1.0
+ * @created 2015-08-12
+ */
 public class JiangTextRead {
 
 	public static void main(String[] args) {

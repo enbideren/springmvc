@@ -3,7 +3,13 @@ package cn.springmvc.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * 菜单详情实体类
+ * 
+ * @author JZR
+ * @version 1.0
+ * @created 2015-08-12
+ */
 public class MenuNode implements Serializable{
 
 	private static final long serialVersionUID = 1L;

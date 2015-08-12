@@ -7,7 +7,12 @@ import cn.springmvc.dao.UserMapper;
 import cn.springmvc.model.User;
 import cn.springmvc.service.UserService;
 
-
+/**
+ * 
+ * @author JZR
+ * @version 1.0
+ * @created 2015-08-12
+ */
 @Service(value="userService")
 public class UserServiceImpl implements UserService{
 

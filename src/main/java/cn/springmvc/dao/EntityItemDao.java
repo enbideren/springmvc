@@ -5,8 +5,10 @@ import java.util.List;
 import cn.springmvc.model.TEntityItem;
 /**
  * 实体dao接口层
- * @author test-2
- *
+ * 
+ * @author JZR
+ * @version 1.0
+ * @created 2015-08-12
  */
 public interface EntityItemDao {
 	/**

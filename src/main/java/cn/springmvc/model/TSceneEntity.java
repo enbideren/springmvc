@@ -1,17 +1,18 @@
 package cn.springmvc.model;
 
+import java.io.Serializable;
+
 
 /**
  * 
  * 场景实体中间表
  *
- * @author guolei
+ * @author JZR
  * @version 1.0
- * @created 2013-4-9 上午10:24:16
- * @history 
- * @see
+ * @created 2015-08-12
  */
-public class TSceneEntity{
+public class TSceneEntity implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private Integer id;                                     //主键
 	private Integer entityId;                               //实体id
 	private Integer sceneId;                              //场景id

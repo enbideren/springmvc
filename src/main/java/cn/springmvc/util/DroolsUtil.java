@@ -20,13 +20,11 @@ import org.junit.Test;
 
 
 /**
- * Drools工具�?
+ * Drools工具
  * 
- * @author guolei
+ * @author JZR
  * @version 1.0
- * @created 2013-3-8 上午11:15:16
- * @history 
- * @see
+ * @created 2015-08-12
  */
 public class DroolsUtil {
 	
@@ -59,17 +57,11 @@ public class DroolsUtil {
 		Reader strReader = null;
 		try{
 			strReader = new StringReader(rule);
-			//TODO 添加规则�?
-			kbuilder.add(ResourceFactory.newReaderResource(new StringReader(JiangTextRead.read("C:\\Users\\jiang\\Desktop\\rule\\AgeRule.drl"))),ResourceType.DRL);
-			kbuilder.add(ResourceFactory.newReaderResource(new StringReader(JiangTextRead.read("C:\\Users\\jiang\\Desktop\\rule\\CreditCardRule.drl"))),ResourceType.DRL);
-			kbuilder.add(ResourceFactory.newReaderResource(new StringReader(JiangTextRead.read("C:\\Users\\jiang\\Desktop\\rule\\EducationRule.drl"))),ResourceType.DRL);
-			kbuilder.add(ResourceFactory.newReaderResource(new StringReader(JiangTextRead.read("C:\\Users\\jiang\\Desktop\\rule\\JobRule.drl"))),ResourceType.DRL);
-			kbuilder.add(ResourceFactory.newReaderResource(new StringReader(JiangTextRead.read("C:\\Users\\jiang\\Desktop\\rule\\OverDraftRule.drl"))),ResourceType.DRL);
-			kbuilder.add(ResourceFactory.newReaderResource(new StringReader(JiangTextRead.read("C:\\Users\\jiang\\Desktop\\rule\\SocialSecurityRule.drl"))),ResourceType.DRL);
-			kbuilder.add(ResourceFactory.newReaderResource(new StringReader(JiangTextRead.read("C:\\Users\\jiang\\Desktop\\rule\\baseFlow.rf"))),ResourceType.DRF);
+			//TODO 添加规则流
+			kbuilder.add(ResourceFactory.newReaderResource(strReader),ResourceType.DRL);
 		}catch (Exception e) {
 			try {
-				strReader.close();//关闭�?
+				strReader.close();//关闭�?
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -88,7 +80,7 @@ public class DroolsUtil {
 		return ksession;
 	}
 	/**
-	 * 根据场景获取缓存中的kbase,然后创建session，如果返回null，则表示缓存中没�?
+	 * 根据场景获取缓存中的kbase,然后创建session，如果返回null，则表示缓存中没�?
 	 * 
 	 * @param scene
 	 * @return
@@ -127,7 +119,7 @@ public class DroolsUtil {
 			kbuilder.add(ResourceFactory.newReaderResource(strReader),ResourceType.DRL);
 		}catch (Exception e) {
 			try {
-				strReader.close();//关闭�?
+				strReader.close();//关闭�?
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

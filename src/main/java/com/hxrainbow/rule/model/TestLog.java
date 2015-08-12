@@ -1,6 +1,12 @@
 package com.hxrainbow.rule.model;
 
 import java.util.Date;
+/**
+ * 
+ * @author JZR
+ * @version 1.0
+ * @created 2015-08-12
+ */
 public class TestLog {
 	private Integer id;//主键
 	private String reason;//原因

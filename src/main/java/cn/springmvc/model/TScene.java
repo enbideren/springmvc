@@ -1,15 +1,18 @@
 package cn.springmvc.model;
 
+import java.io.Serializable;
+
 
 /**
  * 
  * 规则引擎场景实体类
  * 
- * @author guolei
+ * @author JZR
  * @version 1.0
- * @created 2013-4-9
+ * @created 2015-08-12
  */
-public class TScene {
+public class TScene implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private Integer id;                                     //主键
 	private String name;                                  //场景名称
 	private String identify;                              //场景标识

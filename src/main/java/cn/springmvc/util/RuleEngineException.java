@@ -4,11 +4,9 @@ package cn.springmvc.util;
  * 
  * 规则引擎异常类
  *
- * @author guolei
+ * @author JZR
  * @version 1.0
- * @created 2013-04-19 上午11:00:56
- * @history 
- * @see
+ * @created 2015-08-12
  */
 public class RuleEngineException extends Exception {
 	

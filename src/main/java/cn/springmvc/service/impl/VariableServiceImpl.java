@@ -12,7 +12,12 @@ import cn.springmvc.model.TVariable;
 import cn.springmvc.service.VariableService;
 import cn.springmvc.util.StringKit;
 
-
+/**
+ * 
+ * @author JZR
+ * @version 1.0
+ * @created 2015-08-12
+ */
 @Service("variableService")
 @Transactional
 public class VariableServiceImpl implements VariableService {

@@ -1,14 +1,17 @@
 package cn.springmvc.model;
 
+import java.io.Serializable;
+
 
 /**
  * 规则条件实体类
  * 
- * @author guolei
+ * @author JZR
  * @version 1.0
- * @created 2013-4-9
+ * @created 2015-08-12
  */
-public class TActionMetaVariable{
+public class TActionMetaVariable implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private Integer id; //主键
 	private String name;//动作类型变量名称
 	private String identify;//动作类型变量标识

@@ -2,6 +2,7 @@ package cn.springmvc.service.impl;
 
 import java.util.List;
 
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -14,6 +15,12 @@ import cn.springmvc.model.TActionMetaVariable;
 import cn.springmvc.service.ActionMetaService;
 import cn.springmvc.util.BasePage;
 import cn.springmvc.util.StringKit;
+/**
+ * 
+ * @author JZR
+ * @version 1.0
+ * @created 2015-08-12
+ */
 @Service("actionMetaService")
 @Transactional
 public class ActionMetaServiceImpl implements ActionMetaService{

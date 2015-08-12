@@ -6,11 +6,9 @@ import java.util.Map;
 /**
  * Drools动作接口
  *
- * @author guolei
+ * @author JZR
  * @version 1.0
- * @created 2013-04-18 下午8:40:29
- * @history 
- * @see
+ * @created 2015-08-12
  */
 public interface IAction {
 

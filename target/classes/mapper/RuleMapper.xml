@@ -8,7 +8,7 @@
 		<id column="dateEntered" property="dateEntered" jdbcType="VARCHAR" />
 		<id column="dateModified" property="dateModified" jdbcType="VARCHAR" />
 		<id column="sceneId" property="sceneId" jdbcType="VARCHAR" />
-		<id column="condition" property="condition" jdbcType="VARCHAR" />
+		<id column="conditionC" property="conditionC" jdbcType="VARCHAR" />
 		<id column="action" property="action" jdbcType="VARCHAR" />
 		<id column="enabled" property="enabled" jdbcType="VARCHAR" />
 		<id column="begin" property="begin" jdbcType="VARCHAR" />
@@ -65,9 +65,9 @@
 	</resultMap>
 	<insert id="saveRule" parameterType="cn.springmvc.model.TRule">
 		insert into t_dept(name,dateEntered,dateModified,sceneId,
-			condition,action,enabled,begin,end
+			conditionC,action,enabled,begin,end
 		) values(
-			#{name},now(),now(),#{sceneId},#{condition},#{action},
+			#{name},now(),now(),#{sceneId},#{conditionC},#{action},
 			#{enabled},#{begin},#{end})
 	</insert>
 

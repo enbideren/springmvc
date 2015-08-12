@@ -3,8 +3,10 @@ package cn.springmvc.dao;
 import java.util.List;
 /**
  * 实体dao接口层
- * @author guolei
- *
+ * 
+ * @author JZR
+ * @version 1.0
+ * @created 2015-08-12
  */
 public interface VariableDao {
 	/**

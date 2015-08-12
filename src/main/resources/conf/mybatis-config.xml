@@ -13,6 +13,15 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
          <typeAlias alias="TRule" type="cn.springmvc.model.TRule"/> 
          <typeAlias alias="TestUser" type="com.hxrainbow.rule.model.TestUser"/> 
          <typeAlias alias="TestLog" type="com.hxrainbow.rule.model.TestLog"/> 
+         <typeAlias alias="TCondition" type="cn.springmvc.model.TCondition"/> 
+         <typeAlias alias="TEntity" type="cn.springmvc.model.TEntity"/> 
+         <typeAlias alias="TEntityItem" type="cn.springmvc.model.TEntityItem"/> 
+         <typeAlias alias="Menu" type="cn.springmvc.model.Menu"/> 
+         <typeAlias alias="MenuNode" type="cn.springmvc.model.MenuNode"/> 
+         <typeAlias alias="Role" type="cn.springmvc.model.Role"/> 
+         <typeAlias alias="TScene" type="cn.springmvc.model.TScene"/> 
+         <typeAlias alias="TSceneEntity" type="cn.springmvc.model.TSceneEntity"/> 
+         <typeAlias alias="TVariable" type="cn.springmvc.model.TVariable"/> 
     </typeAliases>
 
     <!-- 映射map -->

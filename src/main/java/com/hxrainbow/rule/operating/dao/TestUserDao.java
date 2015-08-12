@@ -4,7 +4,12 @@ import java.util.List;
 
 import com.hxrainbow.rule.model.TestLog;
 import com.hxrainbow.rule.model.TestUser;
-
+/**
+ * 
+ * @author JZR
+ * @version 1.0
+ * @created 2015-08-12
+ */
 public interface TestUserDao {
 	public List<TestUser> User();
 	public void saveUser(TestUser user);

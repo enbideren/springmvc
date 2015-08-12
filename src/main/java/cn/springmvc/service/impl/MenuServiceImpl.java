@@ -13,6 +13,12 @@ import cn.springmvc.dao.MenuDao;
 import cn.springmvc.model.Menu;
 import cn.springmvc.model.MenuNode;
 import cn.springmvc.service.MenuService;
+/**
+ * 
+ * @author JZR
+ * @version 1.0
+ * @created 2015-08-12
+ */
 @Repository("menuService")
 public class MenuServiceImpl implements MenuService {
 	@Resource
@@ -20,16 +26,7 @@ public class MenuServiceImpl implements MenuService {
 	
 	@Override
 	public List<Menu> getMenuList(String role) {
-		Map<Integer,Menu> map=new HashMap<Integer,Menu>();
-		List<Menu> oldList=menuDao.getMenuList(role);
-		for(Menu m:oldList){
-			if(m.getParentId()==0){
-				map.put(m.getId(), m);
-			}else{
-				map.get(m.getParentId()).getChildren().add(m);
-			}
-		}
-		return new LinkedList<Menu>(map.values());
+		return menuDao.getMenuList(role);
 	}
 
 	public MenuDao getMenuDao() {

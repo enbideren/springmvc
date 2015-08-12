@@ -1,7 +1,17 @@
 package cn.springmvc.model;
 
-public class User {
-    private String employeeid;
+import java.io.Serializable;
+/**
+ * 测试类
+ * 
+ * @author JZR
+ * @version 1.0
+ * @created 2015-08-12
+ */
+public class User implements Serializable{
+	private static final long serialVersionUID = 1L;
+
+	private String employeeid;
 
     private String idcardnr;
 

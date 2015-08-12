@@ -1,9 +1,14 @@
 package cn.springmvc.util;
-
+/**
+ * 
+ * @author JZR
+ * @version 1.0
+ * @created 2015-08-12
+ */
 public class Result {
 
 	private String statusCode = "200";
-	private String message = "²Ù×÷³É¹¦";
+	private String message = "ï¿½ï¿½ï¿½ï¿½ï¿½É¹ï¿½";
 	private String callbackType = "closeCurrent";
 	private String forwardUrl = "";
 	private String navTabId="";

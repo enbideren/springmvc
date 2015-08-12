@@ -1,6 +1,8 @@
 package cn.springmvc.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -15,7 +17,12 @@ import cn.springmvc.service.ConditionService;
 import cn.springmvc.util.BasePage;
 import cn.springmvc.util.StringKit;
 
-
+/**
+ * 
+ * @author JZR
+ * @version 1.0
+ * @created 2015-08-12
+ */
 @Service("conditionService")
 @Transactional
 public class ConditionServiceImpl implements ConditionService {
@@ -55,7 +62,10 @@ public class ConditionServiceImpl implements ConditionService {
 		//实体属性处理
 		List<String> itemList = StringKit.getParamId(desc);
 		for(String itemName : itemList){
-			Integer itemId = conditionDao.getCondition(condition.getTypeId(),itemName);
+			Map map = new HashMap();
+			map.put("typeId", condition.getTypeId());
+			map.put("itemName", itemName);
+			Integer itemId = conditionDao.getCondition(map);
 			if(itemId == null){
 				return 0;
 			}else{

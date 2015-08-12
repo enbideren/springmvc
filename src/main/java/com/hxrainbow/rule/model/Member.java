@@ -1,7 +1,12 @@
-package com.hxrainbow;
+package com.hxrainbow.rule.model;
 
 import java.io.Serializable;
-
+/**
+ * 
+ * @author JZR
+ * @version 1.0
+ * @created 2015-08-12
+ */
 public class Member implements Serializable{
 
 	private static final long serialVersionUID = 1L;

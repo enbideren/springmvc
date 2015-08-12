@@ -1,15 +1,17 @@
 package cn.springmvc.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 规则条件实体类
  * 
- * @author guolei
+ * @author JZR
  * @version 1.0
- * @created 2013-4-9
+ * @created 2015-08-12
  */
-public class TAction{
+public class TAction implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private Integer id; //主键
 	private String name;//动作名称
 	private Date dateEntered;//创建日期

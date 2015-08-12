@@ -1,21 +1,23 @@
 package cn.springmvc.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 规则表
  * 
- * @author guolei
+ * @author JZR
  * @version 1.0
- * @created 2013-4-9
+ * @created 2015-08-12
  */
-public class TRule{
+public class TRule implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private Integer id;//主键
 	private String name;//规则名称
 	private Date dateEntered;//创建时间
 	private Date dateModified;//修改时间
 	private Integer sceneId; //场景
-	private String condition;//规则条件
+	private String conditionC;//规则条件
 	private String action;//动作
 	private Integer enabled;//是否启用 1表示启用 2表示不启动
 	private Date begin;//规则开始时间
@@ -51,14 +53,14 @@ public class TRule{
 	public void setSceneId(Integer sceneId) {
 		this.sceneId = sceneId;
 	}
-	public String getCondition() {
-		return condition;
-	}
-	public void setCondition(String condition) {
-		this.condition = condition;
-	}
 	public String getAction() {
 		return action;
+	}
+	public String getConditionC() {
+		return conditionC;
+	}
+	public void setConditionC(String conditionC) {
+		this.conditionC = conditionC;
 	}
 	public void setAction(String action) {
 		this.action = action;

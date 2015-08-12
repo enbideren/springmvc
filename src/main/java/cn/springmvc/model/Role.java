@@ -1,7 +1,13 @@
 package cn.springmvc.model;
 
 import java.io.Serializable;
-
+/**
+ * 角色实体类
+ * 
+ * @author JZR
+ * @version 1.0
+ * @created 2015-08-12
+ */
 
 public class Role implements Serializable{
 

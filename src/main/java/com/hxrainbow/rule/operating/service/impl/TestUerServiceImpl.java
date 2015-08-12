@@ -11,7 +11,12 @@ import com.hxrainbow.rule.model.TestUser;
 import com.hxrainbow.rule.operating.dao.TestUserDao;
 import com.hxrainbow.rule.operating.service.TestUserService;
 
-
+/**
+ * 
+ * @author JZR
+ * @version 1.0
+ * @created 2015-08-12
+ */
 @Service("testUserService")
 public class TestUerServiceImpl implements TestUserService{
 	@Autowired

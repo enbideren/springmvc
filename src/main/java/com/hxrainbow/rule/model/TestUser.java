@@ -1,5 +1,10 @@
 package com.hxrainbow.rule.model;
-
+/**
+ * 
+ * @author JZR
+ * @version 1.0
+ * @created 2015-08-12
+ */
 public class TestUser {
 	private Integer id;//主键
 	private String name;//字段显示名称
