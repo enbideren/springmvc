@@ -48,7 +48,7 @@ public interface EntityItemService {
 	 */
 	public void deleteEntityItem(Integer id);
 	
-	public Long getEntityItemCount(Integer typeId);
+	public int getEntityItemCount(Integer typeId);
 	
 	/**
 	 * 

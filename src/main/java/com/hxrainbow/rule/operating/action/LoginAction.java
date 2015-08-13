@@ -9,7 +9,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import cn.springmvc.controller.BaseAction;
+import cn.springmvc.controller.BaseController;
 import cn.springmvc.service.IRuleEngine;
 
 import com.caucho.hessian.client.HessianProxyFactory;
@@ -26,7 +26,7 @@ import com.hxrainbow.rule.operating.service.TestUserService;
  */
 @Controller
 @RequestMapping("/")
-public class LoginAction extends BaseAction{
+public class LoginAction extends BaseController{
 	
 	@Resource(name = "testUserService")
 	private TestUserService testUserService;

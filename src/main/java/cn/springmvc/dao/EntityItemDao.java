@@ -1,6 +1,7 @@
 package cn.springmvc.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import cn.springmvc.model.TEntityItem;
 /**
@@ -20,7 +21,7 @@ public interface EntityItemDao {
 	public List findDataByHql(String hql);
 	
 	
-	Long getEntityItemCount(Integer typeId);
+	int getEntityItemCount(Integer typeId);
 	/**
 	 * 根据给定的条件去查询对应的页数上的数据
 	 * @param page
@@ -29,7 +30,7 @@ public interface EntityItemDao {
 	 * @return
 	 */
 	@SuppressWarnings("rawtypes")
-	public List findPageDataByHql(final int page,final int pageSize, final String hql) ;
+	public List findPageDataByHql(Map map) ;
 	
 	/**
 	 * 保存实体属性
@@ -70,5 +71,5 @@ public interface EntityItemDao {
 	 * @version 1.0
 	 * @created 2013-4-17
 	 */
-	public Long findTotalCount(final String hql);
+	public int findTotalCount(Map map);
 }

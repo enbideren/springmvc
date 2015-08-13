@@ -1,5 +1,6 @@
 package cn.springmvc.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -31,25 +32,21 @@ public class MainController {
 	}
 	@RequestMapping("index.do")
 	public String test(Model model){
-//		User user = new User();
-//		user.setEmployeeid("111");
-//		user.setIdcardnr("123");
-//		user.setName("���㷨");
-//		user.setGender("sd");
-//		user.setPhonenumber("17712855887");
-//		System.out.println(userService.insertUser(user));
 		String role="sa";
 		List<Menu> list=menuService.getMenuList(role);
+		List<Menu> listNew=new ArrayList<Menu>();
+		
 		for (Menu menu : list) {
-			System.out.println(menu.getId());
-			for (Menu menu2 : list) {
-				if (menu2.getParentId()==menu.getId()) {
-					menu.getChildren().add(menu2);
-					list.remove(menu2);
+			if (menu.getParentId()==0) {
+				for (Menu menu2 : list) {
+					if (menu2.getParentId()==menu.getId()) {
+						menu.getChildren().add(menu2);
+					}
 				}
+				listNew.add(menu);
 			}
 		}
-		model.addAttribute("menus", list);
+		model.addAttribute("menus", listNew);
 		return "main/index";
 	}
 	

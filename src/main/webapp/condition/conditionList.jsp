@@ -1,9 +1,9 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<form id="pagerForm" method="post" action="<%=request.getContextPath()%>/entity/listEntity">
+<form id="pagerForm" method="post" action="<%=request.getContextPath()%>/entity/listEntity.do">
 	<input type="hidden" name="basePage.page" value="1" />
 </form>
 <div class="pageHeader">
-	<form onsubmit="return navTabSearch(this);" action="<%=request.getContextPath()%>/entity/listEntity" method="post" rel="pagerForm">
+	<form onsubmit="return navTabSearch(this);" action="<%=request.getContextPath()%>/entity/listEntity.do" method="post" rel="pagerForm">
 	<div class="searchBar">
 		<table class="searchContent">
 			<tr>

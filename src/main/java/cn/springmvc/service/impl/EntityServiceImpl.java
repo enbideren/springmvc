@@ -1,6 +1,7 @@
 package cn.springmvc.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -29,22 +30,10 @@ public class EntityServiceImpl implements EntityService {
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	@Override
 	public BasePage getPageEntity(BasePage basePage, String entityName) {
-		StringBuilder hql = new StringBuilder("from TEntity where 1=1");
-		StringBuilder countSql = new StringBuilder(
-				"select count(t) from TEntity t where 1=1");
-		if (StringKit.isNotEmpty(entityName)) {
-			hql.append("where name like '");
-			hql.append(entityName);
-			hql.append("'");
-			countSql.append("where t.name like '");
-			countSql.append(entityName);
-			countSql.append("'");
-		}
-		basePage.setList(entityDao.findPageDataByHql(basePage.getPage(),
-				basePage.getPageSize(), hql.toString()));
-
-		basePage.setRecordNum(entityDao.findTotalCount(countSql.toString())
-				.intValue());
+		Map map =basePage.getPaging(); 
+		map.put("name", entityName);
+		basePage.setList(entityDao.findPageDataByHql(map));
+		basePage.setRecordNum(entityDao.findTotalCount(map));
 		return basePage;
 	}
 

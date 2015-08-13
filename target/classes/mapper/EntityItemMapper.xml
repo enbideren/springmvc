@@ -24,13 +24,6 @@
 		select * from t_entity_item where id =#{id}
 	</select>
 	
-	<!-- 根据实体id查询实体属性 -->
-	<select id="getEntityItemByTypeId" parameterType="Integer" resultMap="TEntityItem">
-			select i.* from t_entity_item i join i.entity t on i.typeId =t.id where t.id  = #{id}
-	</select>
-	
-	
-	
 	<!-- 更新实体属性 -->
 	<update id="updateEntityItem" parameterType="cn.springmvc.model.TEntityItem">
 		update t_entity_item set 
@@ -45,7 +38,21 @@
 		delete from t_entity_item where id = #{id}
 	</delete>
 	
-	<select id="getEntityItemCount" parameterType="Integer" resultType="java.lang.Long">
-		select count(i) from t_entity_item i join i.entity t on i.typeId =t.id where t.id=#{id}
+	<select id="getEntityItemCount" parameterType="Integer" resultType="Integer">
+		select count(i.id) from t_entity_item i join t_entity t on i.typeId =t.id where t.id=#{id}
+	</select>
+	<!-- 分页使用 -->
+	<select id="findPageDataByHql" parameterType="Map" resultMap="TEntityItem">
+		select *  from t_entity_item where typeId = #{typeId} 
+		<if test="entityItemName != null">
+			and t.name like #{entityItemName} 
+		</if>
+	</select>
+	<!-- 分页使用 -->
+	<select id="findTotalCount" parameterType="Map" resultType="Integer">
+		select count(t.id) from t_entity_item t where typeId = #{typeId} 
+		<if test="entityItemName != null">
+			and t.name like #{entityItemName} 
+		</if>
 	</select>
 </mapper>

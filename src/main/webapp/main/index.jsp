@@ -120,7 +120,7 @@ function reloadCurrentTab(){
 						</div>
 						<div class="accordionContent">
 						<ul>
-							<c:forEach items="children" var="mc">
+							<c:forEach items="${menu.children}" var="mc">
 								<li>
 									<div  align="center"><br/>
 									<a href="${mc.url}" target="navTab" rel="m_${mc.id}" style="text-decoration:none">

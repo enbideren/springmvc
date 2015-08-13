@@ -2,6 +2,7 @@ package cn.springmvc.service.impl;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -29,15 +30,11 @@ public class EntityItemServiceImpl implements EntityItemService{
 	@Transactional(propagation=Propagation.NOT_SUPPORTED)
 	@Override
 	public BasePage getPageEntityItem(BasePage basePage, String entityItemName,Integer typeId) {
-		StringBuilder hql=new StringBuilder("from TEntityItem where typeId = " + typeId );
-		StringBuilder countSql = new StringBuilder(
-				"select count(t) from TEntityItem t where typeId = " + typeId);
-		if(StringKit.isNotEmpty(entityItemName)){
-			  hql.append(" and name like '" + entityItemName + "'");
-			  countSql.append(" and name like '" + entityItemName + "'");
-		  }
-		basePage.setList(entityItemDao.findPageDataByHql(basePage.getPage(), basePage.getPageSize(), hql.toString()));
-		basePage.setRecordNum(entityItemDao.findTotalCount(hql.insert(0, "select count(*) ").toString()).intValue());	
+		Map map =basePage.getPaging(); 
+		map.put("name", entityItemName);
+		map.put("typeId", typeId);
+		basePage.setList(entityItemDao.findPageDataByHql(map));
+		basePage.setRecordNum(entityItemDao.findTotalCount(map));	
 		
 		return basePage;
 	}
@@ -106,7 +103,7 @@ public class EntityItemServiceImpl implements EntityItemService{
 		return list;
 	}
 	@Override
-	public Long getEntityItemCount(Integer typeId) {
+	public int getEntityItemCount(Integer typeId) {
 		
 		return entityItemDao.getEntityItemCount(typeId);
 	}

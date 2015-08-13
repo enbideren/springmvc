@@ -7,7 +7,7 @@ import cn.springmvc.util.BasePage;
  * @version 1.0
  * @created 2015-08-12
  */
-public abstract class BaseAction  {
+public abstract class BaseController  {
 
 
 	private static final long serialVersionUID = 1L;

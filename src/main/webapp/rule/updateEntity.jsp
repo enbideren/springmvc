@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <div class="pageContent">
-	<form method="post" action="<%=request.getContextPath()%>/entity/updateEntity" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
+	<form method="post" action="<%=request.getContextPath()%>/entity/updateEntity.do" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
 		<div class="pageFormContent" layoutH="56">
 			<p>
 				<label>实体名称：</label>

@@ -1,6 +1,7 @@
 package cn.springmvc.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import cn.springmvc.model.TEntity;
 
@@ -12,15 +13,6 @@ import cn.springmvc.model.TEntity;
  * @created 2015-08-12
  */
 public interface EntityDao {
-	/**
-	 * 根据指定的hql语句去查询对应的营销活动，并返回list
-	 *
-	 * @param hql
-	 * @return
-	 *
-	 */
-	@SuppressWarnings("rawtypes")
-	public List findDataByHql(String hql);
 	
 	
 	/**
@@ -32,7 +24,7 @@ public interface EntityDao {
 	 * @version 1.0
 	 * @created 2013-4-17
 	 */
-	public Long findTotalCount(final String hql);
+	public int findTotalCount(Map map);
 	/**
 	 * 根据给定的条件去查询对应的页数上的数据
 	 *
@@ -43,7 +35,7 @@ public interface EntityDao {
 	 *
 	 */
 	@SuppressWarnings("rawtypes")
-	public List findPageDataByHql(final int page,final int pageSize, final String hql) ;
+	public List findPageDataByHql(Map map) ;
 	/**
 	 * 保存实体
 	 * 
