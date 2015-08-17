@@ -37,7 +37,7 @@ public interface RuleDao {
 	 *
 	 */
 	@SuppressWarnings("rawtypes")
-	public List findPageDataByHql(final int page,final int pageSize, final String hql);
+	public List findPageDataByHql(Map map);
 	/**
 	 * 保存动作
 	 * 
@@ -118,7 +118,7 @@ public interface RuleDao {
 	 * @version 1.0
 	 * @created 2013-4-17
 	 */
-	public Long findTotalCount(final String hql);
+	public int findTotalCount(Map map);
 
 	/**
 	 * 根据规则主键更新规则enabled状态

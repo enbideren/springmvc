@@ -29,7 +29,7 @@ public interface ActionMetaDao {
 	 * @return
 	 */
 	@SuppressWarnings("rawtypes")
-	public List findPageDataByHql(final int page,final int pageSize, final String hql) ;
+	public List findPageDataByHql(Map map) ;
 	/**
 	 * 保存动作类型
 	 * @param actionMeta
@@ -42,6 +42,12 @@ public interface ActionMetaDao {
 	 * @return
 	 */
 	public TActionMeta getActionMetaById(Integer id);
+	/**
+	 * 根据名称查动作类型
+	 * @param id
+	 * @return
+	 */
+	public TActionMeta getActionMetaByName(String name);
 	
 	/**
 	 * 更新东西类型
@@ -62,7 +68,7 @@ public interface ActionMetaDao {
 	 * @version 1.0
 	 * @created 2013-4-17
 	 */
-	public Long findTotalCount(final String hql);
+	public int findTotalCount(Map map);
 	
 	/**
 	 * 根据actionid查询动作以及动作元对象

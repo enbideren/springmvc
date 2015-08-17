@@ -105,5 +105,19 @@
 	<select id="listEntityScene" resultMap="TSceneEntity" parameterType="Map">
 		select TS.id from t_scene_entity TS where TS.sceneId = #{sceneId} and TS.entityId = #{entityId}
 	</select>
-	
+	<!-- 分页使用 -->
+	<select id="findTotalCount" resultType="Integer" parameterType="Map">
+		select count(t.id) from t_scene t 
+		<if test="name != null and  name !=''">
+			where t.name like #{name} 
+		</if>
+	</select>
+	<!-- 分页使用 -->
+	<select id="findPageDataByHql" resultMap="TScene" parameterType="Map" >
+		select scene.* from t_scene  scene 
+		<if test="name != null and name !=''">
+			where scene.name like #{name} 
+		</if>
+		 limit #{page}, #{pageSize}
+	</select>
 </mapper>

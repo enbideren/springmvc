@@ -45,20 +45,20 @@ function saveActionMeta(){
 }
 </script>
 <div class="pageContent">
-	<form id="subForm" method="post" action="<%=request.getContextPath()%>/action/addActionMeta" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
+	<form id="subForm" method="post" action="<%=request.getContextPath()%>/action/addActionMeta.do" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
 		<div class="pageFormContent" layoutH="56" id="show">
 		<input type="hidden" name="rel" value="<%=request.getParameter("rel")%>">
 			<p>
 				<label>动作名称：</label>
-				<input name="actionMeta.name" type="text" size="30" alt="请输入动作类型名称" class="required" />
+				<input name="name" type="text" size="30" alt="请输入动作类型名称" class="required" />
 			</p>			
 			<p>
 				<label>动作实现类：</label>
-				<input name="actionMeta.methodC"  type="text" size="30"  alt="请输入动作类型包名称" class="required " />
+				<input name="methodC"  type="text" size="30"  alt="请输入动作类型包名称" class="required " />
 			</p>
 			<p>
 				<label>描述：</label>
-				<input name="actionMeta.description"  type="text" size="30"  alt="请输入动作类型描述" class=" " />
+				<input name="description"  type="text" size="30"  alt="请输入动作类型描述" class=" " />
 			</p>
 			<fieldset id="fieldDiv">
 				<p>

@@ -29,8 +29,8 @@
 		from t_menu m left join t_role_menu rm 
 		on m.id=rm.menuId  and rm.roleId= #{id} order by m.parentId,m.sequence
 	</select>
-
-	<select id="getMenuChildren" resultMap="Menu">
+	<!-- 查询规则管理菜单下的所有选项 -->
+	<select id="getMenuChildren" resultType="Integer">
 		select max(sequence) from t_menu menu where menu.parentId = 2
 	</select>
 	

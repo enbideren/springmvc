@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <style>
 .lose{
 float:right;margin-right:80px;margin-top: -10px
@@ -45,23 +46,23 @@ function saveActionMeta(){
 }
 </script>
 <div class="pageContent">
-	<form id="subForm" method="post" action="<%=request.getContextPath()%>/action/updateActionMeta" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
+	<form id="subForm" method="post" action="<%=request.getContextPath()%>/action/updateActionMeta.do" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
 		<div id="show" class="pageFormContent" layoutH="56">
 		    <input type="hidden" name="rel" value="${rel}"/>
 			<p>
 				<label>动作类型名称：</label>
-				<input name="actionMeta.id" type="hidden" size="30" value="${actionMeta.id }"/>
-				<input name="actionMeta.name" type="text" size="30" alt="请输入动作类型名称" class="required" value="${actionMeta.name }"/>
+				<input name="id" type="hidden" size="30" value="${actionMeta.id }"/>
+				<input name="name" type="text" size="30" alt="请输入动作类型名称" class="required" value="${actionMeta.name }"/>
 			</p>
 			<p>
 				<label>动作类型实现类：</label>
-				<input name="actionMeta.methodC" type="text" size="30"  alt="请输入动作类型实现类" class="required" value="${actionMeta.methodC }"/>
+				<input name="methodC" type="text" size="30"  alt="请输入动作类型实现类" class="required" value="${actionMeta.methodC }"/>
 			</p>
 			<p>
 				<label>描述：</label>
-				<input name="actionMeta.description"  type="text" size="30"  alt="请输入动作类型描述" class="required " value="${actionMeta.description}"/>
+				<input name="description"  type="text" size="30"  alt="请输入动作类型描述" class="required " value="${actionMeta.description}"/>
 			</p>
-			<s:iterator value="variableList" id="variable_show" status="st">
+			<c:forEach items="${variableList}"  var="variable_show" varStatus="st">
 			<fieldset>
 				<p>
 					<label>变量标签：</label>
@@ -79,7 +80,7 @@ function saveActionMeta(){
 					<input type='hidden' id='variable' name='variable'>
 				</span>
 			</fieldset>
-			</s:iterator>
+			</c:forEach>
 		</div>
 		<div class="formBar">
 			<ul>

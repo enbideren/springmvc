@@ -46,13 +46,17 @@
 	<select id="getActionMetaById" resultMap="TActionMeta" parameterType="Integer">
 		select * from t_action_meta c where  c.id = #{id}
 	</select>
+	<!-- 根据名称查询动作类型 -->
+	<select id="getActionMetaByName" resultMap="TActionMeta" parameterType="String">
+		select * from t_action_meta c where  c.name = #{name}
+	</select>
 	
 	<update id="updateActionMeta" parameterType="cn.springmvc.model.TActionMeta">
 		update t_action_meta set 
 			id=#{id},
 			name=#{name},
 			methodC=#{methodC},
-			description=#{description},
+			description=#{description}
 		where id = #{id}
 	</update>
 	
@@ -61,7 +65,7 @@
 	</delete>
 	
 	<delete id="deleteActionMetaVariable" parameterType="Integer">
-		delete from t_action_meta_variable where id = #{id}
+		delete from t_action_meta_variable where actionMetaId = #{id}
 	</delete>
 	
 	<!-- 根据actionid查询动作以及动作元对象 -->	
@@ -86,7 +90,22 @@
 			)
 	</insert>
 	
-	<select id="getActionMetaVariableById" parameterType="int"  resultMap="TActionMeta">
+	<select id="getActionMetaVariableById" parameterType="int"  resultMap="TActionMetaVariable">
 		select * from t_action_meta_variable where actionMetaId = #{id}
+	</select>
+	<!-- 分页使用 -->
+	<select id="findTotalCount" resultType="Integer" parameterType="Map">
+		select count(t.id) from t_action_meta t 
+		<if test="name != null and  name !=''">
+			where t.name like #{name} 
+		</if>
+	</select>
+	<!-- 分页使用 -->
+	<select id="findPageDataByHql" resultMap="TActionMeta" parameterType="Map" >
+		select action_meta.* from t_action_meta  action_meta 
+		<if test="name != null and name !=''">
+			where action_meta.name like #{name} 
+		</if>
+		 limit #{page}, #{pageSize}
 	</select>
 </mapper>

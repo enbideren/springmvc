@@ -39,7 +39,7 @@ public interface SceneService {
 	 * @version 1.0
 	 * @created 2013-4-9
 	 */
-	public void saveScene(TScene scene,List<Integer> idList,String sceneName,List<Menu> children);
+	public void saveScene(TScene scene,List<Integer> idList,String sceneName,int maxSequence);
 	/**
 	 * 添加菜单
 	 * 
@@ -142,7 +142,7 @@ public interface SceneService {
 	 */
 	void deleteEntityScene(Integer sceneId);
 
-	int saveSceneEntity(int[] entityIds,int sceneId);
+	void saveSceneEntity(int[] entityIds,int sceneId);
 	/**
 	 * 根据场景标识查询实体信息
 	 * 

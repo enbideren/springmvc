@@ -20,15 +20,15 @@ function deleteDiv(my){
 			<dl>
 				<dt>规则名称：</dt>
 				<dd>
-					<input name="rule.name" type="text" size="30" alt="请输入规则名称" class="required" />
-					<input name="rule.sceneId" type="hidden" value="${sceneId }"/>
+					<input name="name" type="text" size="30" alt="请输入规则名称" class="required" />
+					<input name="sceneId" type="hidden" value="${sceneId }"/>
 					<input name="rel" type="hidden" value="${rel }"/>
 				</dd>
 			</dl>
 			<dl>
 				<dt>立即启用：</dt>
 				<dd>
-					<select name="rule.enabled" class="combox">
+					<select name="enabled" class="combox">
 						<option value="1">启用</option>
 						<option value="2">不启用</option>
 					</select>
@@ -37,21 +37,21 @@ function deleteDiv(my){
 			<dl>
 				<dt>开始时间：</dt>
 				<dd>
-					<input type="text" name="rule.begin"  class="date" readonly="true"/>
+					<input type="text" name="begin"  class="date" readonly="true"/>
 					<a class="inputDateButton" href="javascript:;">选择</a>
 				</dd>
 			</dl>
 			<dl>
 				<dt>结束时间：</dt>
 				<dd>
-					<input type="text" name="rule.end" class="date" readonly="true"/>
+					<input type="text" name="end" class="date" readonly="true"/>
 					<a class="inputDateButton" href="javascript:;">选择</a>
 				</dd>
 			</dl>
 			<dl>
 				<dt>&nbsp;&nbsp;&nbsp;&nbsp;</dt>
 				<dd>
-					<a class="button" href="rule/showItemRule?sceneId=${sceneId }&flag=1" lookupGroup="org1" width="650" height="300"><span>属性</span></a>
+					<a class="button" href="rule/showItemRule.do?sceneId=${sceneId }&flag=1" lookupGroup="org1" width="650" height="300"><span>属性</span></a>
 <%-- 					<a class="button" href="variable/listVariable" lookupGroup="org2" width="650" height="400"><span>变量</span></a> --%>
 					<a class="button" href="rule/symbolList.jsp" lookupGroup="org3" width="500" height="400"><span>符号</span></a>
 				</dd>
@@ -59,7 +59,7 @@ function deleteDiv(my){
 			<dl>
 				<dt>规则条件：</dt>
 				<dd>
-					<textarea id="content" rows="6" cols="60" spellcheck="false" autocomplete="off" name="rule.condition" alt="请输入条件内容"></textarea>
+					<textarea id="content" rows="6" cols="60" spellcheck="false" autocomplete="off" name="condition" alt="请输入条件内容"></textarea>
 				</dd>
 			</dl>
 			<dl>

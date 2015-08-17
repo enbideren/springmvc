@@ -85,12 +85,12 @@
 
 	<!-- 根据actionId查询action信息 -->
 	<select id="getActionById" resultMap="TAction"  parameterType="Integer">
-		select * from t_action where actionId = #{actionId}
+		select * from t_action where id = #{actionId}
 	</select>
 
 	<!-- 根据actiontypeId查询action类型信息 -->
 	<select id="getActionMetaById" resultMap="TActionMeta"  parameterType="Integer">
-		select * from t_action_meta where typeId = #{typeId}
+		select * from t_action_meta where id = #{typeId}
 	</select>
 
 	<!-- 根据actiontypeId查询action类型信息 -->
@@ -150,4 +150,26 @@
 		select * from t_scene scene where scene.id = #{id}
 	</select>
 	
+	<!-- 分页使用 -->
+	<select id="findTotalCount" resultType="Integer" parameterType="Map">
+		select count(t.id) from t_rule t where t.sceneId = #{sceneId}
+		<if test="name != null and  name !=''">
+			and t.name like #{name} 
+		</if>
+		<if test="enabled != null and  enabled !=0">
+			and t.enabled = #{enabled}
+		</if>
+	</select>
+	
+	<!-- 分页使用 -->
+	<select id="findPageDataByHql" resultMap="TRule" parameterType="Map" >
+		select s.* from t_rule  s where s.sceneId = #{sceneId}
+		<if test="name != null and name !=''">
+			and s.name like #{name} 
+		</if>
+		<if test="enabled != null and  enabled !=0">
+			and s.enabled = #{enabled}
+		</if>
+		 limit #{page}, #{pageSize}
+	</select>
 </mapper>

@@ -60,13 +60,8 @@ public class MenuServiceImpl implements MenuService {
 		return list;
 	}
 	@Override
-	public List<Menu> getMenuChildren() {
-		Map<Integer,Menu> map=new HashMap<Integer,Menu>();
-		List<Menu> oldList=menuDao.getMenuChildren();
-		for(Menu m:oldList){			
-			map.put(m.getSequence(), m);			
-		}
-		return new LinkedList<Menu>(map.values());
+	public int getMenuChildren() {
+		return menuDao.getMenuChildren();
 	}
 
 	@Override

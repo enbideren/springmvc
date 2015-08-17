@@ -46,10 +46,11 @@ public class EntityController  extends BaseController{
 	 * @created 2015-08-13
 	 */
 	@RequestMapping("listEntity.do")
-	public String listEntity(HttpServletRequest request,Model model)  throws Exception{
+	public String listEntity(HttpServletRequest request,Model model,String rel)  throws Exception{
 		basePage.installPageConfig(request);
 		basePage = entityService.getPageEntity(basePage,request.getParameter("entityName"));
 		model.addAttribute(basePage);
+		model.addAttribute("rel", rel);
 		return "entity/entityList";
 	}
 
@@ -63,7 +64,7 @@ public class EntityController  extends BaseController{
 	 * @created 2015-08-13
 	 */
 	@RequestMapping("addEntity.do")
-	public String addEntity(Model model,TEntity entity,HttpServletResponse response)  throws Exception{
+	public String addEntity(Model model,TEntity entity,HttpServletResponse response,String rel)  throws Exception{
 		if(entityService.getEntityByIdentify(entity.getIdentify())){
 			Result result = new Result();
 			result.setStatusCode("300");
@@ -76,6 +77,7 @@ public class EntityController  extends BaseController{
 		entityService.saveEntity(entity);
 		Result result = new Result();
 		result.setMessage("添加成功");
+		result.setCallbackType("closeCurrent");
 		result.setStatusCode("200");
 		result.setNavTabId(rel);
 		JsonUtil.toJson(result, response);
@@ -91,9 +93,10 @@ public class EntityController  extends BaseController{
 	 * @created 2015-08-13
 	 */
 	@RequestMapping("showEntity.do")
-	public String showEntity(Model model,TEntity entity) throws Exception{
+	public String showEntity(Model model,TEntity entity,String rel) throws Exception{
 		entity = entityService.getEntityById(entity.getId());
 		model.addAttribute("entity",entity);
+		model.addAttribute("rel",rel);
 		return "/entity/updateEntity";
 	}
 
@@ -107,7 +110,7 @@ public class EntityController  extends BaseController{
 	 * @created 2015-08-13
 	 */
 	@RequestMapping("updateEntity.do")
-	public String updateEntity(Model model,TEntity entity,HttpServletResponse response)  throws Exception{
+	public String updateEntity(Model model,TEntity entity,HttpServletResponse response,String rel)  throws Exception{
 		entityService.updateEntity(entity);
 		Result result = new Result();
 		result.setMessage("更新成功");
@@ -126,7 +129,7 @@ public class EntityController  extends BaseController{
 	 * @created 2015-08-13
 	 */
 	@RequestMapping("deleteEntity.do")
-	public String deleteEntity(Model model,TEntity entity,HttpServletResponse response)  throws Exception{
+	public String deleteEntity(Model model,TEntity entity,HttpServletResponse response,String rel)  throws Exception{
 		int count=entityItemService.getEntityItemCount(entity.getId());
 		Result result = new Result();
 		if(count>0){

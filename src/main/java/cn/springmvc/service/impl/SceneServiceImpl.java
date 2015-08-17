@@ -45,14 +45,10 @@ public class SceneServiceImpl implements SceneService {
 	@Override
 	public BasePage getPageScene(BasePage basePage, String sceneName) {
 
-		StringBuffer hql = new StringBuffer("from TScene where 1=1");
-		if (StringKit.isNotEmpty(sceneName)) {
-			hql.append(" and name like '" + sceneName + "'");
-		}
-		basePage.setList(sceneDao.findPageDataByHql(basePage.getPage(),
-				basePage.getPageSize(), hql.toString()));
-		basePage.setRecordNum(sceneDao.findTotalCount(
-				hql.insert(0, "select count(*) ").toString()).intValue());
+		Map map =basePage.getPaging(); 
+		map.put("name", sceneName);
+		basePage.setList(sceneDao.findPageDataByHql(map));
+		basePage.setRecordNum(sceneDao.findTotalCount(map));
 		return basePage;
 	}
 
@@ -67,23 +63,19 @@ public class SceneServiceImpl implements SceneService {
 	 */
 	@Override
 	public void saveScene(TScene scene, List<Integer> idList, String sceneName,
-			List<Menu> children) {
+			int maxSequence) {
 		sceneDao.saveScene(scene);
 		Integer sceneId = sceneDao.getSceneByIdentify(scene.getIdentify()).get(0).getId();
-
-		for (Menu i : children) {
-			Integer squence = i.getSequence();
-			Integer squenceMax = squence + 1;
-			String url = "rule/listRule?sceneId=" + sceneId;
-			String image = "images/icons/default.png";
-			Menu menu = new Menu();
-			menu.setName(sceneName);
-			menu.setUrl(url);
-			menu.setImage(image);
-			menu.setParentId(2);
-			menu.setSequence(squenceMax);
-			menuDao.save(menu);
-		}
+		Integer squenceMax = maxSequence + 1;
+		String url = "rule/listRule.do?sceneId=" + sceneId;
+		String image = "images/icons/default.png";
+		Menu menu = new Menu();
+		menu.setName(sceneName);
+		menu.setUrl(url);
+		menu.setImage(image);
+		menu.setParentId(2);
+		menu.setSequence(squenceMax);
+		menuDao.save(menu);
 		menuDao.saveMenuRole(sceneName);
 		for (Integer entityId : idList) {
 			Map map = new HashMap();
@@ -253,18 +245,17 @@ public class SceneServiceImpl implements SceneService {
 	}
 
 	@Override
-	public int saveSceneEntity(int[] entityIds, int sceneId) {
+	public void saveSceneEntity(int[] entityIds, int sceneId) {
 		int i = 0;
-		//TODO
-		System.out.println("执行了saveSceneEntity方法!");
-//		if (sceneEntityDao.deleteEntityList(sceneId) >= 0) {
-//			if (entityIds != null) {
-//				for (int eid : entityIds) {
-//					i += sceneEntityDao.saveSceneEntity(eid, sceneId);
-//				}
-//			}
-//		}
-		return i;
+		sceneEntityDao.deleteEntityList(sceneId) ;
+		if (entityIds != null) {
+			for (int eid : entityIds) {
+				Map map = new HashMap();
+				map.put("entityId", eid);
+				map.put("sceneId", sceneId);
+				sceneEntityDao.saveSceneEntity(map);
+			}
+		}
 	}
 
 }

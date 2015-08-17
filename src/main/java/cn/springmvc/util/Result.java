@@ -8,7 +8,7 @@ package cn.springmvc.util;
 public class Result {
 
 	private String statusCode = "200";
-	private String message = "�����ɹ�";
+	private String message = "操作成功";
 	private String callbackType = "closeCurrent";
 	private String forwardUrl = "";
 	private String navTabId="";

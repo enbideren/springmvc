@@ -14,5 +14,5 @@ public interface SceneEntityDao {
 	
 	void deleteEntityList(int id);
 	
-	int saveSceneEntity(Map map);
+	void saveSceneEntity(Map map);
 }

@@ -1,12 +1,13 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<form id="pagerForm" method="post" action="<%=request.getContextPath()%>/scene/listScene">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<form id="pagerForm" method="post" action="<%=request.getContextPath()%>/scene/listScene.do">
 	<input type="hidden"  name="pageNum" value="${basePage.page}" />
 	<input type="hidden"  name="numPerPage" value="${basePage.pageSize}" />
 	<input type="hidden" name="orderField" value="${basePage.orderField}" />
 	<input type="hidden" name="orderDirection" value="${basePage.orderField}" />
 </form>
 <div class="pageHeader">
-	<form onsubmit="return navTabSearch(this);" action="<%=request.getContextPath()%>/scene/listScene" method="post" rel="pagerForm">
+	<form onsubmit="return navTabSearch(this);" action="<%=request.getContextPath()%>/scene/listScene.do" method="post" rel="pagerForm">
 	<div class="searchBar">
 		<table class="searchContent">
 			<tr>
@@ -27,8 +28,8 @@
 	<div class="panelBar">
 		<ul class="toolBar">
 			<li><a class="add" href="<%=request.getContextPath()%>/scene/addScene.jsp?rel=${rel}" target="dialog" rel="addScene" title="添加场景" mask="true"><span>添加</span></a></li>
-			<li><a class="edit" href="<%=request.getContextPath()%>/scene/showScene?sceneId={sid_user}&rel=${rel}" target="dialog" title="修改场景" mask="true"><span>修改</span></a></li>
-			<li><a class="delete" href="<%=request.getContextPath()%>/scene/deleteScene?sceneId={sid_user}&rel=${rel}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
+			<li><a class="edit" href="<%=request.getContextPath()%>/scene/showScene.do?id={sid_user}&rel=${rel}" target="dialog" title="修改场景" mask="true"><span>修改</span></a></li>
+			<li><a class="delete" href="<%=request.getContextPath()%>/scene/deleteScene.do?id={sid_user}&rel=${rel}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
 		</ul>
 	</div>
 	<table class="table" width="100%" layoutH="138">
@@ -41,15 +42,14 @@
 			</tr>
 		</thead>
 		<tbody>
-		
-		<s:iterator value="basePage.list" id="scene" status="index">
+		<c:forEach items="${basePage.list}"  var="scene" varStatus="index">
 			<tr target="sid_user" rel="${scene.id }">
 				<td align="center">${index.index+1}</td>
 				<td align="left">${scene.name}</td>
 				<td align="left">${scene.identify }</td>
-				<td align="center"><a  href="<%=request.getContextPath()%>/scene/listEntityOfScene?rel=listEntityOfScene&sceneId=${scene.id}" width="405" height="300" mask="false" target="dialog" rel="scene_entity_list" title="场景[${scene.name}]实体">关联实体</a></td>
+				<td align="center"><a  href="<%=request.getContextPath()%>/scene/listEntityOfScene.do?rel=${rel}&id=${scene.id}" width="405" height="300" mask="false" target="dialog" rel="scene_entity_list" title="场景[${scene.name}]实体">关联实体</a></td>
 			</tr>
-		</s:iterator>
+		</c:forEach>
 			
 		</tbody>
 	</table>

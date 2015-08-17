@@ -12,16 +12,16 @@
 	
 	<!-- 根据部门id获取当前部门信息 -->
 	<select id="findEntityList" resultType="Map" parameterType="int">
-		SELECT e.id,e.name,e.identify,e.package_c,t.scene_id>0 checked  
-		FROM t_entity e left join t_scene_entity t on (e.id=t.entity_id and t.scene_id=#{sid})
+		SELECT e.id,e.name,e.identify,e.packageC,t.sceneId>0 checked     
+		FROM t_entity e left join t_scene_entity t on (e.id=t.entityId and t.sceneId=#{sid})
 	</select>
 	
 	<delete id="deleteEntityList" parameterType="int">
-		delete from t_scene_entity where scene_id=#{scene_id}
+		delete from t_scene_entity where sceneId=#{scene_id}
 	</delete>
 	
 	<insert id="saveSceneEntity" parameterType="Map">
-		insert into t_scene_entity (entity_id,scene_id) values(#{entity_id},#{scene_id})
+		insert into t_scene_entity (entityId,sceneId) values(#{entityId},#{sceneId})
 	</insert>
 	
 </mapper>

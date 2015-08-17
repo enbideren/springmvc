@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <form id="pagerForm" action="demo/database/dwzOrgLookup.html">
 	<input type="hidden" name="numPerPage" value="${model.numPerPage}" />
 	<input type="hidden" name="orderField" value="${param.orderField}" />
@@ -15,6 +16,7 @@
 			<li>
 				<label>所属实体:</label>
 				<s:select name="entityId" cssClass="combox" list="entityList" listKey="id"  listValue="name" theme="simple"  headerKey="0" headerValue="请选择"/>
+				
 			</li>
 		</ul>
 		<div class="subBar">
@@ -37,7 +39,7 @@
 			</tr>
 		</thead>
 		<tbody>
-		<s:iterator value="itemList" id="item_entity">
+		<c:forEach items="${itemList}"  var="item_entity" varStatus="index">
 		<tr>
 				<td>${item_entity.itemName }</td>
 				<td>${item_entity.entityName }</td>
@@ -46,7 +48,7 @@
 					<a class="btnSelect" href="javascript:$.bringBack({id:'${item_entity.itemId }', orgName:'${item_entity.entityName}${'的' }${item_entity.itemName }',type:'${'condition'}${flag}${itemInput}',variableId:'${variableId}'})" title="查找带回">选择</a>
 				</td>
 			</tr>
-		</s:iterator>
+		</c:forEach>
 		</tbody>
 	</table>
 </div>

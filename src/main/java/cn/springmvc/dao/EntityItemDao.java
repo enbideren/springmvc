@@ -18,7 +18,7 @@ public interface EntityItemDao {
 	 * @return
 	 */
 	@SuppressWarnings("rawtypes")
-	public List findDataByHql(String hql);
+	public List findDataByHql(Map map);
 	
 	
 	int getEntityItemCount(Integer typeId);

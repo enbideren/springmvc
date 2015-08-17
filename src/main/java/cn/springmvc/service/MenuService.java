@@ -14,6 +14,6 @@ import cn.springmvc.model.MenuNode;
 public interface MenuService {
 	List<Menu> getMenuList(String role);
 	List<MenuNode> getRoleMenuList(int id);
-	List<Menu> getMenuChildren();	
+	int getMenuChildren();	
 	boolean save(final Menu o);
 }

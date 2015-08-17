@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <style type="text/css">
  .home{
  float:right;
@@ -19,15 +20,14 @@
 			</tr>
 		</thead>
 		<tbody>
-		
-		<s:iterator value="listEntityScene" id="entity">
+		<c:forEach items="${listEntityScene}"  var="entity" varStatus="index">
 			<tr target="sid_user" rel="${entity.id }">
 			    <td><input type="checkbox" name="entityId" value="{entityIdArr:'${entity.id }',entityName:'${entity.name}'}"/></td>
 				<td align="left">${entity.name}</td>
 				<td align="left">${entity.identify }</td>
 				<td align="left">${entity.packageC }</td>								
 			</tr>
-		</s:iterator>
+		</c:forEach>
 			
 		</tbody>
 	</table>	

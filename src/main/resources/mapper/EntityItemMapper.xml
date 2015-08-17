@@ -30,7 +30,7 @@
 			name=#{name},
 			field=#{field},
 			typeId=#{typeId},
-			description=#{description},
+			description=#{description}
 		where id = #{id}
 	</update>
 	
@@ -53,6 +53,20 @@
 		select count(t.id) from t_entity_item t where typeId = #{typeId} 
 		<if test="entityItemName != null">
 			and t.name like #{entityItemName} 
+		</if>
+	</select>
+	<select id="findDataByHql" parameterType="Map" resultType="Map">
+		select entity.name as entityName,item.name as itemName,item.description as description,item.id as itemId 
+		from t_entity_item item,t_entity entity,t_scene_entity middle 
+		where middle.entityId = entity.id and entity.id = item.typeId
+		<if test="entityItemName != null and entityItemName !=''">
+			 and item.name like #{entityItemName} 
+		</if>
+		<if test="typeId != null and typeId !=0">
+			 and item.typeId = #{typeId} 
+		</if>
+		<if test="sceneId != null and sceneId !=0">
+			 and middle.sceneId = #{sceneId} 
 		</if>
 	</select>
 </mapper>

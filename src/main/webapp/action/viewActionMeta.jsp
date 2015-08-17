@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <style>
 .lose{
 float:right;margin-right:80px;margin-top: -10px
@@ -19,7 +20,7 @@ float:right;margin-right:80px;margin-top: -10px
 				<label>描述：</label>
 				${actionMeta.description}
 			</p>
-			<s:iterator value="variableList" id="variable_show" status="st">
+			<c:forEach items="${variableList}"  var="variable_show" varStatus="st">
 			<fieldset>
 				<p>
 					<label>变量标签：</label>
@@ -30,6 +31,6 @@ float:right;margin-right:80px;margin-top: -10px
 					${variable_show.identify }
 				</p>
 			</fieldset>
-			</s:iterator>
+			</c:forEach>
 		</div>
 </div>

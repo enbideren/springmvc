@@ -1,17 +1,18 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<form id="pagerForm" method="post" action="<%=request.getContextPath()%>/action/listActionMeta">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<form id="pagerForm" method="post" action="<%=request.getContextPath()%>/action/listActionMeta.do">
 	<input type="hidden" name="basePage.page" value="${basePage.page}" />
 	<input type="hidden"  name="numPerPage" value="${basePage.pageSize}" />
 	<input type="hidden" name="orderField" value="${basePage.orderField}" />
 	<input type="hidden" name="orderDirection" value="${basePage.orderField}" />
 </form>
 <div class="pageHeader">
-	<form onsubmit="return navTabSearch(this);" action="<%=request.getContextPath()%>/action/listActionMeta" method="post" rel="pagerForm">
+	<form onsubmit="return navTabSearch(this);" action="<%=request.getContextPath()%>/action/listActionMeta.do" method="post" rel="pagerForm">
 	<div class="searchBar">
 		<table class="searchContent">
 			<tr>
 				<td>
-					动作类型名称：<input type="text" name="actionMetaName" value="${requestScope.actionMetaName }"/>
+					动作类型名称：<input type="text" name="actionMetaName" value="${actionMetaName }"/>
 				</td>
 			</tr>
 		</table>
@@ -27,8 +28,8 @@
 	<div class="panelBar">
 		<ul class="toolBar">
 			<li><a class="add" href="<%=request.getContextPath()%>/action/addActionMeta.jsp?rel=${rel}" target="dialog" rel="addActionMeta" title="添加动作类型" mask="true"><span>添加</span></a></li>
-			<li><a class="edit" href="<%=request.getContextPath()%>/action/showActionMeta?actionMeta.id={sid_user}&rel=${rel}" target="dialog" title="修改动作类型" mask="true"><span>修改</span></a></li>
-			<li><a class="delete" href="<%=request.getContextPath()%>/action/deleteActionMeta?actionMeta.id={sid_user}&rel=${rel}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
+			<li><a class="edit" href="<%=request.getContextPath()%>/action/showActionMeta.do?id={sid_user}&rel=${rel}" target="dialog" title="修改动作类型" mask="true"><span>修改</span></a></li>
+			<li><a class="delete" href="<%=request.getContextPath()%>/action/deleteActionMeta.do?id={sid_user}&rel=${rel}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
 		</ul>
 	</div>
 	<table class="table" width="100%" layoutH="138">
@@ -41,15 +42,14 @@
 			</tr>
 		</thead>
 		<tbody>
-		
-		<s:iterator value="basePage.list" id="actionMeta" status="index">
+		<c:forEach items="${basePage.list}"  var="actionMeta" varStatus="index">
 			<tr target="sid_user" rel="${actionMeta.id }">
 				<td align="center">${index.index+1}</td>
-				<td align="left"><a href="<%=request.getContextPath()%>/action/viewActionMeta?actionMeta.id=${actionMeta.id}" target="dialog">${actionMeta.name}</a></td>
+				<td align="left"><a href="<%=request.getContextPath()%>/action/viewActionMeta.do?actionMeta.id=${actionMeta.id}" target="dialog">${actionMeta.name}</a></td>
 				<td align="left">${actionMeta.methodC}</td>		
 				<td align="left">${actionMeta.description}</td>	
-		</s:iterator>
-			
+			</tr>
+		</c:forEach>			
 		</tbody>
 	</table>
 <div class="panelBar">

@@ -1,7 +1,9 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<form id="pagerForm" method="post" action="<%=request.getContextPath()%>/rule/listRule">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+<form id="pagerForm" method="post" action="<%=request.getContextPath()%>/rule/listRule.do">
 	<input type="hidden" name="basePage.page" value="1" />
-	<input type="hidden" name="sceneId" value="${sceneId }"/>
+	<input type="hidden" name="sceneId" value="${rule.sceneId }"/>
 	<input type="hidden" name="rule.name" value="${rule.name }"/>
 	<input type="hidden"  name="pageNum" value="${basePage.page}" />
 	<input type="hidden"  name="numPerPage" value="${basePage.pageSize}" />
@@ -10,13 +12,13 @@
 	<input type="hidden" name="rel" value="${rel}" />
 </form>
 <div class="pageHeader">
-	<form onsubmit="return navTabSearch(this);" action="<%=request.getContextPath()%>/rule/listRule" method="post" rel="pagerForm">
+	<form onsubmit="return navTabSearch(this);" action="<%=request.getContextPath()%>/rule/listRule.do" method="post" rel="pagerForm">
 	<div class="searchBar">
 		<table class="searchContent">
 			<tr>
 				<td>
 					规则名称：<input type="text" name="rule.name" value="${requestScope.conditionName }"/>
-					<input type="hidden" name="sceneId" value="${sceneId }"/>
+					<input type="hidden" name="sceneId" value="${rule.sceneId }"/>
 				</td>
 			</tr>
 		</table>
@@ -31,9 +33,9 @@
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<li><a class="add" href="<%=request.getContextPath()%>/rule/showAddRule?sceneId=${sceneId}&rel=${rel}" target="navTab" rel="addCondition" title="添加规则" mask="true"><span>添加</span></a></li>
-			<li><a class="edit" rel="update_rule" href="<%=request.getContextPath()%>/rule/showUpdateRule?rule.id={sid_user}&sceneId=${sceneId}&rel=${rel}" target="navTab" title="修改规则"><span>修改</span></a></li>
-			<li><a class="delete" href="<%=request.getContextPath()%>/rule/deleteRule?rule.id={sid_user}&rel=${rel}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
+			<li><a class="add" href="<%=request.getContextPath()%>/rule/showAddRule.do?sceneId=${rule.sceneId}&rel=${rel}" target="navTab" rel="addCondition" title="添加规则" mask="true"><span>添加</span></a></li>
+			<li><a class="edit" rel="update_rule" href="<%=request.getContextPath()%>/rule/showUpdateRule.do?id={sid_user}&sceneId=${rule.sceneId}&rel=${rel}" target="navTab" title="修改规则"><span>修改</span></a></li>
+			<li><a class="delete" href="<%=request.getContextPath()%>/rule/deleteRule.do?id={sid_user}&rel=${rel}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
 		</ul>
 	</div>
 	<table class="table" width="100%" layoutH="138">
@@ -49,26 +51,27 @@
 			</tr>
 		</thead>
 		<tbody>
-		
-		<s:iterator value="basePage.list" id="rule_show" status="index">
+		<c:forEach items="${basePage.list}"  var="rule_show" varStatus="index">
 			<tr target="sid_user" rel="${rule_show.id }" >
 				<td align="center">${index.index+1}</td>
 			
-				<td align="left"><a href="<%=request.getContextPath()%>/rule/showRule?rule.id=${rule_show.id}" target="navTab" rel="ruleShow" title="规则详情">${rule_show.name}</a></td>
+				<td align="left"><a href="<%=request.getContextPath()%>/rule/showRule.do?id=${rule_show.id}" target="navTab" rel="ruleShow" title="规则详情">${rule_show.name}</a></td>
 				
-				<td align="left">${rule_show.condition }</td>
+				<td align="left">${rule_show.conditionC }</td>
 				<td align="left">${rule_show.action }</td>
-				<td align="left"><s:date name="#rule_show.dateEntered"   format="yyyy-MM-dd"/></td>
 				<td align="left">
-				<s:if test="#rule_show.enabled == 1">启用</s:if>
-				<s:if test="#rule_show.enabled == 2">未启用</s:if>
+				 	<fmt:formatDate value="${rule_show.dateEntered}" pattern="yyyy-MM-dd"/>
+				</td>
+				<td align="left">
+				<c:if test="#rule_show.enabled == 1">启用</c:if>
+				<c:if test="#rule_show.enabled == 2">未启用</c:if>
 				</td>
 				<td align="middle">
-				<s:if test="#rule_show.enabled == 1"><a target="ajaxTodo" href="rule/updateEnabledRule?rule.id=${rule_show.id }&rule.enabled=2">停用</a></s:if>
-				<s:if test="#rule_show.enabled == 2"><a target="ajaxTodo" href="rule/updateEnabledRule?rule.id=${rule_show.id }&rule.enabled=1">启用</a></s:if>
+				<c:if test="#rule_show.enabled == 1"><a target="ajaxTodo" href="rule/updateEnabledRule?rule.id=${rule_show.id }&rule.enabled=2">停用</a></c:if>
+				<c:if test="#rule_show.enabled == 2"><a target="ajaxTodo" href="rule/updateEnabledRule?rule.id=${rule_show.id }&rule.enabled=1">启用</a></c:if>
 				</td>
 			</tr>
-		</s:iterator>
+		</c:forEach>
 		</tbody>
 	</table>
 	<div class="panelBar">

@@ -40,7 +40,7 @@ public class TEntityItem implements Serializable{
 	public Integer getTypeId() {
 		return typeId;
 	}
-	public void setTypeId(int typeId) {
+	public void setTypeId(Integer typeId) {
 		this.typeId = typeId;
 	}
 	public TEntity getEntity() {

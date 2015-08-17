@@ -35,7 +35,7 @@ public interface SceneDao {
 	 *
 	 */
 	@SuppressWarnings("rawtypes")
-	public List findPageDataByHql(final int page,final int pageSize, final String hql) ;
+	public List findPageDataByHql(Map map) ;
 	/**
 	 * 保存场景
 	 * 
@@ -129,7 +129,7 @@ public interface SceneDao {
 	 * @version 1.0
 	 * @created 2013-4-17
 	 */
-	public Long findTotalCount(final String hql);
+	public int findTotalCount(Map map);
 	/**
 	 * 根据场景标识查询实体信息
 	 * 

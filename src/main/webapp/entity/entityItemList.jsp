@@ -15,8 +15,8 @@
 					实体属性名称：<input type="text" name="entityItemName" value="${requestScope.entityItemName }"/>
 				</td>
 				<td>
-					<input type="hidden" name="typeId" value="${requestScope.typeId}"/>
-					<input type="hidden" name="rel" value="${requestScope.rel }"/>
+					<input type="hidden" name="typeId" value="${typeId}"/>
+					<input type="hidden" name="rel" value="${rel }"/>
 				</td>
 			</tr>
 		</table>
@@ -32,9 +32,9 @@
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<li><a class="add" href="<%=request.getContextPath()%>/entity/showItem?typeId=${requestScope.typeId}&rel=${requestScope.rel}" target="dialog" title="添加实体属性" mask="true"><span>添加</span></a></li>
-			<li><a class="edit" href="<%=request.getContextPath()%>/entity/showEntityItem?entityItem.id={sid_user}&rel=${requestScope.rel}" target="dialog" title="修改实体属性" mask="true"><span>修改</span></a></li>
-			<li><a class="delete" href="<%=request.getContextPath()%>/entity/deleteEntityItem.do?typeId=${requestScope.typeId}&entityItem.id={sid_user}&rel=${requestScope.rel}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
+			<li><a class="add" href="<%=request.getContextPath()%>/entity/showItem.do?typeId=${entity.id}&rel=${rel}" target="dialog" title="添加实体属性" mask="true"><span>添加</span></a></li>
+			<li><a class="edit" href="<%=request.getContextPath()%>/entity/showEntityItem.do?id={sid_user}&rel=${rel}" target="dialog" title="修改实体属性" mask="true"><span>修改</span></a></li>
+			<li><a class="delete" href="<%=request.getContextPath()%>/entity/deleteEntityItem.do?typeId=${requestScope.typeId}&id={sid_user}&rel=${rel}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
 		</ul>
 	</div>
 	<table class="table" width="100%" layoutH="138">
@@ -54,7 +54,7 @@
 				<td align="left">${item.field}</td>
 				<td align="left">${item.name}</td>
 				<td align="left">${item.description}</td>
-				<td align="left">${item.entity.name}</td>				
+				<td align="left">${entity.name}</td>				
 			</tr>
 		</c:forEach>			
 		</tbody>

@@ -142,18 +142,13 @@ public class RuleServiceImpl implements RuleService {
 	@Transactional(propagation=Propagation.NOT_SUPPORTED,readOnly=true)
 	public BasePage listPageRule(BasePage basePage,Integer sceneId, String name, Integer enabled){
 		
-		StringBuffer hql = new StringBuffer("from TRule where sceneId = " + sceneId);
-		if(StringKit.isNotEmpty(name)){
-			hql.append(" and name like '%" + name +"%'");
-		}
-		if(enabled != null && enabled != 0){
-			hql.append(" and enabled = " + enabled);
-		}
-		List<TRule> ruleList = ruleDao.findPageDataByHql(basePage.getPage(), basePage.getPageSize(), hql.toString());
-		
+		Map maps =basePage.getPaging(); 
+		maps.put("sceneId", sceneId);
+		maps.put("name", name);
+		maps.put("enabled", enabled);
+		List<TRule> ruleList = ruleDao.findPageDataByHql(maps);
 		basePage.setList(ruleList);
-		basePage.setRecordNum(ruleDao.findTotalCount(hql.insert(0, "select count(*) ").toString()).intValue());
-		
+		basePage.setRecordNum(ruleDao.findTotalCount(maps));
 		for(TRule rule : ruleList){
 			String conditionId = rule.getConditionC();
 			

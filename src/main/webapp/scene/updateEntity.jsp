@@ -4,16 +4,16 @@
 		<div class="pageFormContent" layoutH="56">
 			<p>
 				<label>实体名称：</label>
-				<input name="entity.id" type="hidden" size="30" value="${entity.id }"/>
-				<input name="entity.name" type="text" size="30" alt="请输入实体名称" class="required" value="${entity.name }"/>
+				<input name="id" type="hidden" size="30" value="${entity.id }"/>
+				<input name="name" type="text" size="30" alt="请输入实体名称" class="required" value="${entity.name }"/>
 			</p>
 			<p>
 				<label>标识名：</label>
-				<input name="entity.identify"  readonly="readonly" type="text" size="30"  alt="请输入标识名" class="required lettersonly" value="${entity.identify }"/>
+				<input name="identify"  readonly="readonly" type="text" size="30"  alt="请输入标识名" class="required lettersonly" value="${entity.identify }"/>
 			</p>
 			<p>
 				<label>包名：</label>
-				<input name="entity.packageC"  type="text" size="30"  alt="请输入包名" class="required" value="${entity.packageC }"/>
+				<input name="packageC"  type="text" size="30"  alt="请输入包名" class="required" value="${entity.packageC }"/>
 			</p>
 		</div>
 		<div class="formBar">

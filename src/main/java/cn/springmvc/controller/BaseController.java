@@ -43,20 +43,4 @@ public abstract class BaseController  {
 	public void setRel(String rel) {
 		this.rel = rel;
 	}
-	
-	/*public String json(Object obj) throws Exception{
-		ObjectMapper om = new ObjectMapper();
-
-		String result = om.writeValueAsString(obj);
-
-		HttpServletResponse response = ServletActionContext.getResponse();
-		response.setContentType("application/json; charset=utf-8");
-
-		response.setHeader("Cache-Control", "no-cache");
-		PrintWriter out = response.getWriter();
-		out.write(result);
-		out.flush();
-		out.close();
-		return null;
-	}*/
 }

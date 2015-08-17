@@ -20,20 +20,28 @@ import cn.springmvc.service.UserService;
  */
 @Controller
 @RequestMapping("/")
-public class MainController {
+public class IndexController {
 	@Resource(name = "userService")
 	private UserService userService;
 	@Resource
 	private MenuService menuService;
-	@RequestMapping("index")
-	public String index(){
-		System.out.println(111);
-		return "index";
-	}
 	@RequestMapping("index.do")
 	public String test(Model model){
 		String role="sa";
 		List<Menu> list=menuService.getMenuList(role);
+		for (Menu menu : list) {
+			String url = menu.getUrl();
+			if(url.indexOf('?')!=-1){
+				if(!url.endsWith("?")){
+					url=url+"&rel=m_"+menu.getId();
+				}else{
+					url=url+"rel=m_"+menu.getId();
+				}
+			}else{
+				url=url+"?rel=m_"+menu.getId();
+			}
+			menu.setUrl(url);	
+		}
 		List<Menu> listNew=new ArrayList<Menu>();
 		
 		for (Menu menu : list) {

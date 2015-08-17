@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <script>
 function dialogAjax(json){
     $.pdialog.reloadDialog("scene_entity_list");
@@ -12,8 +13,9 @@ function dialogAjax(json){
 		    <li><a class="delete" href="<%=request.getContextPath()%>/scene/deleteEntiyScene?sceneId=${requestScope.sceneId }&entityId={sid_user}" callback="dialogAjax" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
 		</ul>
 	</div> --%>
-	<form method="post" action="<%=request.getContextPath()%>/scene/saveEntityList" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
+	<form method="post" action="<%=request.getContextPath()%>/scene/saveEntityList.do" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
 	<input type="hidden" name="sceneId" value="${sceneId }" />
+	<input type="hidden" name="rel" value="${rel}">
 	<div style="float: left; display: block; margin: 10px; overflow: auto; width: 370px; height: 200px; border: solid 1px #CCC; line-height: 21px; background: #FFF;">
 
 	
@@ -28,15 +30,15 @@ function dialogAjax(json){
 			</tr>
 		</thead>
 		<tbody>
-		   <s:iterator value="entityList" id="entity">
+			<c:forEach items="${entityList}"  var="entity" varStatus="index">
 			<tr target="sid_user" rel="${entity.id }">	
 				<td><input type="checkbox" name="entityIds"
-						value="${entity.id }" <s:if test="checked">checked</s:if> /></td>		    
+						value="${entity.id }" <c:if test="${entity.checked ==1}">checked</c:if> /></td>		    
 				<td align="left">${entity.name}</td>	
 				<td align="left">${entity.packageC}</td>
 				<td align="left">${entity.identify}</td>							
 			</tr>
-		</s:iterator>			
+			</c:forEach>
 		</tbody>
 	</table>
 	</div>

@@ -3,6 +3,8 @@ package cn.springmvc.service.impl;
 import java.util.List;
 
 
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -32,30 +34,28 @@ public class ActionMetaServiceImpl implements ActionMetaService{
 	@Transactional(propagation=Propagation.NOT_SUPPORTED,readOnly=true)
 	@Override
 	public BasePage getPageActionMeta(BasePage basePage, String actionMetaName) {
-		StringBuffer hql = new StringBuffer("from TActionMeta where 1=1");
-		  if(StringKit.isNotEmpty(actionMetaName)){
-			  hql.append(" and name like '" + actionMetaName + "'");
-		  }
-		  basePage.setList(actionMetaDao.findPageDataByHql(basePage.getPage(), basePage.getPageSize(), hql.toString()));
-		  basePage.setRecordNum(actionMetaDao.findTotalCount(hql.insert(0, "select count(*) ").toString()).intValue());
-		  return basePage;
+		Map map =basePage.getPaging(); 
+		map.put("name", actionMetaName);
+		basePage.setList(actionMetaDao.findPageDataByHql(map));
+		basePage.setRecordNum(actionMetaDao.findTotalCount(map));
+		return basePage;
 	}
     /**
      * 保存动作类型
      */
 	@Override
 	public void saveActionMeta(TActionMeta actionMeta,List<String> variableList) {
-		//TODO
-		System.out.println("执行了saveActionMeta方法");
-//		Integer id =  actionMetaDao.saveActionMeta(actionMeta);
-//		for(String ids : variableList){
-//			String[] idArr = ids.split(",");
-//			TActionMetaVariable variable = new TActionMetaVariable();
-//			variable.setName(idArr[0]);
-//			variable.setIdentify(idArr[1]);
-//			variable.setActionMetaId(id);
-//			actionMetaDao.saveActionMetaVariable(variable);
-//		}
+		actionMetaDao.saveActionMeta(actionMeta);
+		actionMeta = actionMetaDao.getActionMetaByName(actionMeta.getName());
+		Integer id =  actionMeta.getId();
+		for(String ids : variableList){
+			String[] idArr = ids.split(",");
+			TActionMetaVariable variable = new TActionMetaVariable();
+			variable.setName(idArr[0]);
+			variable.setIdentify(idArr[1]);
+			variable.setActionMetaId(id);
+			actionMetaDao.saveActionMetaVariable(variable);
+		}
 	}
     /**
      * 根据id查询动作类型

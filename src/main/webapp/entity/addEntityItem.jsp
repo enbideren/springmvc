@@ -1,23 +1,23 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 
 <div class="pageContent">
-	<form method="post" action="<%=request.getContextPath()%>/entity/addEntityItem" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
-		<input type="hidden" name="rel" value="<%=request.getParameter("rel") %>"/>
+	<form method="post" action="<%=request.getContextPath()%>/entity/addEntityItem.do" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
+		<input type="hidden" name="rel" value="${rel}"/>
 		<div class="pageFormContent" layoutH="56">
 			<p>
 				<label>属性字段：</label>
-				<input name="entityItem.field" type="text" size="30" alt="请输入属性字段" class="required alphanumeric" />
+				<input name="field" type="text" size="30" alt="请输入属性字段" class="required alphanumeric" />
 			</p>			
 			<p>
 				<label>属性名称：</label>
-				<input name="entityItem.name"  type="text" size="30"  alt="请输入属性名称" class="required" />
+				<input name="name"  type="text" size="30"  alt="请输入属性名称" class="required" />
 			</p>
 			<p>
 				<label>属性描述：</label>
-				 <input name="entityItem.description"  type="text" size="30"  alt="请输入属性描述" class="required" />
+				 <input name="description"  type="text" size="30"  alt="请输入属性描述" class="required" />
 			</p>
 			<p>
-				<input name="entityItem.typeId"  type="hidden" value="<%=request.getParameter("typeId")%>"/>
+				<input name="typeId"  type="hidden" value="${typeId}"/>
 			</p>
 		</div>
 		<div class="formBar">

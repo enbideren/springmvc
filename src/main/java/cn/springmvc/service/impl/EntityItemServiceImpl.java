@@ -89,17 +89,11 @@ public class EntityItemServiceImpl implements EntityItemService{
 	 */
 	@SuppressWarnings("unchecked")
 	public List<HashMap<String,String>> listEntityItem(String entityItemName, Integer typeId,Integer sceneId){
-		StringBuffer hql=new StringBuffer("select new map(entity.name as entityName,item.name as itemName,item.description as description,item.id as itemId) from TEntityItem item,TEntity entity,TSceneEntity middle where middle.entityId = entity.id and entity.id = item.typeId");
-		if(StringKit.isNotEmpty(entityItemName)){
-			  hql.append(" and item.name like '" + entityItemName + "'");
-		}
-		if(typeId != null && typeId != 0){
-			hql.append(" and item.typeId = " + typeId);
-		}
-		if(sceneId != null && sceneId != 0){
-			hql.append(" and middle.sceneId = " + sceneId);
-		}
-		List<HashMap<String,String>> list = entityItemDao.findDataByHql(hql.toString());
+		Map map = new HashMap();
+		map.put("entityItemName", entityItemName);
+		map.put("typeId", typeId);
+		map.put("sceneId", sceneId);
+		List<HashMap<String,String>> list = entityItemDao.findDataByHql(map);
 		return list;
 	}
 	@Override

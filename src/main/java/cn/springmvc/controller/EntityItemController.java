@@ -6,16 +6,20 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import cn.springmvc.model.TEntity;
 import cn.springmvc.model.TEntityItem;
 import cn.springmvc.service.EntityItemService;
+import cn.springmvc.service.EntityService;
 import cn.springmvc.util.BasePage;
 import cn.springmvc.util.DroolsUtil;
+import cn.springmvc.util.JsonUtil;
 import cn.springmvc.util.Result;
 @Controller
 @RequestMapping("/entity")
@@ -25,6 +29,8 @@ public class EntityItemController extends BaseController{
  
 	@Resource
 	private EntityItemService entityItemService;
+	@Resource
+	private EntityService entityService;
 	private BasePage basePage = new BasePage();
 	private String entityItemName;//实体属性名称
 	private TEntityItem entityItem;//实体对象
@@ -38,14 +44,17 @@ public class EntityItemController extends BaseController{
 	 * @throws Exception
 	 */
 	@RequestMapping("listEntityItem.do")
-	public String listEntityItem(HttpServletRequest request,Model model)  throws Exception{
+	public String listEntityItem(HttpServletRequest request,Model model,String rel)  throws Exception{
 		basePage.installPageConfig(request);
 		String typeId = request.getParameter("typeId");
 		//当未传入实体id时，不做查询
 		if (!StringUtils.isEmpty(typeId)) {
 			basePage = entityItemService.getPageEntityItem(basePage,request.getParameter("entityItemName"),Integer.parseInt(typeId));		
+			TEntity entity = entityService.getEntityById(Integer.parseInt(typeId));
+			model.addAttribute("entity",entity);
 		}
 		model.addAttribute(basePage);
+		model.addAttribute("rel", rel);
 		return "entity/entityItemList";
 	}
 	/**
@@ -54,15 +63,14 @@ public class EntityItemController extends BaseController{
 	 * @throws Exception
 	 */
 	@RequestMapping("addEntityItem.do")
-	public String addEntityItem(Model model)  throws Exception{			
+	public String addEntityItem(Model model,TEntityItem entityItem,HttpServletResponse response,String rel)  throws Exception{			
 		entityItemService.saveEntityItem(entityItem);
 		DroolsUtil.removeRuleMap();
 		Result result = new Result();
 		result.setMessage("添加成功");
 		result.setCallbackType("closeCurrent");
-		result.setForwardUrl("entity/listEntityItem");
 		result.setNavTabId(rel);
-		model.addAttribute(result);
+		JsonUtil.toJson(result, response);
 		return null;
 	}	
 	/**
@@ -71,8 +79,10 @@ public class EntityItemController extends BaseController{
 	 * @throws Exception
 	 */
 	@RequestMapping("showItem.do")
-	public String showItem() throws Exception{		
-		return "showAdd";
+	public String showItem(Model model,TEntityItem entityItem,String rel) throws Exception{		
+		model.addAttribute("typeId", entityItem.getTypeId());
+		model.addAttribute("rel", rel);
+		return "entity/addEntityItem";
 	}
 	/**
 	 * 修改实体属性界面
@@ -80,9 +90,11 @@ public class EntityItemController extends BaseController{
 	 * @throws Exception
 	 */
 	@RequestMapping("showEntityItem.do")
-	public String showEntityItem() throws Exception{
+	public String showEntityItem(TEntityItem entityItem,Model model,String rel) throws Exception{
 		entityItem = entityItemService.getEntityItemById(entityItem.getId());
-		return "showEntityItem";
+		model.addAttribute("entityItem",entityItem);
+		model.addAttribute("rel",rel);
+		return "entity/updateEntityItem";
 	}
 	/**
 	 * 修改实体属性
@@ -90,15 +102,15 @@ public class EntityItemController extends BaseController{
 	 * @throws Exception
 	 */
 	@RequestMapping("updateEntityItem.do")
-    public String updateEntityItem(Model model)  throws Exception{
+    public String updateEntityItem(Model model,HttpServletResponse response,TEntityItem entityItem,String rel)  throws Exception{
 		
 		entityItemService.updateEntityItem(entityItem);
 		DroolsUtil.removeRuleMap();
 		Result result = new Result();
 		result.setMessage("更新成功");
-		result.setForwardUrl("entity/listEntityItem");
+		result.setCallbackType("closeCurrent");
 		result.setNavTabId(rel);
-		model.addAttribute(result);
+		JsonUtil.toJson(result, response);
 		return null;
 	}
     /**
@@ -107,22 +119,15 @@ public class EntityItemController extends BaseController{
      * @throws Exception
      */
 	@RequestMapping("deleteEntityItem.do")
-	public String deleteEntityItem(Model model)  throws Exception{
+	public String deleteEntityItem(Model model,HttpServletResponse response,TEntityItem entityItem,String rel)  throws Exception{
 		Integer id=entityItem.getId();	
 		entityItemService.deleteEntityItem(id);
 		DroolsUtil.removeRuleMap();
 		Result result = new Result();
-		result.setCallbackType("");
+		result.setCallbackType("closeCurrent");
 		result.setMessage("删除成功");
-		result.setForwardUrl("entity/listEntityItem");
 		result.setNavTabId(rel);
-		Map<String, String> r=new HashMap<String, String>();
-		r.put("message", "删除成功");
-		r.put("statusCode", "200");
-		//r.put("navTabId", rel);
-		r.put("callbackType", "forward");
-		r.put("forwardUrl", "entity/listEntityItem");
-		model.addAttribute(result);
+		JsonUtil.toJson(result, response);
 		return null;
 	}
 
