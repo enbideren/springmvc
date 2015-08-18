@@ -67,7 +67,7 @@ function deleteDiv(my){
 			<dl>
 				<dt>&nbsp;&nbsp;&nbsp;&nbsp;</dt>
 				<dd>
-					<a class="button" href="action/ruleActionMeta?sceneId=${sceneId }"  mask="true" target="dialog" rel="type_list" title="选择动作类型" width="650" height="300"><span>动作</span></a>
+					<a class="button" href="action/ruleActionMeta.do?sceneId=${sceneId }"  mask="true" target="dialog" rel="type_list" title="选择动作类型" width="650" height="300"><span>动作</span></a>
 				</dd>
 			</dl>
 				<dt>规则动作：</dt>

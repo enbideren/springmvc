@@ -6,17 +6,23 @@
 	<input type="hidden" name="orderDirection" value="${param.orderDirection}" />
 </form>
 <div class="pageHeader">
-	<form rel="pagerForm" method="post" action="rule/showItemRule?sceneId=${sceneId}&flag=${flag}" onsubmit="return dwzSearch(this, 'dialog');">
+	<form rel="pagerForm" method="post" action="rule/showItemRule.do?sceneId=${sceneId}&flag=${flag}" onsubmit="return dwzSearch(this, 'dialog');">
 	<div class="searchBar">
 		<ul class="searchContent">
 			<li>
 				<label>属性名称:</label>
-				<input class="textInput" name="itemName" value="" type="text">
+				<input class="textInput" name="name" value="" type="text">
 			</li>	  
 			<li>
 				<label>所属实体:</label>
-				<s:select name="entityId" cssClass="combox" list="entityList" listKey="id"  listValue="name" theme="simple"  headerKey="0" headerValue="请选择"/>
-				
+					<div id="combox_entityId" class="select">
+						<select name="typeId" id="entityId" >
+								<option value="0">请选择</option>
+								<c:forEach items="${entityList}"  var="entityList" varStatus="index">
+									<option value="${entityList.id }">${entityList.name }</option>
+								</c:forEach>
+						</select>
+					</div>
 			</li>
 		</ul>
 		<div class="subBar">

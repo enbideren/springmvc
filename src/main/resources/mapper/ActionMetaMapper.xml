@@ -93,6 +93,9 @@
 	<select id="getActionMetaVariableById" parameterType="int"  resultMap="TActionMetaVariable">
 		select * from t_action_meta_variable where actionMetaId = #{id}
 	</select>
+	<select id="findDataByHql" resultMap="TActionMeta">
+		select * from t_action_meta
+	</select>
 	<!-- 分页使用 -->
 	<select id="findTotalCount" resultType="Integer" parameterType="Map">
 		select count(t.id) from t_action_meta t 

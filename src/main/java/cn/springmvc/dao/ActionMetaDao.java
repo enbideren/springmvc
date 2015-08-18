@@ -20,7 +20,7 @@ public interface ActionMetaDao {
 	 * @return
 	 */
 	@SuppressWarnings("rawtypes")
-	public List findDataByHql(String hql);
+	public List findDataByHql();
 	/**
 	 * 根据给定的条件去查询对应的页数上的数据
 	 * @param page

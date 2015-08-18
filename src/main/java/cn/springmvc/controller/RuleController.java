@@ -6,12 +6,12 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.springmvc.model.TEntity;
+import cn.springmvc.model.TEntityItem;
 import cn.springmvc.model.TRule;
 import cn.springmvc.service.EntityItemService;
 import cn.springmvc.service.RuleService;
@@ -87,12 +87,16 @@ public class RuleController extends BaseController {
 	 * @created 2013-4-16
 	 */
 	@RequestMapping("showItemRule.do")
-	public String showItemRule(HttpServletResponse response,Model model,String rel,String itemName, Integer entityId,Integer sceneId) throws Exception{
+	public String showItemRule(HttpServletResponse response,Model model,String rel,TEntityItem entityItem,Integer sceneId,String flag,String variableId,String itemInput) throws Exception{
 		entityList = sceneService.getEntityOfScene(sceneId);
-		itemList = entityItemService.listEntityItem(itemName,entityId,sceneId);	
+		itemList = entityItemService.listEntityItem(entityItem.getName(),entityItem.getTypeId(),sceneId);	
 		model.addAttribute("rel",rel);
 		model.addAttribute("entityList",entityList);
 		model.addAttribute("itemList",itemList);
+		model.addAttribute("sceneId",sceneId);
+		model.addAttribute("flag",flag);
+		model.addAttribute("variableId",variableId);
+		model.addAttribute("itemInput",itemInput);
 		return "rule/itemList";
 	}
 

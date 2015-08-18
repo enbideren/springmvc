@@ -64,9 +64,11 @@ public class ActionMetaController extends BaseController{
 	 * @created 2013-4-16
 	 */
 	@RequestMapping("ruleActionMeta.do")
-	public String ruleActionMeta(HttpServletResponse response,Model model,String rel) throws Exception{
+	public String ruleActionMeta(HttpServletResponse response,Model model,String rel,String sceneId) throws Exception{
 		list = actionMetaService.getActionMetaList();
-		return "rule_meta";
+		model.addAttribute("list", list);
+		model.addAttribute("sceneId", sceneId);
+		return "rule/showActionType";
 	}
 	
 	/**
@@ -79,10 +81,13 @@ public class ActionMetaController extends BaseController{
 	 * @created 2013-4-16
 	 */
 	@RequestMapping("showAddAction.do")
-	public String showAddAction(HttpServletResponse response,Model model,String rel) throws Exception{
+	public String showAddAction(HttpServletResponse response,Model model,String rel,TActionMeta actionMeta,String sceneId) throws Exception{
 		actionMeta = actionMetaService.getActionMetaById(actionMeta.getId());
 		variableList = actionMetaService.getActionMetaVariableById(actionMeta.getId());
-		return "add_action";
+		model.addAttribute("actionMeta", actionMeta);
+		model.addAttribute("variableList", variableList);
+		model.addAttribute("sceneId", sceneId);
+		return "rule/addAction";
 	}
 	/**
 	 * 添加动作类型

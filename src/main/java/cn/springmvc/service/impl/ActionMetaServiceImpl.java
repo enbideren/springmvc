@@ -1,8 +1,6 @@
 package cn.springmvc.service.impl;
 
 import java.util.List;
-
-
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -16,7 +14,6 @@ import cn.springmvc.model.TActionMeta;
 import cn.springmvc.model.TActionMetaVariable;
 import cn.springmvc.service.ActionMetaService;
 import cn.springmvc.util.BasePage;
-import cn.springmvc.util.StringKit;
 /**
  * 
  * @author JZR
@@ -102,8 +99,7 @@ public class ActionMetaServiceImpl implements ActionMetaService{
 	@Transactional(propagation=Propagation.NOT_SUPPORTED,readOnly=true)
 	@Override
 	public List<TActionMeta> getActionMetaList(){
-		String hql = "from TActionMeta";
-		return actionMetaDao.findDataByHql(hql);
+		return actionMetaDao.findDataByHql();
 	}
 	/**
 	 * 查看动作类型变量

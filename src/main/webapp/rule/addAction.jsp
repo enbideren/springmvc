@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <script type="text/javascript">
 	$.pdialog.close("type_list");
 	$("#dialogBackground").show();
@@ -27,14 +28,14 @@
 				<input id="actionId"   type="hidden" value="${actionMeta.id }"/>
 				<input id="flag"  type="hidden" value="${is_update }"/>
 			</p>
-			<s:iterator value="variableList" id="show_variable">
+			<c:forEach items="${variableList}"  var="show_variable" varStatus="index">
 			<p name="variable">
 				<label id="variableName" value='${show_variable.name }'>${show_variable.name }：</label>
 				<input id="variableValue" name="${show_variable.identify }"  type="text" size="30"  class="required" />
 				<input id="variableId" name="${'id_' }${show_variable.identify }" value="${show_variable.id}" type="hidden" size="30"  class="required" />
-				<a class="btnLook" href="rule/showItemRule?sceneId=${sceneId }&flag=2&itemInput=${show_variable.identify}&variableId=${show_variable.id}" mask=true target="dialog" rel="action_value">查找带回</a>
+				<a class="btnLook" href="rule/showItemRule.do?sceneId=${sceneId }&flag=2&itemInput=${show_variable.identify}&variableId=${show_variable.id}" mask=true target="dialog" rel="action_value">查找带回</a>
 			</p>
-			</s:iterator>
+			</c:forEach>
 		</div>
 		<div class="formBar">
 			<ul>
