@@ -38,7 +38,7 @@
 		<id column="description" property="description" jdbcType="VARCHAR" />
 	</resultMap>
 	<!-- 保存实体场景类 -->
-	<insert id="saveCondition" parameterType="TCondition">
+	<insert id="saveCondition" useGeneratedKeys="true" keyProperty="id" parameterType="cn.springmvc.model.TCondition">
 		insert into t_condition(
 			name,
 			dateEntered,
@@ -50,7 +50,7 @@
 			(
 				#{name},
 				#{dateEntered},
-				#{dateModified}
+				#{dateModified},
 				#{typeId},
 				#{conditionC},
 				#{description}
@@ -97,7 +97,7 @@
 	</select>
 	<!-- 根据实体名称和实体属性 -->
 	<select id="getItemByEntityAndItem" resultMap="TEntityItem" parameterType="Map">
-		select item from t_entity entity,t_entity_item item where item.typeId = entity.id and item.name = #{itemNname} and entity.name = #{entityName}
+		select item.* from t_entity entity,t_entity_item item where item.typeId = entity.id and item.name = #{itemName} and entity.name = #{entityName}
 	</select>
 	<!-- 根据条件id查询条件 -->
 	<select id="getConditionById" resultMap="TCondition" parameterType="Integer">

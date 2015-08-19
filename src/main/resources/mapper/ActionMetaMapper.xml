@@ -7,7 +7,7 @@
 		<id column="name" property="name" jdbcType="VARCHAR" />
 		<id column="dateEntered" property="dateEntered" jdbcType="VARCHAR" />
 		<id column="dateModified" property="dateModified" jdbcType="VARCHAR" />
-		<id column="typeId" property="typeId" jdbcType="VARCHAR" />
+		<id column="actionMetaId" property="actionMetaId" jdbcType="VARCHAR" />
 		<id column="description" property="description" jdbcType="VARCHAR" />
 	</resultMap>
 	<resultMap id="TActionMeta" type="cn.springmvc.model.TActionMeta">
@@ -70,10 +70,10 @@
 	
 	<!-- 根据actionid查询动作以及动作元对象 -->	
 	<select id="getActionAndMetaByIdAction" resultType="TAction" parameterType="Integer">
-		select action.* from t_action action,t_action_meta meta where action.typeId = meta.id and action.id = #{actionId}
+		select action.* from t_action action,t_action_meta meta where action.actionMetaId = meta.id and action.id = #{actionId}
 	</select>
 	<select id="getActionAndMetaByIdActionMeta" resultType="TActionMeta" parameterType="Integer">
-		select meta.* from t_action action,t_action_meta meta where action.typeId = meta.id and action.id = #{actionId}
+		select meta.* from t_action action,t_action_meta meta where action.actionMetaId = meta.id and action.id = #{actionId}
 	</select>
 	
 	<!-- 添加动作类型变量 -->

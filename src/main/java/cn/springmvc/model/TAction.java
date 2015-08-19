@@ -16,7 +16,7 @@ public class TAction implements Serializable{
 	private String name;//动作名称
 	private Date dateEntered;//创建日期
 	private Date dateModified;//修改日期
-	private Integer typeId;//动作类型
+	private Integer actionMetaId;//动作类型
 	private String description;//值描述
 	
 	public Integer getId() {
@@ -43,12 +43,12 @@ public class TAction implements Serializable{
 	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
 	}
-
-	public Integer getTypeId() {
-		return typeId;
+	
+	public Integer getActionMetaId() {
+		return actionMetaId;
 	}
-	public void setTypeId(Integer typeId) {
-		this.typeId = typeId;
+	public void setActionMetaId(Integer actionMetaId) {
+		this.actionMetaId = actionMetaId;
 	}
 	public String getDescription() {
 		return description;

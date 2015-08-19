@@ -45,7 +45,7 @@ public interface ConditionDao {
 	 * @version 1.0
 	 * @created 2013-4-9
 	 */
-	public Integer saveCondition(TCondition condition);
+	public void saveCondition(TCondition condition);
 	/**
 	 * 根据实体id查询实体
 	 * 

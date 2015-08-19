@@ -92,7 +92,7 @@ public interface RuleService {
 	 * @version 1.0
 	 * @created 2013-4-17
 	 */
-	public void deleteRule(Integer ruleId);
+	public void deleteRule(Integer id);
 
 	/**
 	 * 更新规则状态

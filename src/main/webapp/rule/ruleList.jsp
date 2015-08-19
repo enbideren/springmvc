@@ -63,12 +63,12 @@
 				 	<fmt:formatDate value="${rule_show.dateEntered}" pattern="yyyy-MM-dd"/>
 				</td>
 				<td align="left">
-				<c:if test="#rule_show.enabled == 1">启用</c:if>
-				<c:if test="#rule_show.enabled == 2">未启用</c:if>
+				<c:if test="${rule_show.enabled == 1}">启用</c:if>
+				<c:if test="${rule_show.enabled == 2}">未启用</c:if>
 				</td>
 				<td align="middle">
-				<c:if test="#rule_show.enabled == 1"><a target="ajaxTodo" href="rule/updateEnabledRule?rule.id=${rule_show.id }&rule.enabled=2">停用</a></c:if>
-				<c:if test="#rule_show.enabled == 2"><a target="ajaxTodo" href="rule/updateEnabledRule?rule.id=${rule_show.id }&rule.enabled=1">启用</a></c:if>
+				<c:if test="${rule_show.enabled == 1}"><a target="ajaxTodo" href="rule/updateEnabledRule?rule.id=${rule_show.id }&rule.enabled=2">停用</a></c:if>
+				<c:if test="${rule_show.enabled == 2}"><a target="ajaxTodo" href="rule/updateEnabledRule?rule.id=${rule_show.id }&rule.enabled=1">启用</a></c:if>
 				</td>
 			</tr>
 		</c:forEach>

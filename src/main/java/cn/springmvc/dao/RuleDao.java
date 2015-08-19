@@ -101,22 +101,13 @@ public interface RuleDao {
 	public TRule getRuleById(Integer ruleId);
 
 	/**
-	 * 删除规则
-	 * 
-	 * @param id
-	 * @author guolei
-	 * @version 1.0
-	 * @created 2013-4-17
-	 */
-	public void deleteRule(TRule rule);
-	/**
 	 * 根据hql查询记录数，用于分页
 	 * 
 	 * @param hql
 	 * @return
 	 * @author guolei
 	 * @version 1.0
-	 * @created 2013-4-17
+	 * @created 2013-4-18
 	 */
 	public int findTotalCount(Map map);
 
@@ -148,7 +139,7 @@ public interface RuleDao {
 	 * @version 1.0
 	 * @created 2013-4-17
 	 */
-	public void deleteRuleById(Integer id);
+	public void deleteRule(Integer id);
 
 	/**
 	 * 保存动作与变量表的中间关联

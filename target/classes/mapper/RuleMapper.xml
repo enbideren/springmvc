@@ -19,7 +19,7 @@
 		<id column="name" property="name" jdbcType="VARCHAR" />
 		<id column="dateEntered" property="dateEntered" jdbcType="VARCHAR" />
 		<id column="dateModified" property="dateModified" jdbcType="VARCHAR" />
-		<id column="typeId" property="typeId" jdbcType="VARCHAR" />
+		<id column="actionMetaId" property="actionMetaId" jdbcType="VARCHAR" />
 		<id column="description" property="description" jdbcType="VARCHAR" />
 	</resultMap>
 	<resultMap id="TActionMeta" type="cn.springmvc.model.TActionMeta">
@@ -64,16 +64,16 @@
 		<id column="identify" property="identify" jdbcType="VARCHAR" />
 	</resultMap>
 	<insert id="saveRule" parameterType="cn.springmvc.model.TRule">
-		insert into t_dept(name,dateEntered,dateModified,sceneId,
+		insert into t_rule(name,dateEntered,dateModified,sceneId,
 			conditionC,action,enabled,begin,end
 		) values(
-			#{name},now(),now(),#{sceneId},#{conditionC},#{action},
+			#{name},#{dateEntered},#{dateModified},#{sceneId},#{conditionC},#{action},
 			#{enabled},#{begin},#{end})
 	</insert>
 
-	<insert id="saveAction" parameterType="cn.springmvc.model.TAction">
-		insert into t_dept(name,dateEntered,dateModified,typeId,description
-		) values(#{name},now(),now(),#{dateModified},#{typeId},#{description})
+	<insert id="saveAction" useGeneratedKeys="true" keyProperty="id" parameterType="cn.springmvc.model.TAction">
+		insert into t_action(name,dateEntered,dateModified,actionMetaId,description
+		) values(#{name},#{dateEntered},#{dateModified},#{actionMetaId},#{description})
 	</insert>
 	
 	<!-- 根据itemId查询item信息 -->
@@ -88,20 +88,14 @@
 		select * from t_action where id = #{actionId}
 	</select>
 
-	<!-- 根据actiontypeId查询action类型信息 -->
+	<!-- 根据actiond的actionMetaId查询action类型信息 -->
 	<select id="getActionMetaById" resultMap="TActionMeta"  parameterType="Integer">
-		select * from t_action_meta where id = #{typeId}
+		select * from t_action_meta where id = #{actionMetaId}
 	</select>
 
-	<!-- 根据actiontypeId查询action类型信息 -->
 	<select id="getRuleById" resultMap="TRule"  parameterType="Integer">
-		select * from t_rule where ruleId = #{ruleId}
+		select * from t_rule where id = #{ruleId}
 	</select>
-	
-	<!-- 删除规则 -->
-	<delete id="deleteRule" parameterType="cn.springmvc.model.TRule">
-		delete from t_rule where id = #{id}
-	</delete>
 	
 	<!-- 根据规则主键更新规则enabled状态 -->
 	<update id="updateEnabledRule" parameterType="cn.springmvc.model.TRule">
@@ -116,26 +110,27 @@
 	</delete>
 
 	<!-- 根据规则id删除规则 -->
-	<delete id="deleteRuleById" parameterType="int">
+	<delete id="deleteRule" parameterType="int">
 		delete from t_rule where id = #{id}
 	</delete>
 	
 	<!-- 保存动作与变量表的中间关联 -->
-	<insert id="saveActionVariable" parameterType="cn.springmvc.model.TActionVariable">
+	<insert id="saveActionVariable"  parameterType="cn.springmvc.model.TActionVariable">
 		insert into t_action_variable(actionId,variableId,variableValue
 		) values(#{actionId},#{variableId},#{variableValue})
 	</insert>
 	
 	<!-- 根据meta主键查找TActionMetaVariable中符合的item -->
 	<select id="getActionVariableList"  resultMap="VariableUnicom" parameterType="Map">
-		select variable.*,middle.* from t_action_meta_variable variable,t_action_variable middle 
-		where middle.actionId = #{actionId} and 
-		middle.variableId = variable.id and variable.actionMetaId = #{metaId}
+		select actionMetaVariable.*,actionVariable.* 
+		from t_action_meta_variable actionMetaVariable,t_action_variable actionVariable 
+		where actionVariable.actionId = #{actionId} and 
+		actionVariable.variableId = actionMetaVariable.id and actionMetaVariable.actionMetaId = #{metaId}
 	</select>
 	
 	<!-- 根据actionId查询对应的条件类型 -->
 	<select id="getActionMetaByActionId" resultMap="TActionMeta" parameterType="Integer">
-		select meta.* from t_action_meta meta,t_action action where action.typeId = meta.id and action.id = #{id}
+		select meta.* from t_action_meta meta,t_action action where action.actionMetaId = meta.id and action.id = #{id}
 	</select>
 
 	<!-- 根据场景id得到场景对应的实体信息 -->

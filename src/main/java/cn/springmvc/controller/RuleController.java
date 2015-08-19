@@ -1,9 +1,11 @@
 package cn.springmvc.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import cn.springmvc.service.EntityItemService;
 import cn.springmvc.service.RuleService;
 import cn.springmvc.service.SceneService;
 import cn.springmvc.util.BasePage;
+import cn.springmvc.util.DateUtils;
 import cn.springmvc.util.JsonUtil;
 import cn.springmvc.util.Result;
 
@@ -110,9 +113,16 @@ public class RuleController extends BaseController {
 	 * @created 2013-4-16
 	 */
 	@RequestMapping("addRule.do")
-	public String addRule(HttpServletResponse response,Model model,String rel) throws Exception{
-		
-		
+	public String addRule(HttpServletResponse response,Model model,String rel,HttpServletRequest request,TRule rule) throws Exception{
+		String begin = request.getParameter("beginTime");
+		rule.setBegin(DateUtils.StringToDate(begin, "yyyy-MM-dd"));
+		String end = request.getParameter("endTime");
+		rule.setEnd(DateUtils.StringToDate(end, "yyyy-MM-dd"));
+		String [] actions = request.getParameterValues("actionList");
+		List<String> actionList = new ArrayList<String>();
+		for (int i = 0; i < actions.length; i++) {
+			actionList.add(actions[i]);
+		}
 		if(rule.getBegin() != null && rule.getEnd() != null && rule.getBegin().getTime() > rule.getEnd().getTime()){
 			Result result = new Result();
 			result.setStatusCode("300");
@@ -146,10 +156,13 @@ public class RuleController extends BaseController {
 	 * @created 2013-4-17
 	 */
 	@RequestMapping("showRule.do")
-	public String showRule(HttpServletResponse response,Model model,String rel) throws Exception{
+	public String showRule(HttpServletResponse response,Model model,String rel,TRule rule) throws Exception{
 		rule = ruleService.getRuleById(rule.getId());//得到规则的信息，包括条件信息，用于修改页面展示
 		actionMap = ruleService.getActionInfo(rule.getAction());
-		return "show_rule";
+		model.addAttribute("rule", rule);
+		model.addAttribute("actionMap", actionMap);
+		model.addAttribute("rel", rel);
+		return "rule/showRule";
 	}
 	/**
 	 * 查看规则
@@ -182,10 +195,13 @@ public class RuleController extends BaseController {
 	 * @created 2013-4-16
 	 */
 	@RequestMapping("showUpdateRule.do")
-	public String showUpdateRule(HttpServletResponse response,Model model,String rel) throws Exception{
+	public String showUpdateRule(HttpServletResponse response,Model model,String rel,TRule rule) throws Exception{
 		rule = ruleService.getRuleById(rule.getId());//得到规则的信息，包括条件信息，用于修改页面展示
 		actionMap = ruleService.getActionInfo(rule.getAction());
-		return "show_update";
+		model.addAttribute("rule", rule);
+		model.addAttribute("actionMap", actionMap);
+		model.addAttribute("rel", rel);
+		return "rule/updateRule";
 	}
 	
 	/**
@@ -217,7 +233,7 @@ public class RuleController extends BaseController {
 	 * @created 2013-4-16
 	 */
 	@RequestMapping("deleteRule.do")
-	public String deleteRule(HttpServletResponse response,Model model,String rel) throws Exception{
+	public String deleteRule(HttpServletResponse response,Model model,String rel,TRule rule) throws Exception{
 		ruleService.deleteRule(rule.getId());
 		Result result = new Result();
 		result.setCallbackType("");

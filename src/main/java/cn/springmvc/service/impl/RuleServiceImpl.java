@@ -75,8 +75,10 @@ public class RuleServiceImpl implements RuleService {
 			conditionInfo = replaceParam(conditionInfo);
 			//动态参数处理 -- 暂不做处理
 			condition.setConditionC(conditionInfo);//设置实体条件信息
-			Integer conditionId = conditionDao.saveCondition(condition);
-			rule.setConditionC(conditionId.toString());
+			condition.setDateEntered(new Date());
+			condition.setDateModified(new Date());
+			conditionDao.saveCondition(condition);
+			rule.setConditionC(condition.getId().toString());
 		}
 		
 		//动作处理
@@ -85,10 +87,11 @@ public class RuleServiceImpl implements RuleService {
 		for(String action : actionList){
 			String[] arr = action.split("##");
 			TAction actionObj = new TAction();
-			actionObj.setTypeId(Integer.parseInt(arr[0]));//动作类型id
-			//TODO
-			//ruleDao.saveAction(actionObj);//保存动作
-			Integer actionId = 	0;		
+			actionObj.setActionMetaId(Integer.parseInt(arr[0]));//动作类型id
+			actionObj.setDateEntered(new Date());
+			actionObj.setDateModified(new Date());
+			ruleDao.saveAction(actionObj);//保存动作
+			Integer actionId = 	actionObj.getId();		
 			for(int i = 1;i < arr.length; i++){
 				String[] middleItem = arr[i].split(",");
 				TActionVariable variable = new TActionVariable();
@@ -111,6 +114,8 @@ public class RuleServiceImpl implements RuleService {
 			}
 		}
 		rule.setAction(actionIds.toString());
+		rule.setDateEntered(new Date());
+		rule.setDateModified(new Date());
 		ruleDao.saveRule(rule);
 		int status =  testRuleCondition(rule);
 		if(status != 2){
@@ -171,7 +176,7 @@ public class RuleServiceImpl implements RuleService {
 			}
 			for(String actionId : arr){
 				TAction actionObj = ruleDao.getActionById(Integer.parseInt(actionId));
-				TActionMeta actionMeta = ruleDao.getActionMetaById(actionObj.getTypeId());
+				TActionMeta actionMeta = ruleDao.getActionMetaById(actionObj.getActionMetaId());
 				actionShow.append(actionMeta.getName());
 				Map map = new HashMap();
 				map.put("metaId", actionMeta.getId());
@@ -241,7 +246,7 @@ public class RuleServiceImpl implements RuleService {
 		}
 		for(String actionId : arr){
 			TAction actionObj = ruleDao.getActionById(Integer.parseInt(actionId));
-			TActionMeta actionMeta = ruleDao.getActionMetaById(actionObj.getTypeId());
+			TActionMeta actionMeta = ruleDao.getActionMetaById(actionObj.getActionMetaId());
 			StringBuffer actionShow = new StringBuffer();
 			StringBuffer actionHidden = new StringBuffer();
 			
@@ -298,7 +303,7 @@ public class RuleServiceImpl implements RuleService {
 			}
 			Map map = new HashMap();
 			map.put("entityName", arr[0]);
-			map.put("itmeName", arr[1]);
+			map.put("itemName", arr[1]);
 			TEntityItem itemObj = conditionDao.getItemByEntityAndItem(map);
 			conditionInfo = conditionInfo.replace(item,itemObj.getId()+"");
 		}
@@ -334,7 +339,7 @@ public class RuleServiceImpl implements RuleService {
 	 * @created 2013-4-17
 	 */
 	public Integer updateRule(TRule rule,List<String> actionList){
-		ruleDao.deleteRuleById(rule.getId());
+		ruleDao.deleteRule(rule.getId());
 		
 		String conditionInfo = rule.getConditionC();
 		TCondition condition = new TCondition();
@@ -343,8 +348,8 @@ public class RuleServiceImpl implements RuleService {
 		conditionInfo = replaceParam(conditionInfo);
 		//动态参数处理 -- 暂不做处理
 		condition.setConditionC(conditionInfo);//设置实体条件信息
-		Integer conditionId = conditionDao.saveCondition(condition);
-		rule.setConditionC(conditionId.toString());
+		conditionDao.saveCondition(condition);
+		//rule.setConditionC(conditionId.toString());
 		
 		if(actionList == null || actionList.size() == 0 || StringKit.isEmpty(actionList.get(0))){
 			rule.setAction("");
@@ -354,7 +359,7 @@ public class RuleServiceImpl implements RuleService {
 			for(String action : actionList){
 				String[] arr = action.split("##");
 				TAction actionObj = new TAction();
-				actionObj.setTypeId(Integer.parseInt(arr[0]));//动作类型id
+				actionObj.setActionMetaId(Integer.parseInt(arr[0]));//动作类型id
 				//TODO
 				//ruleDao.saveAction(actionObj);//保存动作
 				Integer actionId = 0;
@@ -417,7 +422,7 @@ public class RuleServiceImpl implements RuleService {
 				}
 			}
 		}
-		ruleDao.deleteRule(rule);
+		ruleDao.deleteRule(rule.getId());
 		
 		//清除缓存
 		clearCache(rule.getSceneId());

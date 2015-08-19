@@ -3,7 +3,7 @@
 
 <script type="text/javascript">
 function setType(){
-	var value = $("#typeId").val();
+	var value = $("#actionMetaId").val();
 	$("#type_hidden").val(value);
 }
 function deleteDiv(my){
@@ -15,7 +15,7 @@ function deleteDiv(my){
 
 <h2 class="contentTitle">添加规则</h2>
 <div class="pageContent">
-	<form method="post" action="rule/addRule" class="pageForm required-validate" onsubmit="return validateCallback(this,navTabAjaxDone)">
+	<form method="post" action="rule/addRule.do" class="pageForm required-validate" onsubmit="return validateCallback(this,navTabAjaxDone)">
 		<div class="pageFormContent nowrap" layoutH="97">
 			<dl>
 				<dt>规则名称：</dt>
@@ -37,14 +37,14 @@ function deleteDiv(my){
 			<dl>
 				<dt>开始时间：</dt>
 				<dd>
-					<input type="text" name="begin"  class="date" readonly="true"/>
+					<input type="text" name="beginTime"  class="date" readonly="true"/>
 					<a class="inputDateButton" href="javascript:;">选择</a>
 				</dd>
 			</dl>
 			<dl>
 				<dt>结束时间：</dt>
 				<dd>
-					<input type="text" name="end" class="date" readonly="true"/>
+					<input type="text" name="endTime" class="date" readonly="true"/>
 					<a class="inputDateButton" href="javascript:;">选择</a>
 				</dd>
 			</dl>
@@ -59,7 +59,7 @@ function deleteDiv(my){
 			<dl>
 				<dt>规则条件：</dt>
 				<dd>
-					<textarea id="content" rows="6" cols="60" spellcheck="false" autocomplete="off" name="condition" alt="请输入条件内容"></textarea>
+					<textarea id="content" rows="6" cols="60" spellcheck="false" autocomplete="off" name="conditionC" alt="请输入条件内容"></textarea>
 				</dd>
 			</dl>
 			<dl>
