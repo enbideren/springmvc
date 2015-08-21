@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.springmvc.dao.RoleDao">
+	<!-- 部门对象 -->
+	<resultMap id="Role" type="cn.springmvc.model.Role">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<id column="name" property="name" jdbcType="VARCHAR" />
+		<id column="description" property="description" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- 根据部门id获取当前部门信息 -->
+	<select id="findList" resultMap="Role" parameterType="String">
+		select id,name,description from t_role
+		<if test="name != null and name != ''">
+			 where name like #{name}
+		</if>
+		 limit 0,100
+	</select>
+	
+	<insert id="saveRole" useGeneratedKeys="true" keyProperty="id" parameterType="cn.springmvc.model.Role">
+		<if test="id == 0">
+			insert into t_role(name,description) value
+		(   #{name},
+			#{description}
+		)
+		</if>
+		<if test="id != 0">
+			update t_role set name=#{name},description=#{description} where id=#{id}
+		</if>
+	</insert>
+	
+	<delete id="deleteRoleMenu" parameterType="int">
+		delete from t_role_menu where roleId= #{id}
+	</delete>
+	
+	<select id="roleNameExist" resultType="int"  parameterType="String">
+		select count(1) c from t_role where name = #{name}
+	</select>
+
+	<select id="getRoleById" resultType="Role"  parameterType="int">
+		select name,description from t_role where id=#{id}
+	</select>
+	
+	<delete id="delete"  parameterType="int">
+		delete from t_role where id = #{id}
+	</delete>
+	
+	<select id="roleExist" resultType="int"  parameterType="int">
+		select count(1) from t_role where id=#{id}
+	</select>
+	
+	<insert id="saveRoleMenu" useGeneratedKeys="true" keyProperty="id" parameterType="Map">
+		insert into t_role_menu(roleId,menuId) value(#{roleId},#{menuId})
+	</insert>
+	
+</mapper>

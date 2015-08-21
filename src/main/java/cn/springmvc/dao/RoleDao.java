@@ -1,8 +1,10 @@
 package cn.springmvc.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import cn.springmvc.model.Role;
+import cn.springmvc.model.RoleMenu;
 /**
  * 
  * @author JZR
@@ -14,16 +16,22 @@ public interface RoleDao {
 
 	List<Role> findList(String name);
 	
-	boolean roleNameExist(String name);
+	int roleNameExist(String name);
 	
-	boolean save(final Role o);
+	int saveRole(Role o);
 
 	Role getRoleById(int id);
 
-	boolean delete(int id);
+	int delete(int id);
 	
-	boolean roleExist(int id);
+	int roleExist(int id);
 	
-	boolean deleteRoleMenu(int roleId);
-	int saveRoleMenu(int menuId,int roleId); 
+	int deleteRoleMenu(int roleId);
+	/**
+	 * xxx
+	 * @author JZR	
+	 * @param int menuId,int roleId
+	 * @return
+	 */
+	int saveRoleMenu(RoleMenu roleMenu); 
 }

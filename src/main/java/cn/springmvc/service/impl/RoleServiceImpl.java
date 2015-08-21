@@ -1,6 +1,8 @@
 package cn.springmvc.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import cn.springmvc.dao.RoleDao;
 import cn.springmvc.model.Role;
+import cn.springmvc.model.RoleMenu;
 import cn.springmvc.service.RoleService;
 /**
  * 
@@ -39,18 +42,11 @@ public class RoleServiceImpl implements RoleService {
 		if(name==null){
 			return false;
 		}
-		return roleDao.roleNameExist(name);
+		return (roleDao.roleNameExist(name))>0?true:false;
 	}
 	@Override
-	public boolean save(Role o) {
-		
-		return save(o,null);
-	}
-	@Override
-	public boolean save(Role o,String oldName) {
-		if(o==null){
-			return false;
-		}
+	public int saveRole(Role o) {
+		return roleDao.saveRole(o);
 		/*if(o.getId()>0){
 			if(o.getName().equals(oldName)){
 				roleDao.save(o);
@@ -58,7 +54,6 @@ public class RoleServiceImpl implements RoleService {
 				
 			}
 		}*/
-		return roleDao.save(o);
 	}
 	
 	public Role getRoleById(int id){
@@ -68,30 +63,34 @@ public class RoleServiceImpl implements RoleService {
 	public boolean delete(int id) {
 		if(id<=0){
 			return false;
-		}else if(roleDao.roleExist(id)){
+		}else if(roleDao.roleExist(id)>0){
 			deleteRoleMenu(id);
-			return roleDao.delete(id);
+			int result = roleDao.delete(id);
+			return result>0?true:false;
 		}else{
 			return false;
 		}
 	}
 	@Override
 	public boolean deleteRoleMenu(int roleId) {
-		return roleDao.deleteRoleMenu(roleId);
+		int result = roleDao.deleteRoleMenu(roleId);
+		return result>0?true:false;
 	}
 	@Override
 	public int saveRoleMenu(String[] menuIds, int roleId) {
 		int i=0;
-		if(roleDao.deleteRoleMenu(roleId)){
+		if(deleteRoleMenu(roleId)){
 			for(String menuIdStr:menuIds){
 				if(menuIdStr.length()>0){
 					int menuId=Integer.parseInt(menuIdStr);
-					i+=roleDao.saveRoleMenu(menuId, roleId);
+					RoleMenu roleMenu = new RoleMenu();
+					roleMenu.setMenuId(menuId);
+					roleMenu.setRoleId(roleId);
+					i+=roleDao.saveRoleMenu(roleMenu);
 				}
 			}
 		}
 		return i;
 	}
-
 	
 }

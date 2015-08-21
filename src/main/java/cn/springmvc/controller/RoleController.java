@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.springmvc.model.MenuNode;
@@ -18,7 +19,7 @@ import cn.springmvc.util.JsonUtil;
 import cn.springmvc.util.Result;
 
 @Repository("roleAction")
-@Scope("prototype")
+@RequestMapping("/role")
 public class RoleController extends BaseController {
 
 	private static final long serialVersionUID = 1L;
@@ -54,7 +55,10 @@ public class RoleController extends BaseController {
 		this.menuService = menuService;
 	}
 	@RequestMapping("save.do")
-	public String save(HttpServletResponse response,Model model,String rel) throws Exception{
+	public String save(HttpServletResponse response,Model model,String rel,Role role,String oldName,String roleId) throws Exception{
+		if (!StringUtils.isEmpty(roleId)) {
+			role.setId(Integer.parseInt(roleId));
+		}
 		Result r=new Result();
 		if(role==null){
 			r.setStatusCode("300");
@@ -64,8 +68,8 @@ public class RoleController extends BaseController {
 		}
 		if(role.getId()==0){
 			if(!roleService.roleNameExist(role.getName())){
-				boolean success=roleService.save(role,oldName);
-				if(success){
+				int success=roleService.saveRole(role);
+				if(success>0){
 					r.setStatusCode("200");
 					r.setMessage("添加角色成功！");
 					r.setCallbackType("closeCurrent");
@@ -86,9 +90,9 @@ public class RoleController extends BaseController {
 		}else{
 			if(oldName!=null){
 				if(oldName.equals(role.getName())){
-					roleService.save(role);
+					roleService.saveRole(role);
 				}else if(!roleService.roleNameExist(role.getName())){
-					if(roleService.save(role)){
+					if(roleService.saveRole(role)>0){
 						r.setStatusCode("200");
 						r.setMessage("修改角色成功！");
 						r.setCallbackType("closeCurrent");
@@ -110,22 +114,26 @@ public class RoleController extends BaseController {
 	}
 	@RequestMapping("add.do")
 	public String add(HttpServletResponse response,Model model,String rel){
-//		return SUCCESS;
-		return null;
+		model.addAttribute("rel", rel);
+		return "role/info";
 	}
 	@RequestMapping("menu.do")
 	public String menu(HttpServletResponse response,Model model,String rel){
 		List<MenuNode> list=menuService.getRoleMenuList(role.getId());
-//		ActionContext.getContext().put("nodes", list);
-//		return SUCCESS;
-		return null;
+		model.addAttribute("list", list);
+		model.addAttribute("rel", rel);
+		return "role/menu";
 	}
 	@RequestMapping("right.do")
-	public String right(HttpServletResponse response,Model model,String rel) throws Exception{
+	public String right(HttpServletResponse response,Model model,String rel,String roleId) throws Exception{
+		Integer roleIds = null;
+		if (!StringUtils.isEmpty(roleId)) {
+			roleIds = Integer.parseInt(roleId);
+		}
 		Result r=new Result();
 		if(menuIds!=null){
 			String[] idsStr=menuIds.split(",");
-			int num=roleService.saveRoleMenu(idsStr, roleId);
+			int num=roleService.saveRoleMenu(idsStr, roleIds);
 			
 			if(num>0){
 				r.setMessage("角色权限设置成功！");
@@ -141,13 +149,14 @@ public class RoleController extends BaseController {
 		return null;
 	}
 	@RequestMapping("get.do")
-	public String get(HttpServletResponse response,Model model,String rel){
+	public String get(HttpServletResponse response,Model model,String rel,Role role){
 		role=roleService.getRoleById(role.getId());
-//		return SUCCESS;
-		return null;
+		model.addAttribute("rel", rel);
+		model.addAttribute("role", role);
+		return "role/info";
 	}
 	@RequestMapping("del.do")
-	public String del(HttpServletResponse response,Model model,String rel) throws Exception{
+	public String del(HttpServletResponse response,Model model,String rel,Role role) throws Exception{
 		Result r=new Result();
 		r.setNavTabId(rel);
 		if(role==null){
@@ -175,17 +184,18 @@ public class RoleController extends BaseController {
 		JsonUtil.toJson(r, response);
 		return null;
 	}
-	@RequestMapping("execute.do")
-	public String execute(HttpServletResponse response,Model model,String rel){
+	@RequestMapping("list.do")
+	public String list(HttpServletResponse response,Model model,String rel,Role role){
 		List<Role> roles=null;
-		if(role!=null&&role.getName()!=null){
+		if(role!=null&&!StringUtils.isEmpty(role.getName())){
 			roles=roleService.findList(role.getName());
 		}else{
 			roles=roleService.findList();
 		}
-//		ActionContext ctx=ActionContext.getContext();
-//		ctx.put("roles", roles);
-		return null;
+		model.addAttribute("rel", rel);
+		model.addAttribute("roles", roles);
+		model.addAttribute("role", role);
+		return "role/index";
 	}
 
 	public RoleService getRoleService() {
