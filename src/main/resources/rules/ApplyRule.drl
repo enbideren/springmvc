@@ -1,0 +1,15 @@
+package com.hxrainbow.rule.model
+query "end Apply"
+	apply:Apply()
+end
+rule "bnAllTimes"
+    //ruleflow-group "bnAllTimesRule"
+    no-loop true
+	when
+		//电商成功交易订单数少于10条
+   		$business: Business(bnAllTimes<10);
+   		$apply:Apply();
+	then
+   		$apply.setResult(21);
+   		System.out.println("电商成功交易订单数少于10条");
+end

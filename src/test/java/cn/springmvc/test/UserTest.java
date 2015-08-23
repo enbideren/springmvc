@@ -27,7 +27,7 @@ private UserService userService;
 		User user = new User();
 		user.setEmployeeid("110");
 		user.setIdcardnr("123");
-		user.setName("º∆À„∑®");
+		user.setName("asfs");
 		user.setGender("sd");
 		user.setPhonenumber("17712855887");
 		System.out.println(userService.insertUser(user));
