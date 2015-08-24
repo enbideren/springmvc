@@ -146,7 +146,11 @@
 			<artifactId>drools-core</artifactId>
 			<version>5.5.0.Final</version>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.jbpm</groupId>
+			<artifactId>jbpm-bpmn2</artifactId>
+			<version>5.1.0.Final</version>
+		</dependency>
 		<!-- json数据 -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>

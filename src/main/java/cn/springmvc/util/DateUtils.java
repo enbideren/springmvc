@@ -112,12 +112,21 @@ public class DateUtils {
 		return objectTmp;
 	}
 	
-	/*
+	/**
 	 * 计算过去某天距今天多少天
-	 * */
+	 * @author JZR	
+	 * @param 
+	 * @return
+	 */
 	public static int dayDist(String dateStr) throws Exception{
 		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
 		Date date=df.parse(dateStr);
+		return dayDist(date);
+	}
+	/*
+	 * 计算过去某天距今天多少天
+	 * */
+	public static int dayDist(Date date) throws Exception{
 		long timeMillion=new Date().getTime()-date.getTime();
 		return (int)(timeMillion/(24l*60*60*1000));
 	}
@@ -658,28 +667,27 @@ public class DateUtils {
 		Date thisMonthMax = cal.getTime();
 		return thisMonthMax;
 	}
-	
+	/**
+	 * 根据当前时间-身份证的出生日期-18（年）-5（年）
+	 * @author JZR	
+	 * @param 
+	 * @return
+	 */
+	public static Integer getWorkAge(String idCard){
+		Integer result = null;
+		try {
+			int birthYear = Integer.parseInt(idCard.substring(6, 10));
+			int currentYear = new Date().getYear();
+			result = currentYear - birthYear - 18 - 5;
+		} catch (Exception e) {
+			//TODO 
+			e.printStackTrace();
+		}
+		return result;
+	}
 	public static void main(String[] args) {
-
-		//    	List<String> list = getMonthForm(6,"yyyyMM");
-		//    	for(int i=0;i<list.size();i++){
-			//    		System.out.println(list.get(i));
-			//    	}
-		//    	Date d = new Date();
-		//    	String data = formatDate( d, "yyyyMM");
-		//    	String month = "201406";
-		//    	if(data.equals(month)){
-			//    		System.out.println("ssss");
-			//    	}
-
-		//        String start="2009-07";
-		//        String end="2010-07";
-		//
-		//        String[] result=getAllMonths(start, end);
-		//        for (String str : result) {
-		//            System.out.println(str);
-		//        }
-		System.out.println(getDayOfMonth(new Date()));
-		//System.out.println(getLMDay());
+		//System.out.println(getDayOfMonth(new Date()));
+		String s = "131026199210232331";
+		System.out.println(s.substring(6, 10));
 	}
 }

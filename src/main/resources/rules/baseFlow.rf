@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<process xmlns="http://drools.org/drools-5.0/process"
+         xmlns:xs="http://www.w3.org/2001/XMLSchema-instance"
+         xs:schemaLocation="http://drools.org/drools-5.0/process drools-processes-5.0.xsd"
+         type="RuleFlow" name="baseFlow" id="baseFlow" package-name="com.goSmarter.drools.banking" >
+
+  <header>
+  </header>
+
+  <nodes>
+    <start id="1" name="Start" x="37" y="25" width="48" height="48" />
+    <end id="6" name="End" x="586" y="345" width="48" height="48" />
+    <ruleSet id="10" name="overdraft_rule" x="365" y="235" width="80" height="48" ruleFlowGroup="overdraft_rule" />
+    <ruleSet id="11" name="education_rule" x="169" y="136" width="80" height="48" ruleFlowGroup="education_rule" />
+  </nodes>
+
+  <connections>
+    <connection from="10" to="6" />
+    <connection from="11" to="10" />
+    <connection from="1" to="11" />
+  </connections>
+
+</process>

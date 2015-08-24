@@ -1,9 +1,28 @@
 package com.hxrainbow.rule.model
+import function cn.springmvc.util.DateUtils.dayDist;
+import function cn.springmvc.util.DateUtils.getWorkAge;
 query "end Apply"
 	apply:Apply()
 end
+
+rule "salary"
+    //ruleflow-group "salaryRule"
+    //ruleflow-group "ApplyRule"
+    no-loop true
+	when
+		//年收入非空，且<1万元，>1,000,000万元
+   		$user: User(salary!=null &&(salary<10000 || salary>1000000));
+   		$business: Business();
+   		$apply:Apply();
+	then
+   		$apply.setResult(21);
+   		//System.out.println(dayDist($business.getBnRegisterTime()));
+   		System.out.println("年收入非空，且<1万元，>1,000,000万元");
+end
+
 rule "bnAllTimes"
     //ruleflow-group "bnAllTimesRule"
+    //ruleflow-group "ApplyRule"
     no-loop true
 	when
 		//电商成功交易订单数少于10条
@@ -12,4 +31,31 @@ rule "bnAllTimes"
 	then
    		$apply.setResult(21);
    		System.out.println("电商成功交易订单数少于10条");
+end
+
+rule "bnRegisterTime"
+    //ruleflow-group "bnRegisterTimeRule"
+    //ruleflow-group "ApplyRule"
+    no-loop true
+	when
+		//在电商的账龄小于7天
+   		$business: Business(dayDist(bnRegisterTime)<7);
+   		$apply:Apply();
+	then
+   		$apply.setResult(21);
+   		System.out.println("在电商的账龄小于7天");
+end
+
+rule "WorkAge"
+    //ruleflow-group "bnRegisterTimeRule"
+    //ruleflow-group "ApplyRule"
+    no-loop true
+	when
+		//当学历=2，工作年限=2，（申请日期-身份证年月日-18-5）<7
+		$user:User(getWorkAge(idCard)<7);
+   		$business: Business();
+   		$apply:Apply();
+	then
+   		$apply.setResult(22);
+   		System.out.println("在电商的账龄小于7天");
 end
