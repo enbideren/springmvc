@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>用户注册</title>
+<link href="css/normalize.css" rel="stylesheet"/>
+<link href="css/jquery-ui.css" rel="stylesheet"/>
+<link href="css/jquery.idealforms.min.css" rel="stylesheet" media="screen"/>
+
+<style type="text/css">
+body{font:normal 15px/1.5 Arial, Helvetica, Free Sans, sans-serif;color: #222;background:url(pattern.png);overflow-y:scroll;padding:60px 0 0 0;}
+#my-form{width:755px;margin:0 auto;border:1px solid #ccc;padding:3em;border-radius:3px;box-shadow:0 0 2px rgba(0,0,0,.2);}
+#comments{width:350px;height:100px;}
+</style>
+</head>
+<body>
+<div class="row">
+  <div class="eightcol last">
+    <!-- Begin Form -->
+    <form id="my-form">
+          <div><label>用户姓名</label><input type="text" id="username" name="username" value='测试'/></div>
+          <div><label>电话</label><input type="text" name="phone" id="phone" data-ideal="phone" value='13854361231'/></div>
+          <div>
+          	   <label>性别</label>
+			   <label><input type="radio" name="gender" checked value="0"/>女</label>
+               <label><input type="radio" name="gender" value="1"/>男</label>
+		  </div>
+          <div>
+          	   <label>行业</label>
+			  <select id="industry" name="industry">
+	            <option value="default">&ndash; 选择行业 &ndash;</option>
+	            <option value="0" selected>制造业</option>
+	            <option value="1">服务业</option>
+	            <option value="2">其他</option>
+	          </select>
+		  </div>
+          <div>
+          	   <label>企业类型</label>
+			  <select id="companyType" name="companyType">
+	            <option value="default">&ndash; 选择企业类型 &ndash;</option>
+	            <option value="0" selected>私企</option>
+	            <option value="1">外资</option>
+	            <option value="2">国企</option>
+	          </select>
+		  </div>
+          <div>
+          	   <label>职位</label>
+			  <select id="position" name="position">
+	            <option value="default">&ndash; 选择职位 &ndash;</option>
+	            <option value="0" selected>普通员工</option>
+	            <option value="1">经理及主管</option>
+	            <option value="2">企业法人、CEO</option>
+	          </select>
+		  </div>
+          <div>
+          	   <label>学历</label>
+			  <select id="education" name="education">
+	            <option value="default">&ndash; 选择学历 &ndash;</option>
+	            <option value="0">高中、高职及以下</option>
+	            <option value="1" selected>本科</option>
+	            <option value="2">研究生及以上</option>
+	          </select>
+		  </div>
+          <div><label>紧急联系人姓名</label><input id="contactName" name="contactName" type="text" value='安顿'/></div>
+          <div><label>紧急联系人号码</label><input id="contactPhoneNum" name="contactPhoneNum" type="text" value='18643258747'/></div>
+          <div><label>邮箱</label><input id="email" name="email" data-ideal="required email" type="email" value='123@qq.com'/></div>
+          <div>
+          	   <label>工作年限</label>
+			  <select id="workTime" name="workTime">
+	            <option value="default">&ndash; 选择工作年限 &ndash;</option>
+	            <option value="0" selected>3年及以下</option>
+	            <option value="1">3到7年</option>
+	            <option value="2">7年及以上</option>
+	          </select>
+		  </div>
+          <div><label>年收入</label><input id="salary" name="salary" type="text" value ='10'/><label>单位（万元）</label></div>
+          <div><label>申请金额</label><input id="loanMoney" name="loanMoney" type="text" value='2'/><label>单位（万元）</label></div>
+          <div><label>申请期数</label><input id="loanRepayTime" name="loanRepayTime" type="text" value='12'/><label>单位（月）</label></div>
+          
+          <!-- <div><label>生日:</label><input name="date" class="datepicker" data-ideal="date" type="text" placeholder="月/日/年"/></div> -->
+          <!-- <div><label>上传头像:</label><input id="file" name="file" multiple type="file"/></div> -->
+          <!-- <div><label>备注:</label><textarea id="comments" name="comments"></textarea></div> -->
+      <div><hr/></div>
+      <div>
+        <button type="submit">提交</button>
+        <button id="reset" type="button">重置</button>
+      </div>
+    </form>
+    <!-- End Form -->
+  </div>
+</div>
+<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="js/jquery.idealforms.js"></script>
+<script type="text/javascript">
+var options = {
+
+	onFail: function(){
+		/* alert( $myform.getInvalid().length +' invalid fields.' ) */
+	},
+
+	inputs: {
+		'username': {
+			filters: 'required username',
+		},
+		'phone': {
+			filters: 'required phone',
+		},
+		'contactName': {
+			filters: 'required username',
+		},
+		'contactPhoneNum': {
+			filters: 'required phone',
+		},
+		'industry': {
+			filters: 'exclude',
+			data: { exclude: ['default'] },
+			errors : {
+				exclude: '选择行业'
+			}
+		},
+		'companyType': {
+			filters: 'exclude',
+			data: { exclude: ['default'] },
+			errors : {
+				exclude: '选择企业类型'
+			}
+		},
+		'position': {
+			filters: 'exclude',
+			data: { exclude: ['default'] },
+			errors : {
+				exclude: '选择职位'
+			}
+		},
+		'education': {
+			filters: 'exclude',
+			data: { exclude: ['default'] },
+			errors : {
+				exclude: '选择学历'
+			}
+		},
+		'workTime': {
+			filters: 'exclude',
+			data: { exclude: ['default'] },
+			errors : {
+				exclude: '选择工作年限'
+			}
+		}
+	}
+	
+};
+
+var $myform = $('#my-form').idealforms(options).data('idealforms');
+
+$('#reset').click(function(){
+	$myform.reset().fresh().focusFirst()
+});
+
+$myform.focusFirst();
+</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+package com.hxrainbow.rule.model
+query "end Apply"
+	apply:Apply()
+end
+
+rule "assortA"
+    //ruleflow-group "salaryRule"
+    no-loop true
+	when
+		//学历=2且职位>=1,客户预分类=A
+   		$user: User(education==2 && position>=1);
+   		$business: Business();
+   		$apply:Apply();
+	then
+   		$apply.setUserType("A");
+   		System.out.println("学历=2且职位>=1,客户预分类=A");
+end
+
+rule "assortB"
+    //ruleflow-group "salaryRule"
+    no-loop true
+	when
+		//学历=1,职位=0，客户预分类=B
+   		$user: User(education==1 && position>=0);
+   		$business: Business();
+   		$apply:Apply();
+	then
+   		$apply.setUserType("B");
+   		System.out.println("学历=1,职位=0，客户预分类=B");
+end
+
+rule "assortC"
+    //ruleflow-group "salaryRule"
+    no-loop true
+	when
+		//非上述，客户分类=C
+   		$user: User(!(education==2 && position>=1)&&!(education==1 && position>=0));
+   		$business: Business();
+   		$apply:Apply();
+	then
+   		$apply.setUserType("C");
+   		System.out.println("非上述，客户分类=C");
+end

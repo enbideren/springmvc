@@ -1,0 +1,56 @@
+package com.hxrainbow.rule.model
+query "end Cheat"
+	cheat:Cheat()
+end
+
+rule "cheat1"
+    //ruleflow-group "CheatRule"
+    no-loop true
+	when
+		//申请表手机号与电商账户存的手机号不一致
+   		$user: User(salary!=null &&(salary<10000 || salary>1000000));
+   		$business: Business();
+   		$cheat:Cheat();
+	then
+   		$cheat.setCheatType("B01");
+   		System.out.println("申请表手机号与电商账户存的手机号不一致");
+end
+
+rule "cheat2"
+    //ruleflow-group "CheatRule"
+    no-loop true
+	when
+		//单一cust_nbr关联手机号码大于等于3个
+   		$user: User(salary!=null &&(salary<10000 || salary>1000000));
+   		$business: Business();
+   		$cheat:Cheat();
+	then
+   		$apply.setCheatType("A01");
+   		System.out.println("单一cust_nbr关联手机号码大于等于3个");
+end
+
+rule "cheat3"
+    //ruleflow-group "CheatRule"
+    no-loop true
+	when
+		//同一手机号关联姓名大于等于6个
+   		$user: User(salary!=null &&(salary<10000 || salary>1000000));
+   		$business: Business();
+   		$cheat:Cheat();
+	then
+   		$apply.setCheatType("A02");
+   		System.out.println("同一手机号关联姓名大于等于6个");
+end
+
+rule "cheat4"
+    //ruleflow-group "CheatRule"
+    no-loop true
+	when
+		//如申请人IP 24小时内申请次数大于等于3次 
+   		$user: User(salary!=null &&(salary<10000 || salary>1000000));
+   		$business: Business();
+   		$cheat:Cheat();
+	then
+   		$apply.setCheatType("F01");
+   		System.out.println("如申请人IP 24小时内申请次数大于等于3次 ");
+end

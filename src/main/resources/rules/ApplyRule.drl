@@ -52,10 +52,10 @@ rule "WorkAge"
     no-loop true
 	when
 		//当学历=2，工作年限=2，（申请日期-身份证年月日-18-5）<7
-		$user:User(getWorkAge(idCard)<7);
-   		$business: Business();
+		$user:User();
+   		$business: Business(getWorkAge(idCard)<7);
    		$apply:Apply();
 	then
    		$apply.setResult(22);
-   		System.out.println("在电商的账龄小于7天");
+   		System.out.println("当学历=2，工作年限=2，（申请日期-身份证年月日-18-5）<7");
 end
