@@ -14,7 +14,6 @@ import cn.springmvc.dao.EntityItemDao;
 import cn.springmvc.model.TEntityItem;
 import cn.springmvc.service.EntityItemService;
 import cn.springmvc.util.BasePage;
-import cn.springmvc.util.StringKit;
 /**
  * 
  * @author JZR

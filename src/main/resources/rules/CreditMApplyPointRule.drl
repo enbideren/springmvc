@@ -1,0 +1,44 @@
+package cn.msds.model
+import  com.hxrainbow.rule.model.TempCreditCheck;
+import  com.hxrainbow.rule.action.CreditCheckActionImpl;
+query "end TempCreditCheck"
+	tempCreditCheck:TempCreditCheck()
+end
+
+rule "point1"
+    //ruleflow-group "position"
+    no-loop true
+	when
+		//“申请评分”<560
+   		$apply: Apply();
+   		$tempCreditCheck:TempCreditCheck();
+   		$creditCheckActionImpl:CreditCheckActionImpl($creditCheckActionImpl.getApplyPoint($apply)<560);
+	then
+   		$tempCreditCheck.setApplyPointType(3);
+   		System.out.println("point1"+"   "+$tempCreditCheck.getApplyPointType());
+end
+rule "point2"
+    //ruleflow-group "position"
+    no-loop true
+	when
+		//560<=“申请评分”<630
+   		$apply: Apply();
+   		$tempCreditCheck:TempCreditCheck();
+   		$creditCheckActionImpl:CreditCheckActionImpl($creditCheckActionImpl.getApplyPoint($apply)>=560||$creditCheckActionImpl.getApplyPoint($apply)<630);
+	then
+   		$tempCreditCheck.setApplyPointType(2);
+   		System.out.println("point2"+"   "+$tempCreditCheck.getApplyPointType());
+end
+
+rule "point3"
+    //ruleflow-group "position"
+    no-loop true
+	when
+		//
+   		$apply: Apply();
+   		$tempCreditCheck:TempCreditCheck();
+   		$creditCheckActionImpl:CreditCheckActionImpl($creditCheckActionImpl.getApplyPoint($apply)>=630);
+	then
+   		$tempCreditCheck.setApplyPointType(1);
+   		System.out.println("point3"+"   "+$tempCreditCheck.getApplyPointType());
+end

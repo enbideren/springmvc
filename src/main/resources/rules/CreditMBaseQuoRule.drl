@@ -1,0 +1,44 @@
+package cn.msds.model
+import  com.hxrainbow.rule.action.CreditCheckActionImpl;
+import  com.hxrainbow.rule.model.TempCreditCheck;
+query "end TempCreditCheck"
+	tempCreditCheck:TempCreditCheck()
+end
+
+rule "position1"
+    //ruleflow-group "position"
+    no-loop true
+	when
+		//“职位”=2
+   		$apply: Apply($apply.getPosition()==2);
+   		$tempCreditCheck:TempCreditCheck();
+   		$creditCheckActionImpl:CreditCheckActionImpl();
+	then
+   		$tempCreditCheck.setIncome($creditCheckActionImpl.MIN($apply.getSalary(),120000)*0.6+$apply.getBnMonthMoney()*12*0.4);
+   		System.out.println("position1"+"   "+$tempCreditCheck.getIncome());
+end
+rule "position2"
+    //ruleflow-group "position"
+    no-loop true
+	when
+		//“职位”=1
+   		$apply: Apply($apply.getPosition()==1);
+   		$tempCreditCheck:TempCreditCheck();
+   		$creditCheckActionImpl:CreditCheckActionImpl();
+	then
+   		$tempCreditCheck.setIncome($creditCheckActionImpl.MIN($apply.getSalary(),80000)*0.6+$apply.getBnMonthMoney()*12*0.4);
+   		System.out.println("position2"+"   "+$tempCreditCheck.getIncome());
+end
+
+rule "position3"
+    //ruleflow-group "position"
+    no-loop true
+	when
+		//
+   		$apply: Apply($apply.getPosition()!=2&&$apply.getPosition()!=1);
+   		$tempCreditCheck:TempCreditCheck();
+   		$creditCheckActionImpl:CreditCheckActionImpl();
+	then
+   		$tempCreditCheck.setIncome($creditCheckActionImpl.MIN($apply.getSalary(),60000)*0.6+$apply.getBnMonthMoney()*12*0.4);
+   		System.out.println("position3"+"   "+$tempCreditCheck.getIncome());
+end

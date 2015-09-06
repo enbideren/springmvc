@@ -1,9 +1,19 @@
-package com.hxrainbow.rule.model;
+package cn.msds.model;
 
 import java.io.Serializable;
 
+/**
+ * @author JZR
+ * @date 2015年9月1日
+ * @Description 用户表单
+ * @version V1.0
+ */
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
+	/** 姓名*/
+	private String userName;
+	/** 身份证号 */
+	private String idCard;
 	/** 性别 	0-女；1-男；2-不详 */
 	private Integer gender;
 	/** 申请人手机号 */
@@ -27,19 +37,22 @@ public class User implements Serializable {
 	/** 年收入 */
 	private Integer salary;
 	/** 申请金额 */
-	private Integer loanMoney;
+	private Integer applyMoney;
 	/** 申请期数 */
-	private Integer loanRepayTime;
-	
-	public User( Integer salary) {
-		this.salary = salary;
+	private Integer applyRepayTime;
+	private String ip; 
+	private String lBS;
+	private String mACID;
+	public User() {
 	}
-	
-	public User(Integer gender, String phoneNum, Integer industry,
-			Integer companyType, Integer position, Integer education,
-			String contactName, String contactPhoneNum, String email,
-			Integer workTime, Integer salary, Integer loanMoney,
-			Integer loanRepayTime) {
+
+	public User(String userName, String idCard, Integer gender,
+			String phoneNum, Integer industry, Integer companyType,
+			Integer position, Integer education, String contactName,
+			String contactPhoneNum, String email, Integer workTime,
+			Integer salary, Integer applyMoney, Integer applyRepayTime) {
+		this.userName = userName;
+		this.idCard = idCard;
 		this.gender = gender;
 		this.phoneNum = phoneNum;
 		this.industry = industry;
@@ -51,10 +64,46 @@ public class User implements Serializable {
 		this.email = email;
 		this.workTime = workTime;
 		this.salary = salary;
-		this.loanMoney = loanMoney;
-		this.loanRepayTime = loanRepayTime;
+		this.applyMoney = applyMoney;
+		this.applyRepayTime = applyRepayTime;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getIdCard() {
+		return idCard;
+	}
+
+	public void setIdCard(String idCard) {
+		this.idCard = idCard;
+	}
+
+	public Integer getApplyMoney() {
+		return applyMoney;
+	}
+
+	public void setApplyMoney(Integer applyMoney) {
+		this.applyMoney = applyMoney;
+	}
+
+	public Integer getApplyRepayTime() {
+		return applyRepayTime;
+	}
+
+	public void setApplyRepayTime(Integer applyRepayTime) {
+		this.applyRepayTime = applyRepayTime;
+	}
+
+	public User( Integer salary) {
+		this.salary = salary;
+	}
+	
 	public Integer getGender() {
 		return gender;
 	}
@@ -143,20 +192,28 @@ public class User implements Serializable {
 		this.salary = salary;
 	}
 
-	public Integer getLoanMoney() {
-		return loanMoney;
+	public String getIp() {
+		return ip;
 	}
 
-	public void setLoanMoney(Integer loanMoney) {
-		this.loanMoney = loanMoney;
+	public void setIp(String ip) {
+		this.ip = ip;
 	}
 
-	public Integer getLoanRepayTime() {
-		return loanRepayTime;
+	public String getlBS() {
+		return lBS;
 	}
 
-	public void setLoanRepayTime(Integer loanRepayTime) {
-		this.loanRepayTime = loanRepayTime;
+	public void setlBS(String lBS) {
+		this.lBS = lBS;
+	}
+
+	public String getmACID() {
+		return mACID;
+	}
+
+	public void setmACID(String mACID) {
+		this.mACID = mACID;
 	}
 
 }

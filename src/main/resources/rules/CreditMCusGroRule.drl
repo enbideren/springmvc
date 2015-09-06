@@ -1,0 +1,39 @@
+package cn.msds.model
+import  com.hxrainbow.rule.model.TempCreditCheck;
+query "end TempCreditCheck"
+	tempCreditCheck:TempCreditCheck()
+end
+
+rule "CusGroup1"
+    //ruleflow-group "position"
+    no-loop true
+	when
+		//“电商最近1年金额退拒率”>=0.9
+		$apply: Apply($apply.getBnBackRate()>=0.9);
+   		$tempCreditCheck:TempCreditCheck();
+	then
+   		$tempCreditCheck.setGBLable("E");
+   		System.out.println("CusGroup1"+"   "+$tempCreditCheck.getGBLable());
+end
+rule "CusGroup2"
+    //ruleflow-group "position"
+    no-loop true
+	when
+		// “电商最近1年的月均成功交易金额”>=50000 OR  “电商最近1年的月均成功交易金额”<100
+		$apply: Apply($apply.getBnMonthMoney()>=50000 || $apply.getBnMonthMoney()<100);
+   		$tempCreditCheck:TempCreditCheck();
+	then
+   		$tempCreditCheck.setGBLable("I");
+   		System.out.println("CusGroup2"+"   "+$tempCreditCheck.getGBLable());
+end
+
+rule "CusGroup3"
+    //ruleflow-group "position"
+    no-loop true
+	when
+		$apply: Apply(!($apply.getBnMonthMoney()>=50000 || $apply.getBnMonthMoney()<100 || $apply.getBnBackRate()>=0.9));
+		$tempCreditCheck:TempCreditCheck();
+	then
+   		$tempCreditCheck.setGBLable("GB");
+   		System.out.println("CusGroup3"+"   "+$tempCreditCheck.getGBLable());
+end

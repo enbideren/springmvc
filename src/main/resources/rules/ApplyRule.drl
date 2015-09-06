@@ -1,4 +1,5 @@
-package com.hxrainbow.rule.model
+package cn.msds.model
+import cn.msds.constant.ConstantRuleResult;
 import function cn.springmvc.util.DateUtils.dayDist;
 import function cn.springmvc.util.DateUtils.getWorkAge;
 query "end Apply"
@@ -15,9 +16,9 @@ rule "salary"
    		$business: Business();
    		$apply:Apply();
 	then
-   		$apply.setResult(21);
-   		//System.out.println(dayDist($business.getBnRegisterTime()));
-   		System.out.println("年收入非空，且<1万元，>1,000,000万元");
+   		$apply.setPreResult(ConstantRuleResult.Rule_apply_refuse);
+   		//System.out.println("年收入非空，且<1万元，>1,000,000万元");
+   		System.out.println("salary");
 end
 
 rule "bnAllTimes"
@@ -29,8 +30,9 @@ rule "bnAllTimes"
    		$business: Business(bnAllTimes<10);
    		$apply:Apply();
 	then
-   		$apply.setResult(21);
-   		System.out.println("电商成功交易订单数少于10条");
+   		$apply.setPreResult(ConstantRuleResult.Rule_apply_refuse);
+   		//System.out.println("电商成功交易订单数少于10条");
+   		System.out.println("bnAllTimes");
 end
 
 rule "bnRegisterTime"
@@ -42,8 +44,9 @@ rule "bnRegisterTime"
    		$business: Business(dayDist(bnRegisterTime)<7);
    		$apply:Apply();
 	then
-   		$apply.setResult(21);
-   		System.out.println("在电商的账龄小于7天");
+   		$apply.setPreResult(ConstantRuleResult.Rule_apply_refuse);
+   		//System.out.println("在电商的账龄小于7天");
+   		System.out.println("bnRegisterTime");
 end
 
 rule "WorkAge"
@@ -56,6 +59,7 @@ rule "WorkAge"
    		$business: Business(getWorkAge(idCard)<7);
    		$apply:Apply();
 	then
-   		$apply.setResult(22);
-   		System.out.println("当学历=2，工作年限=2，（申请日期-身份证年月日-18-5）<7");
+   		$apply.setPreResult(ConstantRuleResult.Rule_apply_reSubmit);
+   		//System.out.println("当学历=2，工作年限=2，（申请日期-身份证年月日-18-5）<7");
+   		System.out.println("WorkAge");
 end

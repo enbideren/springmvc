@@ -1,3 +1,5 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -17,9 +19,10 @@ body{font:normal 15px/1.5 Arial, Helvetica, Free Sans, sans-serif;color: #222;ba
 <div class="row">
   <div class="eightcol last">
     <!-- Begin Form -->
-    <form id="my-form" method="post" action="">
-          <div><label>用户姓名</label><input type="text" id="username" name="userName" value='测试'/></div>
+    <form id="my-form" method="post" action="<%=request.getContextPath()%>/apply/register.do">
+          <div><label>用户姓名</label><input type="text" id="username" name="userName" value='张34'/></div>
           <div><label>电话</label><input type="text" name="phoneNum" id="phone" data-ideal="phone" value='13854361231'/></div>
+          <div><label>身份证号</label><input type="text" name="idCard" id="idCard" data-ideal="idCard" value='131026197708092331'/></div>
           <div>
           	   <label>性别</label>
 			   <label><input type="radio" name="gender" checked value="0"/>女</label>
@@ -73,8 +76,8 @@ body{font:normal 15px/1.5 Arial, Helvetica, Free Sans, sans-serif;color: #222;ba
 	            <option value="2">7年及以上</option>
 	          </select>
 		  </div>
-          <div><label>年收入</label><input id="salary" name="salary" type="text" value ='10'/><label>单位（万元）</label></div>
-          <div><label>申请金额</label><input id="loanMoney" name="applyMoney" type="text" value='2'/><label>单位（万元）</label></div>
+          <div><label>年收入</label><input id="salary" name="salary" type="text" value ='100000'/><label>单位（元）</label></div>
+          <div><label>申请金额</label><input id="loanMoney" name="applyMoney" type="text" value='20000'/><label>单位（元）</label></div>
           <div><label>申请期数</label><input id="loanRepayTime" name="applyRepayTime" type="text" value='12'/><label>单位（月）</label></div>
           
           <!-- <div><label>生日:</label><input name="date" class="datepicker" data-ideal="date" type="text" placeholder="月/日/年"/></div> -->
@@ -105,6 +108,9 @@ var options = {
 		},
 		'phone': {
 			filters: 'required phone',
+		},
+		'idCard': {
+			filters: 'required idCard',
 		},
 		'contactName': {
 			filters: 'required username',

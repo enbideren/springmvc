@@ -1,8 +1,14 @@
-package com.hxrainbow.rule.model;
+package cn.msds.model;
 
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * @author JZR
+ * @date 2015年9月1日
+ * @Description 电商接口
+ * @version V1.0
+ */
 public class Business implements Serializable {
 
 	private static final long serialVersionUID = 1L;

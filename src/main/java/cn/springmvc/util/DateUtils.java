@@ -677,7 +677,7 @@ public class DateUtils {
 		Integer result = null;
 		try {
 			int birthYear = Integer.parseInt(idCard.substring(6, 10));
-			int currentYear = new Date().getYear();
+			int currentYear = Integer.parseInt(DateUtils.formatDate(new Date(), "yyyy"));
 			result = currentYear - birthYear - 18 - 5;
 		} catch (Exception e) {
 			//TODO 

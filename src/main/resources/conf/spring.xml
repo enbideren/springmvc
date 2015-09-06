@@ -13,4 +13,5 @@
     <!-- 扫描文件（自动将servicec层注入） -->
     <context:component-scan base-package="cn.springmvc.service"/>
     <context:component-scan base-package="com.hxrainbow.rule.operating.service"/>
+    <context:component-scan base-package="cn.msds.service"/>
 </beans>

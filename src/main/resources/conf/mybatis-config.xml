@@ -5,7 +5,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 <configuration>
         <!-- 命名空间 -->
     <typeAliases>
-         <typeAlias alias="User" type="cn.springmvc.model.User"/> 
          <typeAlias alias="TAction" type="cn.springmvc.model.TAction"/> 
          <typeAlias alias="TActionMeta" type="cn.springmvc.model.TActionMeta"/> 
          <typeAlias alias="TActionMetaVariable" type="cn.springmvc.model.TActionMetaVariable"/> 

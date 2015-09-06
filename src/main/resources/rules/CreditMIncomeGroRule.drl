@@ -1,0 +1,36 @@
+package cn.msds.model
+import  com.hxrainbow.rule.model.TempCreditCheck;
+query "end TempCreditCheck"
+	tempCreditCheck:TempCreditCheck()
+end
+
+rule "incomeGroup1"
+    //ruleflow-group "position"
+    no-loop true
+	when
+		//内部变量.预估年收入“<40000
+   		$tempCreditCheck:TempCreditCheck($tempCreditCheck.getPreIncome()<40000);
+	then
+   		$tempCreditCheck.setIncomeGroup(3);
+   		System.out.println("incomeGroup1"+"   "+$tempCreditCheck.getIncomeGroup());
+end
+rule "incomeGroup2"
+    //ruleflow-group "position"
+    no-loop true
+	when
+		// 40000<=“预估年收入“<100000
+   		$tempCreditCheck:TempCreditCheck($tempCreditCheck.getPreIncome()>=40000&&$tempCreditCheck.getPreIncome()<100000);
+	then
+   		$tempCreditCheck.setIncomeGroup(2);
+   		System.out.println("incomeGroup2"+"   "+$tempCreditCheck.getIncomeGroup());
+end
+
+rule "incomeGroup3"
+    //ruleflow-group "position"
+    no-loop true
+	when
+		$tempCreditCheck:TempCreditCheck($tempCreditCheck.getPreIncome()>=100000);
+	then
+   		$tempCreditCheck.setIncomeGroup(1);
+   		System.out.println("incomeGroup3"+"   "+$tempCreditCheck.getIncomeGroup());
+end

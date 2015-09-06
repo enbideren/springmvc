@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.msds.dao.ApplyDao">
+  <resultMap id="Apply" type="cn.msds.model.Apply">
+    <result column="id" jdbcType="VARCHAR" property="id" />
+    <result column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="userName" jdbcType="VARCHAR" property="userName" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="phoneNum" jdbcType="VARCHAR" property="phoneNum" />
+    <result column="certificateType" jdbcType="VARCHAR" property="certificateType" />
+    <result column="idCard" jdbcType="VARCHAR" property="idCard" />
+    <result column="industry" jdbcType="VARCHAR" property="industry" />
+    <result column="companyType" jdbcType="VARCHAR" property="companyType" />
+    <result column="position" jdbcType="VARCHAR" property="position" />
+    <result column="education" jdbcType="VARCHAR" property="education" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="contactName" jdbcType="VARCHAR" property="contactName" />
+    <result column="contactPhoneNum" jdbcType="VARCHAR" property="contactPhoneNum" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="IP" jdbcType="VARCHAR" property="IP" />
+    <result column="LBS" jdbcType="VARCHAR" property="LBS" />
+    <result column="MACID" jdbcType="VARCHAR" property="MACID" />
+    <result column="workTime" jdbcType="VARCHAR" property="workTime" />
+    <result column="salary" jdbcType="VARCHAR" property="salary" />
+    <result column="bnRegisterTime" jdbcType="VARCHAR" property="bnRegisterTime" />
+    <result column="bnOrderNum" jdbcType="VARCHAR" property="bnOrderNum" />
+    <result column="bnRecivePhone" jdbcType="VARCHAR" property="bnRecivePhone" />
+    <result column="bnAllTimes" jdbcType="VARCHAR" property="bnAllTimes" />
+    <result column="bnAllMoney" jdbcType="VARCHAR" property="bnAllMoney" />
+    <result column="bnBackRate" jdbcType="VARCHAR" property="bnBackRate" />
+    <result column="bnMonthMoney" jdbcType="VARCHAR" property="bnMonthMoney" />
+    <result column="price" jdbcType="VARCHAR" property="price" />
+    <result column="bnAvgPrice" jdbcType="VARCHAR" property="bnAvgPrice" />
+    <result column="reciveAddr" jdbcType="VARCHAR" property="reciveAddr" />
+    <result column="fitProduct" jdbcType="VARCHAR" property="fitProduct" />
+    <result column="applyMoney" jdbcType="VARCHAR" property="applyMoney" />
+    <result column="applyRepayTime" jdbcType="VARCHAR" property="applyRepayTime" />
+    <result column="applyRate" jdbcType="VARCHAR" property="applyRate" />
+    <result column="applyDeadline" jdbcType="VARCHAR" property="applyDeadline" />
+    <result column="applyTime" jdbcType="VARCHAR" property="applyTime" />
+    <result column="preResult" jdbcType="VARCHAR" property="preResult" />
+    <result column="preDate" jdbcType="VARCHAR" property="preDate" />
+    <result column="userType" jdbcType="VARCHAR" property="userType" />
+    <result column="cheatType" jdbcType="VARCHAR" property="cheatType" />
+    <result column="cheatContent" jdbcType="VARCHAR" property="cheatContent" />
+    <result column="cheatTime" jdbcType="VARCHAR" property="cheatTime" />
+    <result column="score" jdbcType="VARCHAR" property="score" />
+    <result column="creditCheckRst" jdbcType="VARCHAR" property="creditCheckRst" />
+    <result column="grade" jdbcType="VARCHAR" property="grade" />
+    <result column="baseQuota" jdbcType="VARCHAR" property="baseQuota" />
+    <result column="enableQuota" jdbcType="VARCHAR" property="enableQuota" />
+    <result column="creditCheckTime" jdbcType="VARCHAR" property="creditCheckTime" />
+    <result column="creditCheckRate" jdbcType="VARCHAR" property="creditCheckRate" />
+  </resultMap>
+  <sql id="Apply">
+    id,uuid,userName,gender,phoneNum,certificateType,idCard,industry,companyType,position,
+    education,address,contactName,contactPhoneNum,email,IP,LBS,MACID,workTime,salary,bnRegisterTime,
+    bnOrderNum,bnRecivePhone,bnAllTimes,bnAllMoney,bnBackRate,bnMonthMoney,price,bnAvgPrice,reciveAddr,
+    fitProduct,applyMoney,applyRepayTime,applyRate,applyDeadline,applyTime,preResult,preDate,userType,
+    cheatType,cheatContent,cheatTime,score,creditCheckRst,grade,baseQuota,enableQuota,creditCheckTime,
+    creditCheckRate
+  </sql>
+  <insert id="addApply" parameterType="cn.msds.model.Apply">
+    insert into  t_apply (uuid,userName,gender,phoneNum,certificateType,idCard,industry,companyType,position,
+    education,address,contactName,contactPhoneNum,email,IP,LBS,MACID,workTime,salary,bnRegisterTime,
+    bnOrderNum,bnRecivePhone,bnAllTimes,bnAllMoney,bnBackRate,bnMonthMoney,price,bnAvgPrice,reciveAddr,
+    fitProduct,applyMoney,applyRepayTime,applyRate,applyDeadline,applyTime,preResult,preDate,userType,
+    cheatType,cheatContent,cheatTime,score,creditCheckRst,grade,baseQuota,enableQuota,creditCheckTime,
+    creditCheckRate
+      )
+    values (#{uuid},#{userName},#{gender},#{phoneNum},#{certificateType},#{idCard},#{industry},
+    #{companyType},#{position},#{education},#{address},#{contactName},#{contactPhoneNum},#{email},
+    #{IP},#{LBS},#{MACID},#{workTime},#{salary},#{bnRegisterTime},#{bnOrderNum},#{bnRecivePhone},
+    #{bnAllTimes},#{bnAllMoney},#{bnBackRate},#{bnMonthMoney},#{price},#{bnAvgPrice},#{reciveAddr},
+    #{fitProduct},#{applyMoney},#{applyRepayTime},#{applyRate},#{applyDeadline},#{applyTime},
+    #{preResult},#{preDate},#{userType},#{cheatType},#{cheatContent},#{cheatTime},#{score},
+    #{creditCheckRst},#{grade},#{baseQuota},#{enableQuota},#{creditCheckTime},#{creditCheckRate})
+  </insert>
+  <select id="getApplyByCondition" resultMap="Apply"  parameterType="cn.msds.model.Apply">
+		select  <include refid="Apply" /> from t_apply where true 
+        <if test="id != null">
+       and id = #{id}
+      </if>
+      <if test="uuid != null">
+       and uuid = #{uuid}
+      </if>
+      <if test="userName != null">
+        and userName = #{userName}
+      </if>
+      <if test="phoneNum != null">
+       and phoneNum = #{phoneNum}
+      </if>
+      <if test="idCard != null">
+       and idCard = #{idCard}
+      </if>
+	</select>
+	<select id="getIpCount" parameterType="Map" resultType="int">
+		select count(1) from t_apply where uuid = #{uuid} and applyTime between #{start} and #{end}
+	</select>
+</mapper>

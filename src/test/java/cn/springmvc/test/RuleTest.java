@@ -1,31 +1,19 @@
 package cn.springmvc.test;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
-import org.drools.KnowledgeBase;
-import org.drools.KnowledgeBaseFactory;
-import org.drools.builder.KnowledgeBuilder;
-import org.drools.builder.KnowledgeBuilderErrors;
-import org.drools.builder.KnowledgeBuilderFactory;
-import org.drools.builder.ResourceType;
-import org.drools.compiler.DroolsParserException;
-import org.drools.definition.KnowledgePackage;
-import org.drools.io.ResourceFactory;
 import org.drools.runtime.StatefulKnowledgeSession;
 import org.drools.runtime.rule.QueryResults;
 import org.drools.runtime.rule.QueryResultsRow;
 import org.junit.Test;
 
+import cn.msds.model.Apply;
+import cn.msds.model.Business;
+import cn.msds.model.User;
 import cn.springmvc.util.DateUtils;
+import cn.springmvc.util.ruleUtil.RuleUtil;
 
-import com.hxrainbow.rule.model.Apply;
-import com.hxrainbow.rule.model.Business;
-import com.hxrainbow.rule.model.User;
 
 public class RuleTest {
 	@Test
@@ -35,15 +23,19 @@ public class RuleTest {
 //		Business business = new Business(DateUtils.StringToDate("20150820", "yyyyMMdd"),9);
 		Business business = getBusiness("张34");
 		Apply apply = new Apply();
-		StatefulKnowledgeSession session = getDrlSession("rules/ApplyRule.drl");
-		session.insert(business);
-		session.insert(user);
-		session.insert(apply);
-		session.fireAllRules();
+//		List<String> list = new ArrayList<String>();
+//		list.add("rules/ApplyRule.drl");
+//		StatefulKnowledgeSession session = RuleUtil.getDrlSession(list);
+//		session.insert(business);
+//		session.insert(user);
+//		session.insert(apply);
+//		session.fireAllRules();
+		Object [] objects = new Object[]{business,user,apply};
+		StatefulKnowledgeSession session = RuleUtil.doRuleQuery("rules/ApplyRule.drl", objects);
 		QueryResults queryResult = session.getQueryResults("end Apply");
 		for (QueryResultsRow queryResultsRow : queryResult) {
 			Apply loanMoney = (Apply)queryResultsRow.get("apply");
-			System.out.println(loanMoney.getResult());
+			System.out.println(loanMoney.getPreResult());
 		}
 		session.dispose();
 	}
@@ -54,11 +46,8 @@ public class RuleTest {
 //		Business business = new Business(DateUtils.StringToDate("20150820", "yyyyMMdd"),9);
 		Business business = getBusiness("张34");
 		Apply apply = new Apply();
-		StatefulKnowledgeSession session = getDrlSession("rules/ApplyAssortRule.drl");
-		session.insert(business);
-		session.insert(user);
-		session.insert(apply);
-		session.fireAllRules();
+		Object [] objects = new Object[]{business,user,apply};
+		StatefulKnowledgeSession session = RuleUtil.doRuleQuery("rules/ApplyAssortRule.drl", objects);
 		QueryResults queryResult = session.getQueryResults("end Apply");
 		for (QueryResultsRow queryResultsRow : queryResult) {
 			Apply loanMoney = (Apply)queryResultsRow.get("apply");
@@ -66,86 +55,57 @@ public class RuleTest {
 		}
 		session.dispose();
 	}
-	public StatefulKnowledgeSession getDrlSession(String rule)
-			throws DroolsParserException {
-
-		final KnowledgeBuilder kbuilder = KnowledgeBuilderFactory
-				.newKnowledgeBuilder();
-		Reader strReader = null;
-		try {
-			kbuilder.add(ResourceFactory.newClassPathResource(rule),
-					ResourceType.DRL);
-		} catch (Exception e) {
-			try {
-				strReader.close();// 关闭�?
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-		}
-		if (kbuilder.hasErrors()) {
-			System.out.println("规则中存在错误，错误消息如下：");
-			KnowledgeBuilderErrors kbuidlerErrors=kbuilder.getErrors();
-			for(Iterator iter=kbuidlerErrors.iterator();iter.hasNext();){
-			System.out.println(iter.next());
-			}
-		}
-		Collection<KnowledgePackage> pkgs = kbuilder.getKnowledgePackages();
-		KnowledgeBase kbase = KnowledgeBaseFactory.newKnowledgeBase();
-		kbase.addKnowledgePackages(pkgs);
-		StatefulKnowledgeSession ksession = kbase.newStatefulKnowledgeSession();
-		return ksession;
-	}
 	public static User getUser(String id){
 		Map<String, User> map = new HashMap<String, User>();
-		map.put("张1", new User(0,"13310890120",0,0,0,0,"李1","13522371210","test30@126.com",2, 1000 ,9928,1));
-		map.put("张2", new User(1,"13310890121",1,1,1,1,"李2","13522371211","test30@126.com",2, 10000 ,3908,1));
-		map.put("张3", new User(1,null,2,2,2,2,"李3","13522371212","test30@126.com",2, 20000 ,2312,1));
-		map.put("张4", new User(2,"13310890211",0,0,0,0,"李4","13522371213","test30@126.com",2, 50000 ,2322,1));
-		map.put("张6", new User(1,"1331089021",2,2,2,2,"李6","13522371215","test30@126.com",1, 50000 ,2332,1));
-		map.put("张7", new User(2,"13310890124",0,0,0,0,"李7","1352371216","test30@126.com",1, 50000 ,2342,1));
-		map.put("张8", new User(0,"13310890125",1,1,1,1,null,"13522371217","test30@126.com",1, 50000 ,2352,1));
-		map.put("张9", new User(1,"13310890126",2,2,2,2,"张9","13522371218","test30@126.com",1, 50000 ,2362,1));
-		map.put("张10", new User(1,"13310890127",0,0,0,0,"李10","13310890127","test30@126.com",0, 50000 ,2372,1));
-		map.put("张11", new User(2,"13310890128",1,1,1,1,"李11","13522371220","test30@126.com",0,null,2382,1));
-		map.put("张12", new User(1,"13310890129",2,2,2,null,"李12","13522371221","test30@126.com",0, 50000 ,2392,1));
-		map.put("张13", new User(1,"13310890130",0,0,0,0,"李13","13522371222","test30@126.com",0, 50000 ,2402,1));
-		map.put("张14", new User(2,"13310890131",1,1,1,1,"李14","13522371223","test30@126.com",0, 1000 ,2412,1));
-		map.put("张15", new User(0,"13310890132",2,2,2,2,"李15","13522371224","test30@126.com",2, 99999999 ,2422,1));
-		map.put("张17", new User(1,"13310890134",1,1,1,1,"李17","13522371226","test30@126.com",2, 50000 ,2432,1));
-		map.put("张18", new User(2,"13310890135",2,2,2,2,"李18","13522371227","test30@126.com",2, 50000 ,2442,1));
-		map.put("张19", new User(1,"13310890136",0,0,0,2,"李19","13522371228","test30@126.com",2, 50000 ,2452,1));
-		map.put("张20", new User(1,"13310890137",1,1,2,1,"李20","13522371229","test30@126.com",1, 50000 ,9928,1));
-		map.put("张21", new User(2,"13310890138",2,1,2,2,"李21","13522371230","test30@126.com",1, 50000 ,2322,1));
-		map.put("张22", new User(0,"13310890138",0,1,2,0,"李22","13522371231","test30@126.com",1, 50000 ,2522,1));
-		map.put("张23", new User(1,"13310890138",1,1,2,1,"李23","13522371232","test30@126.com",1, 50000 ,2722,1));
-		map.put("张24", new User(1,"13310890138",2,1,2,2,"李24","13522371233","test30@126.com",1, 50000 ,2922,1));
-		map.put("张25", new User(2,"13310890138",0,1,2,0,"李25","13522371234","test30@126.com",0, 50000 ,3122,1));
-		map.put("张26", new User(1,"13310890138",1,1,1,1,"李26","13522371235","test30@126.com",0, 50000 ,3322,1));
-		map.put("张27", new User(1,"13310890138",2,1,1,2,"李27","13522371236","test30@126.com",0, 50000 ,3522,1));
-		map.put("张281", new User(2,"13310890139",0,1,1,0,"李28","13522371237","test30@126.com",0, 50000 ,3722,1));
-		map.put("张282", new User(2,"13310890139",0,1,1,0,"李28","13522371237","test30@126.com",0, 50000 ,3922,1));
-		map.put("张283", new User(2,"13310890139",0,0,1,0,"李28","13522371237","test30@126.com",0, 50000 ,4122,1));
-		map.put("张384", new User(2,"13310890139",0,0,1,0,"李28","13522371237","test30@126.com",0, 50000 ,4322,1));
-		map.put("张30", new User(1,"13310890141",0,2,1,1,"李30","13522371239","test30@126.com",1, 107947 ,9928,1));
-		map.put("张31", new User(1,"13310890142",0,2,0,1,"李31","13522371240","test31@126.com",0, 219840 ,4318,1));
-		map.put("张32", new User(2,"13310890143",0,1,0,1,"李32","13522371241","test32@126.com",0, 192167 ,4604,1));
-		map.put("张33", new User(1,"13310890144",0,0,2,1,"李33","13522371242","test33@126.com",0, 140135 ,3865,1));
-		map.put("张34", new User(1,"13310890145",2,0,0,1,"李34","13522371243","test34@126.com",0, 155929 ,4043,1));
-		map.put("张35", new User(0,"13310890146",2,0,2,0,"李35","13522371244","test35@126.com",2, 156761 ,421,1));
-		map.put("张36", new User(1,"13310890147",1,0,2,2,"李36","13522371245","test36@126.com",1, 121521 ,9598,1));
-		map.put("张37", new User(1,"13310890148",2,0,2,1,"李37","13522371246","test37@126.com",2, 211417 ,3529,1));
-		map.put("张38", new User(2,"13310890149",0,0,1,1,"李38","13522371247","test38@126.com",1, 270712 ,4581,1));
-		map.put("张39", new User(1,"13310890150",1,0,2,2,"李39","13522371248","test39@126.com",0, 51332 ,5393,1));
-		map.put("张40", new User(1,"13310890151",1,1,2,0,"李40","13522371249","test40@126.com",1, 80520 ,5547,1));
-		map.put("张41", new User(1,"13310890152",1,0,1,2,"李41","13522371250","test41@126.com",2, 207800 ,8159,1));
-		map.put("张42", new User(1,"13310890153",0,1,2,0,"李42","13522371251","test42@126.com",1, 289777 ,1700,1));
-		map.put("张43", new User(1,"13310890154",0,1,0,2,"李43","13522371252","test43@126.com",2, 294674 ,1214,1));
-		map.put("张44", new User(1,"13310890155",2,2,1,2,"李44","13522371253","test44@126.com",1, 244585 ,644,1));
-		map.put("张45", new User(1,"13310890156",1,1,1,0,"李45","13522371254","test45@126.com",1, 287712 ,6322,1));
-		map.put("张46", new User(1,"13310890157",0,1,2,1,"李46","13522371255","test46@126.com",1, 273028 ,8744,1));
-		map.put("张47", new User(1,"13310890158",0,1,2,2,"李47","13522371256","test47@126.com",0, 230224 ,1174,1));
-		map.put("张48", new User(1,"13310890159",0,2,2,2,"李48","13522371257","test48@126.com",0, 165271 ,6473,1));
-		map.put("张49", new User(1,"13310890160",2,2,0,2,"李49","13522371258","test49@126.com",2, 114367 ,7963,1));
+		map.put("张1", new User("张1","131026197708092331",0,"13310890120",0,0,0,0,"李1","13522371210","test30@126.com",2, 1000 ,9928,1));
+		map.put("张2", new User("张2","131026197708092331",1,"13310890121",1,1,1,1,"李2","13522371211","test30@126.com",2, 10000 ,3908,1));
+		map.put("张3", new User("张3","131026197708092331",1,null,2,2,2,2,"李3","13522371212","test30@126.com",2, 20000 ,2312,1));
+		map.put("张4", new User("张4","131026197708092331",2,"13310890211",0,0,0,0,"李4","13522371213","test30@126.com",2, 50000 ,2322,1));
+		map.put("张6", new User("张6","131026197708092331",1,"1331089021",2,2,2,2,"李6","13522371215","test30@126.com",1, 50000 ,2332,1));
+		map.put("张7", new User("张7","131026197708092331",2,"13310890124",0,0,0,0,"李7","1352371216","test30@126.com",1, 50000 ,2342,1));
+		map.put("张8", new User("张8","131026197708092331",0,"13310890125",1,1,1,1,null,"13522371217","test30@126.com",1, 50000 ,2352,1));
+		map.put("张9", new User("张9","131026197708092331",1,"13310890126",2,2,2,2,"张9","13522371218","test30@126.com",1, 50000 ,2362,1));
+		map.put("张10", new User("张10","131026197708092331",1,"13310890127",0,0,0,0,"李10","13310890127","test30@126.com",0, 50000 ,2372,1));
+		map.put("张11", new User("张11","131026197708092331",2,"13310890128",1,1,1,1,"李11","13522371220","test30@126.com",0,null,2382,1));
+		map.put("张12", new User("张12","131026197708092331",1,"13310890129",2,2,2,null,"李12","13522371221","test30@126.com",0, 50000 ,2392,1));
+		map.put("张13", new User("张13","131026197708092331",1,"13310890130",0,0,0,0,"李13","13522371222","test30@126.com",0, 50000 ,2402,1));
+		map.put("张14", new User("张14","131026197708092331",2,"13310890131",1,1,1,1,"李14","13522371223","test30@126.com",0, 1000 ,2412,1));
+		map.put("张15", new User("张15","131026197708092331",0,"13310890132",2,2,2,2,"李15","13522371224","test30@126.com",2, 99999999 ,2422,1));
+		map.put("张17", new User("张17","131026197708092331",1,"13310890134",1,1,1,1,"李17","13522371226","test30@126.com",2, 50000 ,2432,1));
+		map.put("张18", new User("张18","131026197708092331",2,"13310890135",2,2,2,2,"李18","13522371227","test30@126.com",2, 50000 ,2442,1));
+		map.put("张19", new User("张19","131026197708092331",1,"13310890136",0,0,0,2,"李19","13522371228","test30@126.com",2, 50000 ,2452,1));
+		map.put("张20", new User("张20","131026197708092331",1,"13310890137",1,1,2,1,"李20","13522371229","test30@126.com",1, 50000 ,9928,1));
+		map.put("张21", new User("张21","131026197708092331",2,"13310890138",2,1,2,2,"李21","13522371230","test30@126.com",1, 50000 ,2322,1));
+		map.put("张22", new User("张22","131026197708092331",0,"13310890138",0,1,2,0,"李22","13522371231","test30@126.com",1, 50000 ,2522,1));
+		map.put("张23", new User("张23","131026197708092331",1,"13310890138",1,1,2,1,"李23","13522371232","test30@126.com",1, 50000 ,2722,1));
+		map.put("张24", new User("张24","131026197708092331",1,"13310890138",2,1,2,2,"李24","13522371233","test30@126.com",1, 50000 ,2922,1));
+		map.put("张25", new User("张25","131026197708092331",2,"13310890138",0,1,2,0,"李25","13522371234","test30@126.com",0, 50000 ,3122,1));
+		map.put("张26", new User("张26","131026197708092331",1,"13310890138",1,1,1,1,"李26","13522371235","test30@126.com",0, 50000 ,3322,1));
+		map.put("张27", new User("张27","131026197708092331",1,"13310890138",2,1,1,2,"李27","13522371236","test30@126.com",0, 50000 ,3522,1));
+		map.put("张281", new User("张281","131026197708092331",2,"13310890139",0,1,1,0,"李28","13522371237","test30@126.com",0, 50000 ,3722,1));
+		map.put("张282", new User("张282","131026197708092331",2,"13310890139",0,1,1,0,"李28","13522371237","test30@126.com",0, 50000 ,3922,1));
+		map.put("张283", new User("张283","131026197708092331",2,"13310890139",0,0,1,0,"李28","13522371237","test30@126.com",0, 50000 ,4122,1));
+		map.put("张384", new User("张284","131026197708092331",2,"13310890139",0,0,1,0,"李28","13522371237","test30@126.com",0, 50000 ,4322,1));
+		map.put("张30", new User("张30","131026197708092331",1,"13310890141",0,2,1,1,"李30","13522371239","test30@126.com",1, 107947 ,9928,1));
+		map.put("张31", new User("张31","131026197708092331",1,"13310890142",0,2,0,1,"李31","13522371240","test31@126.com",0, 219840 ,4318,1));
+		map.put("张32", new User("张32","131026197708092331",2,"13310890143",0,1,0,1,"李32","13522371241","test32@126.com",0, 192167 ,4604,1));
+		map.put("张33", new User("张33","131026197708092331",1,"13310890144",0,0,2,1,"李33","13522371242","test33@126.com",0, 140135 ,3865,1));
+		map.put("张34", new User("张34","131026197708092331",1,"13310890145",2,0,0,1,"李34","13522371243","test34@126.com",0, 155929 ,4043,1));
+		map.put("张35", new User("张35","131026197708092331",0,"13310890146",2,0,2,0,"李35","13522371244","test35@126.com",2, 156761 ,421,1));
+		map.put("张36", new User("张36","131026197708092331",1,"13310890147",1,0,2,2,"李36","13522371245","test36@126.com",1, 121521 ,9598,1));
+		map.put("张37", new User("张37","131026197708092331",1,"13310890148",2,0,2,1,"李37","13522371246","test37@126.com",2, 211417 ,3529,1));
+		map.put("张38", new User("张38","131026197708092331",2,"13310890149",0,0,1,1,"李38","13522371247","test38@126.com",1, 270712 ,4581,1));
+		map.put("张39", new User("张39","131026197708092331",1,"13310890150",1,0,2,2,"李39","13522371248","test39@126.com",0, 51332 ,5393,1));
+		map.put("张40", new User("张40","131026197708092331",1,"13310890151",1,1,2,0,"李40","13522371249","test40@126.com",1, 80520 ,5547,1));
+		map.put("张41", new User("张41","131026197708092331",1,"13310890152",1,0,1,2,"李41","13522371250","test41@126.com",2, 207800 ,8159,1));
+		map.put("张42", new User("张42","131026197708092331",1,"13310890153",0,1,2,0,"李42","13522371251","test42@126.com",1, 289777 ,1700,1));
+		map.put("张43", new User("张43","131026197708092331",1,"13310890154",0,1,0,2,"李43","13522371252","test43@126.com",2, 294674 ,1214,1));
+		map.put("张44", new User("张44","131026197708092331",1,"13310890155",2,2,1,2,"李44","13522371253","test44@126.com",1, 244585 ,644,1));
+		map.put("张45", new User("张45","131026197708092331",1,"13310890156",1,1,1,0,"李45","13522371254","test45@126.com",1, 287712 ,6322,1));
+		map.put("张46", new User("张46","131026197708092331",1,"13310890157",0,1,2,1,"李46","13522371255","test46@126.com",1, 273028 ,8744,1));
+		map.put("张47", new User("张47","131026197708092331",1,"13310890158",0,1,2,2,"李47","13522371256","test47@126.com",0, 230224 ,1174,1));
+		map.put("张48", new User("张48","131026197708092331",1,"13310890159",0,2,2,2,"李48","13522371257","test48@126.com",0, 165271 ,6473,1));
+		map.put("张49", new User("张49","131026197708092331",1,"13310890160",2,2,0,2,"李49","13522371258","test49@126.com",2, 114367 ,7963,1));
 		return map.get(id);
 	}
 	public static Business getBusiness(String key){

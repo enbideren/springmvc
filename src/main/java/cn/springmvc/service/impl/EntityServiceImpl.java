@@ -13,7 +13,6 @@ import cn.springmvc.dao.EntityDao;
 import cn.springmvc.model.TEntity;
 import cn.springmvc.service.EntityService;
 import cn.springmvc.util.BasePage;
-import cn.springmvc.util.StringKit;
 /**
  * 
  * @author JZR

@@ -807,6 +807,7 @@ $.idealforms.errors = {
   strongpass: '必须至少为8个字符长，至少包含一个大写字母和一个小写字母和一个数字或特殊字符.',
   email: '请填写正确的邮箱地址. <em>(例如.user@gmail.com)</em>',
   phone: '请填写正确的11位手机号码. <em>(例如. 13883651234)</em>',
+  idCard: '请填写正确的身份证号码. ',
   zip: 'Must be a valid US zip code. <em>(e.g. 33245 or 33245-0003)</em>',
   url: 'Must be a valid URL. <em>(e.g. www.google.com)</em>',
   minChar: 'Must be at least <strong>{0}</strong> characters long.',
@@ -822,7 +823,6 @@ $.idealforms.errors = {
   extension: 'File(s) must have a valid extension. <em>(e.g. "{0}")</em>',
   ajaxSuccess: '<strong>{0}</strong> is not available.',
   ajaxError: 'Server error...'
-
 }
 
 /**
@@ -876,6 +876,10 @@ var getFilters = function() {
     phone: {
       regex: /^1\d{10}$/,
       error: $.idealforms.errors.phone
+    },
+    idCard: {
+    	regex: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
+    	error: $.idealforms.errors.idCard
     },
 
     zip: {
@@ -1138,8 +1142,8 @@ var _defaults = {
   customFilters: {},
   customFlags: {},
   globalFlags: '',
-  onSuccess: function(e) { alert('Thank you...') },
-  onFail: function() { alert('Invalid!') },
+  onSuccess: function(e) { /*alert('Thank you...')*/ },
+  onFail: function() { /*alert('Invalid!')*/ },
   responsiveAt: 'auto',
   disableCustom: ''
 }

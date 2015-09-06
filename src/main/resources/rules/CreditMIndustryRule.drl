@@ -1,0 +1,40 @@
+package cn.msds.model
+import  com.hxrainbow.rule.model.TempCreditCheck;
+query "end TempCreditCheck"
+	tempCreditCheck:TempCreditCheck()
+end
+
+rule "position1"
+    //ruleflow-group "position"
+    no-loop true
+	when
+		//“职位”=2
+   		$apply: Apply($apply.getIndustry()==2);
+   		$tempCreditCheck:TempCreditCheck();
+	then
+   		$tempCreditCheck.setPreIncome($tempCreditCheck.getIncome()*1.2);
+   		System.out.println("position1"+"   "+$tempCreditCheck.getPreIncome());
+end
+rule "position2"
+    //ruleflow-group "position"
+    no-loop true
+	when
+		//“职位”=1
+   		$apply: Apply($apply.getIndustry()==1);
+   		$tempCreditCheck:TempCreditCheck();
+	then
+   		$tempCreditCheck.setPreIncome($tempCreditCheck.getIncome()*1.0);
+   		System.out.println("position2"+"   "+$tempCreditCheck.getPreIncome());
+end
+
+rule "position3"
+    //ruleflow-group "position"
+    no-loop true
+	when
+		//
+   		$apply: Apply($apply.getIndustry()!=2&&$apply.getIndustry()!=1);
+   		$tempCreditCheck:TempCreditCheck();
+	then
+   		$tempCreditCheck.setPreIncome($tempCreditCheck.getIncome()*0.8);
+   		System.out.println("position3"+"   "+$tempCreditCheck.getPreIncome());
+end

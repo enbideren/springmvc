@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.springmvc.model.Menu;
 import cn.springmvc.service.MenuService;
-import cn.springmvc.service.UserService;
 /**
  * 
  * @author JZR
@@ -21,8 +20,6 @@ import cn.springmvc.service.UserService;
 @Controller
 @RequestMapping("/")
 public class IndexController {
-	@Resource(name = "userService")
-	private UserService userService;
 	@Resource
 	private MenuService menuService;
 	@RequestMapping("index.do")

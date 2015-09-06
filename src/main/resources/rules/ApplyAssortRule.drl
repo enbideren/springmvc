@@ -1,4 +1,4 @@
-package com.hxrainbow.rule.model
+package cn.msds.model
 query "end Apply"
 	apply:Apply()
 end
@@ -13,7 +13,8 @@ rule "assortA"
    		$apply:Apply();
 	then
    		$apply.setUserType("A");
-   		System.out.println("学历=2且职位>=1,客户预分类=A");
+   		//System.out.println("学历=2且职位>=1,客户预分类=A");
+   		System.out.println("A");
 end
 
 rule "assortB"
@@ -21,12 +22,13 @@ rule "assortB"
     no-loop true
 	when
 		//学历=1,职位=0，客户预分类=B
-   		$user: User(education==1 && position>=0);
+   		$user: User(education==1 && position==0);
    		$business: Business();
    		$apply:Apply();
 	then
    		$apply.setUserType("B");
-   		System.out.println("学历=1,职位=0，客户预分类=B");
+   		//System.out.println("学历=1,职位=0，客户预分类=B");
+   		System.out.println("B");
 end
 
 rule "assortC"
@@ -34,10 +36,11 @@ rule "assortC"
     no-loop true
 	when
 		//非上述，客户分类=C
-   		$user: User(!(education==2 && position>=1)&&!(education==1 && position>=0));
+   		$user: User(!(education==2 && position>=1)&&!(education==1 && position==0));
    		$business: Business();
    		$apply:Apply();
 	then
    		$apply.setUserType("C");
-   		System.out.println("非上述，客户分类=C");
+   		//System.out.println("非上述，客户分类=C");
+   		System.out.println("C");
 end
