@@ -1,0 +1,70 @@
+@charset "utf-8";
+body{padding:0;	margin:0;font-size:16px;line-height:20px; font-family: "微软雅黑",Arial; background:#FAFAFA;}
+p{  margin:0; padding:0;}
+div{ margin:0 auto}
+img{border:none; vertical-align:top}
+dl,dd,dt,ul,ol,li,form,iframe,h1,h2,h3,h4,h5,h6{margin:0; padding:0; }
+ul,ol,li{list-style:none}
+a,a:visited,a:active,a:link{color:#fb7204; text-decoration:none; }
+a:hover{color:#666; text-decoration:none }
+.clear{clear:both; height:0; line-height:0; font-size:0px; overflow:hidden}
+
+.main{ margin:0 auto; width:1200px; padding:30px 0;}
+h1{ color:#333; font-size:24px; font-weight:normal; line-height:50px; border-bottom:#333 3px solid; width:100%;}
+.info{ padding:10px 0; color:#333; font-size:16px;}
+.info dl{ border-bottom:#CCC 1px dotted; line-height:50px; width:100%;}
+.info dd{ float:left; width:95px; background:url(../img/icon_1.jpg) no-repeat 3px 25px; text-align:right; margin-right:5px; height:50px; overflow:hidden;display:block;}
+.info dt{ float:left; width:240px; display:block;height:50px; overflow:hidden}
+
+.box{ background-color:#FFF; margin:30px 0 10px 0;}
+.box .tit{ background-color:#00bbff; color:#fff; line-height:40px; font-size:20px; padding-left:15px;}
+.box .com{ padding:35px;}
+.box .nodate{display: none; padding: 10px;}
+.box .pjia{ margin-bottom:15px; width:100%;}
+.box .pjia li{ float:left; color:#333; font-size:16px; text-align:center;border-right:1px #ddd solid;}
+.box .pjia li b{ font-size:30px; font-weight:normal; margin-top:20px; display:block; line-height:32px;}
+.box .pjia li p{ color:#ff942b;font-size:30px; font-weight:normal; margin-top:20px; display:block; line-height:32px;}
+.box .pjia li p span{ color:#333; font-size:16px;}
+.box .pjia li em{ background:url(../img/icon_2.jpg) no-repeat center; width:40px; height:40px; color:#fff; font-size:26px; font-style:normal; margin:20px 0 0 92px; *margin:20px 0 0 -6px;line-height:40px; display:block;}
+.xin dl{ background:url(../img/icon_1.jpg) no-repeat 5px 30px; font-size:16px;border-top:#CCC 1px dotted; padding-left:15px;line-height:65px; display:block; width:1130px;_width:1115px;}
+.xin dd{ float:left; width:105px;}
+.xin dt{ float:left;}
+.xin b{ color:#ff942b; font-size:30px; font-weight:normal; margin:0 5px; line-height:40px;*line-height:30px;}
+.xin b em{ font-size:16px;}
+.l_m{*line-height:50px;}
+
+.pros{ height:10px; background-color:#efefef; margin:28px 15px 0 0; overflow:hidden; float:left; width:120px;}
+.pros span{ display:block; background-color:#ff942b; height:10px; font:0;}
+.pros2{ height:15px; background-color:#efefef; margin:3px 15px 0 0; overflow:hidden; float:left; width:345px;}
+.pros2 span{ display:block; background-color:#ff942b; height:15px; font:0;}
+.pros3{ height:15px; margin:3px 15px 0 0; overflow:hidden; float:left; width:345px;}
+.pros3 span{ display:block; background-color:#ff942b; height:15px; position:relative}
+.pros3 span p{ position:absolute; right:-60px; font-size:14px; line-height:15px;}
+.pros4{ height:15px; margin:3px 15px 0 0; overflow:hidden; float:left; width:345px;}
+.pros4 span{ display:block; background-color:#5fccf3; height:15px; position:relative}
+.pros4 span p{ position:absolute; right:-60px; font-size:14px; line-height:15px;}
+
+.bas_in{border-bottom:#CCC 1px dotted; line-height:50px; width:100%;}
+.bas_in dt{ float:left; padding-left:20px; width:265px; display:block; height:50px; overflow:hidden}
+.bas_in dd{ float:left; background:url(../img/icon_3.jpg) no-repeat; height:20px; width:90px; text-align:center; line-height:20px; margin-top:15px; font-size:14px; display:block; overflow:hidden}
+
+.tab{ background-color:#d8d8d8; margin-bottom:25px;}
+.tab th{ background-color:#efefef; padding:18px 0; font-weight:normal;}
+.tab td{ background-color:#fff; padding:15px 10px; text-align:center}
+.tab td b{ font-weight:normal}
+.tab td p{ font-size:14px; color:#666;}
+
+.tu{ margin:25px 0;}
+.tu h3{font-weight:normal; font-size:16px; line-height:30px; margin-bottom:20px;}
+.assets{}
+.assets dl{border-bottom:#CCC 1px dotted; line-height:50px; width:100%;}
+.assets dd{ float:left; background:url(../img/icon_3.jpg) no-repeat; height:20px; width:90px; text-align:center; line-height:20px; margin-top:15px; font-size:14px; height:50px; overflow:hidden;display:block;}
+.assets dt{ float:left; padding-left:20px; overflow:hidden;display:block;}
+.assets p{ color:#666; font-size:14px; line-height:50px; }
+
+h2{ font-weight:normal; font-size:20px; line-height:30px; margin-bottom:20px;}
+.line{ border-bottom:#ccc 1px dotted; width:100%;}
+
+.site{ margin:45px auto; width:785px; border:#d8d8d8 1px solid;}
+.site th{ background-color:#efefef; padding:10px 0; font-weight:normal; border-bottom:#d8d8d8 1px solid;}
+.site td{ padding:20px 10px 20px 35px; text-align:left;}

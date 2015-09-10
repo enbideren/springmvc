@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.msds.dao.CreditManageDao">
+  <resultMap id="CreditManage" type="cn.msds.model.CreditManage">
+    <result column="orderId" jdbcType="VARCHAR" property="orderId" />
+    <result column="verifyStep" jdbcType="VARCHAR" property="verifyStep" />
+	<result column="verifyResult" jdbcType="VARCHAR" property="verifyResult" />
+	<result column="verifyTime" jdbcType="VARCHAR" property="verifyTime" />
+	<result column="operateNum" jdbcType="VARCHAR" property="operateNum" />
+	<result column="verifyMark" jdbcType="VARCHAR" property="verifyMark" />
+	<result column="verifyContent" jdbcType="VARCHAR" property="verifyContent" />
+  </resultMap>
+  <sql id="CreditManage">
+   orderId,verifyStep,verifyResult,verifyTime,operateNum,verifyMark,verifyContent
+  </sql>
+  <insert id="addCreditManage" parameterType="cn.msds.model.CreditManage">
+    insert into  t_creditManage (uuid,applyId,creditManageType,creditManageContent,creditManageTime)
+    values (#{uuid},#{applyId},#{creditManageType},#{creditManageContent},#{creditManageTime})
+  </insert>
+  <select id="getCreditManageByOrderId" resultMap="CreditManage"  parameterType="cn.msds.model.CreditManage">
+		select  <include refid="CreditManage" /> from t_creditManage where true 
+      <if test="uuid != null">
+       and orderId = #{orderId}
+      </if>
+	</select>
+</mapper>

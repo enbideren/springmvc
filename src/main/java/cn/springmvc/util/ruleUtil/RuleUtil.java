@@ -17,22 +17,23 @@ import org.drools.compiler.DroolsParserException;
 import org.drools.definition.KnowledgePackage;
 import org.drools.io.ResourceFactory;
 import org.drools.runtime.StatefulKnowledgeSession;
+import org.springframework.util.StringUtils;
 
 public class RuleUtil {
-	public static void doRule(String rule,Object[] objects){
+	public static void doRule(String flowName,String rule,Object[] objects){
 		List<String> list = new ArrayList<String>();
 		list.add(rule);
-		doRuleQuery(list,objects).dispose();
+		doRuleQuery(flowName,list,objects).dispose();
 	}
-	public static void doRule(List<String> rule,Object[] objects){
-		doRuleQuery(rule,objects).dispose();
+	public static void doRule(String flowName,List<String> rule,Object[] objects){
+		doRuleQuery(flowName,rule,objects).dispose();
 	}
-	public static StatefulKnowledgeSession doRuleQuery(String rule,Object[] objects){
+	public static StatefulKnowledgeSession doRuleQuery(String flowName,String rule,Object[] objects){
 		List<String> list = new ArrayList<String>();
 		list.add(rule);
-		return doRuleQuery(list,objects);
+		return doRuleQuery(flowName,list,objects);
 	}
-	public static StatefulKnowledgeSession doRuleQuery(List<String> rule,Object[] objects){
+	public static StatefulKnowledgeSession doRuleQuery(String flowName,List<String> rule,Object[] objects){
 		StatefulKnowledgeSession session = null;
 		try {
 			session = getDrlSession(rule);
@@ -41,6 +42,9 @@ public class RuleUtil {
 		}
 		for (int i = 0; i < objects.length; i++) {
 			session.insert(objects[i]);
+		}
+		if (!StringUtils.isEmpty(flowName)) {
+			session.startProcess(flowName);
 		}
 		session.fireAllRules();
 		return session;
@@ -51,8 +55,13 @@ public class RuleUtil {
 		Reader strReader = null;
 		try {
 			for (int i = 0; i < rule.size(); i++) {
-				kbuilder.add(ResourceFactory.newClassPathResource(rule.get(i)),
-						ResourceType.DRL);
+				if (rule.get(i).endsWith("drl")) {
+					kbuilder.add(ResourceFactory.newClassPathResource(rule.get(i)),
+							ResourceType.DRL);
+				}else if(rule.get(i).endsWith("rf")){
+					kbuilder.add(ResourceFactory.newClassPathResource(rule.get(i)),
+							ResourceType.DRF);
+				}
 			}
 		} catch (Exception e) {
 			try {
@@ -73,5 +82,11 @@ public class RuleUtil {
 		kbase.addKnowledgePackages(pkgs);
 		StatefulKnowledgeSession ksession = kbase.newStatefulKnowledgeSession();
 		return ksession;
+	}
+	public static void main(String[] args) {
+		String name = "rules/baseFlow.rf";
+		String name2 ="rules/CreditMPostionRule.drl"; 
+		System.out.println(name.endsWith("drl"));
+		System.out.println(name2.endsWith("drl"));
 	}
 }

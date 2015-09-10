@@ -1,0 +1,38 @@
+package cn.msds.model
+import  com.hxrainbow.rule.model.TempCreditCheck;
+import  com.hxrainbow.rule.action.CreditCheckActionImpl;
+query "end TempCreditCheck"
+	tempCreditCheck:TempCreditCheck()
+	apply:Apply()
+end
+
+rule "result1"
+    ruleflow-group "result"
+    no-loop true
+	when
+		//“客户级消费类可用额度”<”申请金额”
+   		$apply: Apply();
+   		$creditCheckActionImpl:CreditCheckActionImpl($creditCheckActionImpl.getEnableQuota($apply) < $apply.getApplyMoney());
+	then
+   		$apply.setCreditCheckRst(""+0);
+   		$apply.setCreditCheckRate(0.0);
+   		$apply.setEnableQuota($creditCheckActionImpl.getEnableQuota($apply));
+   		System.out.println("result1"+"   "+$apply.getCreditCheckRst()+"     "+$apply.getCreditCheckRate());
+   		System.out.println("jiang");
+   		update($apply);
+end
+rule "result2"
+    ruleflow-group "result"
+    no-loop true
+	when
+		//“内部变量.GBIE客户标志”=‘E’,“申请评分等级”!=1
+   		$apply: Apply();
+   		$creditCheckActionImpl:CreditCheckActionImpl($creditCheckActionImpl.getEnableQuota($apply) >= $apply.getApplyMoney());
+	then
+   		$apply.setCreditCheckRst(""+1);
+   		$apply.setCreditCheckRate(0.65);
+   		$apply.setEnableQuota($creditCheckActionImpl.getEnableQuota($apply));
+   		System.out.println("result2"+"   "+$apply.getCreditCheckRst()+"     "+$apply.getCreditCheckRate());
+   		update($apply);
+end
+

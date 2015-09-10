@@ -14,6 +14,7 @@
 		<id column="id" property="id" jdbcType="VARCHAR" />
 		<id column="name" property="name" jdbcType="VARCHAR" />
 		<id column="methodC" property="methodC" jdbcType="VARCHAR" />
+		<id column="classC" property="classC" jdbcType="VARCHAR" />
 		<id column="description" property="description" jdbcType="VARCHAR" />
 	</resultMap>
 	<resultMap id="TActionMetaVariable" type="cn.springmvc.model.TActionMetaVariable">
@@ -34,11 +35,13 @@
 		insert into t_action_meta(
 			name,
 			methodC,
+			classC,
 			description
 		) values
 			(
 				#{name},
 				#{methodC},
+				#{classC},
 				#{description}
 			)
 	</insert>
@@ -56,6 +59,7 @@
 			id=#{id},
 			name=#{name},
 			methodC=#{methodC},
+			classC=#{classC},
 			description=#{description}
 		where id = #{id}
 	</update>

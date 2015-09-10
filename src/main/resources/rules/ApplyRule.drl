@@ -19,6 +19,7 @@ rule "salary"
    		$apply.setPreResult(ConstantRuleResult.Rule_apply_refuse);
    		//System.out.println("年收入非空，且<1万元，>1,000,000万元");
    		System.out.println("salary");
+   		update($apply);
 end
 
 rule "bnAllTimes"
@@ -33,6 +34,7 @@ rule "bnAllTimes"
    		$apply.setPreResult(ConstantRuleResult.Rule_apply_refuse);
    		//System.out.println("电商成功交易订单数少于10条");
    		System.out.println("bnAllTimes");
+   		update($apply);
 end
 
 rule "bnRegisterTime"
@@ -47,6 +49,7 @@ rule "bnRegisterTime"
    		$apply.setPreResult(ConstantRuleResult.Rule_apply_refuse);
    		//System.out.println("在电商的账龄小于7天");
    		System.out.println("bnRegisterTime");
+   		update($apply);
 end
 
 rule "WorkAge"
@@ -62,4 +65,5 @@ rule "WorkAge"
    		$apply.setPreResult(ConstantRuleResult.Rule_apply_reSubmit);
    		//System.out.println("当学历=2，工作年限=2，（申请日期-身份证年月日-18-5）<7");
    		System.out.println("WorkAge");
+   		update($apply);
 end

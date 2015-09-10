@@ -55,8 +55,12 @@ function saveActionMeta(){
 				<input name="name" type="text" size="30" alt="请输入动作类型名称" class="required" value="${actionMeta.name }"/>
 			</p>
 			<p>
+				<label>动作类型实现方法：</label>
+				<input name="methodC" type="text" size="30"  alt="请输入动作类型实现方法" class="required" value="${actionMeta.methodC }"/>
+			</p>
+			<p>
 				<label>动作类型实现类：</label>
-				<input name="methodC" type="text" size="30"  alt="请输入动作类型实现类" class="required" value="${actionMeta.methodC }"/>
+				<input name="classC" type="text" size="30"  alt="请输入动作类型实现类" class="required" value="${actionMeta.classC }"/>
 			</p>
 			<p>
 				<label>描述：</label>

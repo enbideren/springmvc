@@ -4,31 +4,33 @@ query "end TempCreditCheck"
 	tempCreditCheck:TempCreditCheck()
 end
 
-rule "position1"
-    //ruleflow-group "position"
+rule "industry1"
+    ruleflow-group "industry"
     no-loop true
 	when
-		//“职位”=2
+		//“公司类型”=2
    		$apply: Apply($apply.getIndustry()==2);
    		$tempCreditCheck:TempCreditCheck();
 	then
    		$tempCreditCheck.setPreIncome($tempCreditCheck.getIncome()*1.2);
-   		System.out.println("position1"+"   "+$tempCreditCheck.getPreIncome());
+   		System.out.println("industry1"+"   "+$tempCreditCheck.getPreIncome());
+   		update($tempCreditCheck);
 end
-rule "position2"
-    //ruleflow-group "position"
+rule "industry2"
+    ruleflow-group "industry"
     no-loop true
 	when
-		//“职位”=1
+		//“公司类型”=1
    		$apply: Apply($apply.getIndustry()==1);
    		$tempCreditCheck:TempCreditCheck();
 	then
    		$tempCreditCheck.setPreIncome($tempCreditCheck.getIncome()*1.0);
-   		System.out.println("position2"+"   "+$tempCreditCheck.getPreIncome());
+   		System.out.println("industry2"+"   "+$tempCreditCheck.getPreIncome());
+   		update($tempCreditCheck);
 end
 
-rule "position3"
-    //ruleflow-group "position"
+rule "industry3"
+    ruleflow-group "industry"
     no-loop true
 	when
 		//
@@ -36,5 +38,6 @@ rule "position3"
    		$tempCreditCheck:TempCreditCheck();
 	then
    		$tempCreditCheck.setPreIncome($tempCreditCheck.getIncome()*0.8);
-   		System.out.println("position3"+"   "+$tempCreditCheck.getPreIncome());
+   		System.out.println("industry3"+"   "+$tempCreditCheck.getPreIncome());
+   		update($tempCreditCheck);
 end

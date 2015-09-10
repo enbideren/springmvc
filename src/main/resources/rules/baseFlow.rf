@@ -2,22 +2,32 @@
 <process xmlns="http://drools.org/drools-5.0/process"
          xmlns:xs="http://www.w3.org/2001/XMLSchema-instance"
          xs:schemaLocation="http://drools.org/drools-5.0/process drools-processes-5.0.xsd"
-         type="RuleFlow" name="baseFlow" id="baseFlow" package-name="com.goSmarter.drools.banking" >
+         type="RuleFlow" name="baseFlow" id="baseFlow" package-name="cn.msds.model" >
 
   <header>
   </header>
 
   <nodes>
-    <start id="1" name="Start" x="37" y="25" width="48" height="48" />
-    <end id="6" name="End" x="586" y="345" width="48" height="48" />
-    <ruleSet id="10" name="overdraft_rule" x="365" y="235" width="80" height="48" ruleFlowGroup="overdraft_rule" />
-    <ruleSet id="11" name="education_rule" x="169" y="136" width="80" height="48" ruleFlowGroup="education_rule" />
+    <start id="9" name="Start" x="365" y="25" width="48" height="48" />
+    <ruleSet id="10" name="position" x="365" y="125" width="80" height="48" ruleFlowGroup="position" />
+    <ruleSet id="11" name="industry" x="365" y="225" width="80" height="48" ruleFlowGroup="industry" />
+    <ruleSet id="12" name="incomeGroup" x="365" y="325" width="80" height="48" ruleFlowGroup="incomeGroup" />
+    <ruleSet id="13" name="cusGroup" x="365" y="425" width="80" height="48" ruleFlowGroup="cusGroup" />
+    <ruleSet id="14" name="point" x="365" y="525" width="80" height="48" ruleFlowGroup="point" />
+    <ruleSet id="15" name="baseQuo" x="365" y="625" width="80" height="48" ruleFlowGroup="baseQuo" />
+    <ruleSet id="16" name="result" x="365" y="725" width="80" height="48" ruleFlowGroup="result" />
+    <end id="17" name="End" x="365" y="825" width="48" height="48" />
   </nodes>
 
   <connections>
-    <connection from="10" to="6" />
-    <connection from="11" to="10" />
-    <connection from="1" to="11" />
+    <connection from="9" to="10" />
+    <connection from="10" to="11" />
+    <connection from="11" to="12" />
+    <connection from="12" to="13" />
+    <connection from="13" to="14" />
+    <connection from="14" to="15" />
+    <connection from="15" to="16" />
+    <connection from="16" to="17" />
   </connections>
 
 </process>

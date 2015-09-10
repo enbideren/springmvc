@@ -2,7 +2,8 @@ package cn.msds.model
 import cn.msds.constant.ConstantRuleResult;
 import  com.hxrainbow.rule.action.CheatActionImpl;
 query "end Cheat"
-	cheat:Cheat()
+	//cheat:Cheat()
+	apply:Apply()
 end
 
 rule "cheat1"
@@ -13,6 +14,7 @@ rule "cheat1"
    		$apply: Apply($apply.getPhoneNum()!=$apply.getBnRecivePhone());
 	then
    		$apply.setCheatType(ConstantRuleResult.Rule_cheat_phnosame);
+   		update($apply);
    		//System.out.println("申请表手机号与电商账户存的手机号不一致");
    		System.out.println("cheat1"+"   "+ConstantRuleResult.Rule_cheat_phnosame);
 end
@@ -25,6 +27,7 @@ rule "cheat2"
    		$action32:CheatActionImpl($action32.getPhones($apply.getUuid())>=3)
 	then
    		$apply.setCheatType(ConstantRuleResult.Rule_cheat_mcontact);
+   		update($apply);
    		//System.out.println("单一cust_nbr关联手机号码大于等于3个");
    		System.out.println("cheat2"+"      "+ConstantRuleResult.Rule_cheat_mcontact);
 end
@@ -38,6 +41,7 @@ rule "cheat3"
    		$action32:CheatActionImpl($action32.getCusts($apply.getPhoneNum())>=6)
 	then
    		$apply.setCheatType(ConstantRuleResult.Rule_cheat_muuid);
+   		update($apply);
    		//System.out.println("同一手机号关联姓名大于等于6个");
    		System.out.println("cheat3"+"     "+ConstantRuleResult.Rule_cheat_muuid);
 end
@@ -51,6 +55,7 @@ rule "cheat4"
    		$action33:CheatActionImpl($action33.getIps($apply.getUuid())>=3)
 	then
    		$apply.setCheatType(ConstantRuleResult.Rule_cheat_mregister);
+   		update($apply);
    		//System.out.println("如申请人IP 24小时内申请次数大于等于3次 ");
    		System.out.println("cheat4"+"     "+ConstantRuleResult.Rule_cheat_mregister);
 end

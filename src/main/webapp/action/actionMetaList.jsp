@@ -38,6 +38,7 @@
 				<th width="20">序号</th>
 				<th width="100" align="left">动作名称</th>
 				<th width="100" align="left">动作实现类</th>
+				<th width="100" align="left">方法名称</th>
 				<th width="100" align="left">描述</th>
 			</tr>
 		</thead>
@@ -45,7 +46,8 @@
 		<c:forEach items="${basePage.list}"  var="actionMeta" varStatus="index">
 			<tr target="sid_user" rel="${actionMeta.id }">
 				<td align="center">${index.index+1}</td>
-				<td align="left"><a href="<%=request.getContextPath()%>/action/viewActionMeta.do?actionMeta.id=${actionMeta.id}" target="dialog">${actionMeta.name}</a></td>
+				<td align="left"><a href="<%=request.getContextPath()%>/action/viewActionMeta.do?id=${actionMeta.id}" target="dialog">${actionMeta.name}</a></td>
+				<td align="left">${actionMeta.classC}</td>		
 				<td align="left">${actionMeta.methodC}</td>		
 				<td align="left">${actionMeta.description}</td>	
 			</tr>

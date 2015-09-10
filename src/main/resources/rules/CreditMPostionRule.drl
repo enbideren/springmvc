@@ -6,7 +6,7 @@ query "end TempCreditCheck"
 end
 
 rule "position1"
-    //ruleflow-group "position"
+    ruleflow-group "position"
     no-loop true
 	when
 		//“职位”=2
@@ -16,9 +16,10 @@ rule "position1"
 	then
    		$tempCreditCheck.setIncome($creditCheckActionImpl.MIN($apply.getSalary(),120000)*0.6+$apply.getBnMonthMoney()*12*0.4);
    		System.out.println("position1"+"   "+$tempCreditCheck.getIncome());
+   		update($tempCreditCheck);
 end
 rule "position2"
-    //ruleflow-group "position"
+    ruleflow-group "position"
     no-loop true
 	when
 		//“职位”=1
@@ -28,10 +29,11 @@ rule "position2"
 	then
    		$tempCreditCheck.setIncome($creditCheckActionImpl.MIN($apply.getSalary(),80000)*0.6+$apply.getBnMonthMoney()*12*0.4);
    		System.out.println("position2"+"   "+$tempCreditCheck.getIncome());
+   		update($tempCreditCheck);
 end
 
 rule "position3"
-    //ruleflow-group "position"
+    ruleflow-group "position"
     no-loop true
 	when
 		//
@@ -41,4 +43,5 @@ rule "position3"
 	then
    		$tempCreditCheck.setIncome($creditCheckActionImpl.MIN($apply.getSalary(),60000)*0.6+$apply.getBnMonthMoney()*12*0.4);
    		System.out.println("position3"+"   "+$tempCreditCheck.getIncome());
+   		update($tempCreditCheck);
 end

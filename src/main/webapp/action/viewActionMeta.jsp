@@ -13,8 +13,12 @@ float:right;margin-right:80px;margin-top: -10px
 				${actionMeta.name }
 			</p>
 			<p>
-				<label>动作类型实现类：</label>
+				<label>动作类型实现方法：</label>
 				${actionMeta.methodC }
+			</p>
+			<p>
+				<label>动作类型实现类：</label>
+				${actionMeta.classC }
 			</p>
 			<p>
 				<label>描述：</label>

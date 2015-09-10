@@ -6,7 +6,7 @@ query "end TempCreditCheck"
 end
 
 rule "point1"
-    //ruleflow-group "position"
+    ruleflow-group "point"
     no-loop true
 	when
 		//“申请评分”<560
@@ -15,23 +15,31 @@ rule "point1"
    		$creditCheckActionImpl:CreditCheckActionImpl($creditCheckActionImpl.getApplyPoint($apply)<560);
 	then
    		$tempCreditCheck.setApplyPointType(3);
+   		$apply.setScore($creditCheckActionImpl.getApplyPoint($apply));
+   		$apply.setGrade(3);
    		System.out.println("point1"+"   "+$tempCreditCheck.getApplyPointType());
+   		update($tempCreditCheck);
+   		update($apply);
 end
 rule "point2"
-    //ruleflow-group "position"
+    ruleflow-group "point"
     no-loop true
 	when
 		//560<=“申请评分”<630
    		$apply: Apply();
    		$tempCreditCheck:TempCreditCheck();
-   		$creditCheckActionImpl:CreditCheckActionImpl($creditCheckActionImpl.getApplyPoint($apply)>=560||$creditCheckActionImpl.getApplyPoint($apply)<630);
+   		$creditCheckActionImpl:CreditCheckActionImpl($creditCheckActionImpl.getApplyPoint($apply)>=560&&$creditCheckActionImpl.getApplyPoint($apply)<630);
 	then
    		$tempCreditCheck.setApplyPointType(2);
+   		$apply.setScore($creditCheckActionImpl.getApplyPoint($apply));
+   		$apply.setGrade(2);
    		System.out.println("point2"+"   "+$tempCreditCheck.getApplyPointType());
+   		update($tempCreditCheck);
+   		update($apply);
 end
 
 rule "point3"
-    //ruleflow-group "position"
+    ruleflow-group "point"
     no-loop true
 	when
 		//
@@ -40,5 +48,9 @@ rule "point3"
    		$creditCheckActionImpl:CreditCheckActionImpl($creditCheckActionImpl.getApplyPoint($apply)>=630);
 	then
    		$tempCreditCheck.setApplyPointType(1);
+   		$apply.setScore($creditCheckActionImpl.getApplyPoint($apply));
+   		$apply.setGrade(1);
    		System.out.println("point3"+"   "+$tempCreditCheck.getApplyPointType());
+   		update($tempCreditCheck);
+   		update($apply);
 end

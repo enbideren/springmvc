@@ -31,7 +31,7 @@ public class RuleTest {
 //		session.insert(apply);
 //		session.fireAllRules();
 		Object [] objects = new Object[]{business,user,apply};
-		StatefulKnowledgeSession session = RuleUtil.doRuleQuery("rules/ApplyRule.drl", objects);
+		StatefulKnowledgeSession session = RuleUtil.doRuleQuery(null,"rules/ApplyRule.drl", objects);
 		QueryResults queryResult = session.getQueryResults("end Apply");
 		for (QueryResultsRow queryResultsRow : queryResult) {
 			Apply loanMoney = (Apply)queryResultsRow.get("apply");
@@ -47,7 +47,7 @@ public class RuleTest {
 		Business business = getBusiness("张34");
 		Apply apply = new Apply();
 		Object [] objects = new Object[]{business,user,apply};
-		StatefulKnowledgeSession session = RuleUtil.doRuleQuery("rules/ApplyAssortRule.drl", objects);
+		StatefulKnowledgeSession session = RuleUtil.doRuleQuery(null,"rules/ApplyAssortRule.drl", objects);
 		QueryResults queryResult = session.getQueryResults("end Apply");
 		for (QueryResultsRow queryResultsRow : queryResult) {
 			Apply loanMoney = (Apply)queryResultsRow.get("apply");

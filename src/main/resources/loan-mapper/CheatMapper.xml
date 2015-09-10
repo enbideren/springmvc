@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.msds.dao.CheatDao">
+  <resultMap id="Cheat" type="cn.msds.model.Cheat">
+    <result column="id" jdbcType="VARCHAR" property="id" />
+    <result column="uuid" jdbcType="VARCHAR" property="uuid" />
+	<result column="applyId" jdbcType="VARCHAR" property="applyId" />
+	<result column="cheatType" jdbcType="VARCHAR" property="cheatType" />
+	<result column="cheatContent" jdbcType="VARCHAR" property="cheatContent" />
+	<result column="cheatTime" jdbcType="VARCHAR" property="cheatTime" />
+  </resultMap>
+  <sql id="Cheat">
+   id,uuid,applyId,cheatType,cheatContent,cheatTime
+  </sql>
+  <insert id="addCheat" parameterType="cn.msds.model.Cheat">
+    insert into  t_cheat (uuid,applyId,cheatType,cheatContent,cheatTime)
+    values (#{uuid},#{applyId},#{cheatType},#{cheatContent},#{cheatTime})
+  </insert>
+  <select id="getCheatByUuid" resultMap="Cheat"  parameterType="cn.msds.model.Cheat">
+		select  <include refid="Cheat" /> from t_cheat where true 
+      <if test="uuid != null">
+       and uuid = #{uuid}
+      </if>
+	</select>
+</mapper>

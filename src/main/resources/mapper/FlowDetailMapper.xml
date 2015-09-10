@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.springmvc.dao.FlowDetailDao">
+	<!-- 部门对象 -->
+	<resultMap id="TFlowDetail" type="cn.springmvc.model.TFlowDetail">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<id column="flowId" property="flowId" jdbcType="VARCHAR" />
+		<id column="sceneId" property="sceneId" jdbcType="VARCHAR" />
+		<id column="sceneName" property="sceneName" jdbcType="VARCHAR" />
+		<id column="num" property="num" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- 保存实体 -->
+	<insert id="saveFlowDetail" parameterType="cn.springmvc.model.TFlowDetail">
+		insert into t_flow_detail(flowId,sceneId,sceneName,num) values(#{flowId},#{sceneId},#{sceneName},#{num})
+	</insert>
+	
+	<!-- 根据实体id查询实体 -->
+	<select id="getFlowDetailById" resultMap="TFlowDetail" parameterType="Integer">
+		select * from t_flow_detail c where  c.id = #{id}
+	</select>
+	
+	<!-- 更新实体 -->
+	<update id="updateFlowDetail" parameterType="cn.springmvc.model.TFlowDetail">
+		update t_flow_detail set 
+			flowId=#{flowId},
+			sceneId=#{sceneId},
+			sceneName=#{sceneName},
+			num=#{num}
+		where id = #{id}
+	</update>
+	
+	<!-- 删除实体 -->
+	<delete id="deleteFlowDetail" parameterType="Integer">
+		delete from t_flow_detail where id = #{id}
+	</delete>
+	<!-- 分页使用 -->
+	<select id="findTotalCount" resultType="Integer" parameterType="Map">
+		select count(t.id) from t_flow_detail t where t.flowId = #{flowId}
+		<if test="sceneName != null and  sceneName !=''">
+			and t.sceneName like #{sceneName} 
+		</if>
+	</select>
+	<!-- 分页使用 -->
+	<select id="findPageDataByHql" resultMap="TFlowDetail" parameterType="Map" >
+		select t.id ,t.flowId ,t.sceneId,t.sceneName,t.num from t_flow_detail  t where t.flowId = #{flowId}
+		<if test="sceneName != null and sceneName !=''">
+			and t.sceneName like #{sceneName} 
+		</if>
+		 limit #{page}, #{pageSize}
+	</select>
+</mapper>

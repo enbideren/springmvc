@@ -1,44 +1,163 @@
 package cn.msds.model
-import  com.hxrainbow.rule.action.CreditCheckActionImpl;
 import  com.hxrainbow.rule.model.TempCreditCheck;
 query "end TempCreditCheck"
-	tempCreditCheck:TempCreditCheck()
+	apply:Apply()
 end
 
-rule "position1"
-    //ruleflow-group "position"
+rule "baseQuo1"
+    ruleflow-group "baseQuo"
     no-loop true
 	when
-		//“职位”=2
-   		$apply: Apply($apply.getPosition()==2);
-   		$tempCreditCheck:TempCreditCheck();
-   		$creditCheckActionImpl:CreditCheckActionImpl();
+		//“内部变量.GBIE客户标志”=‘E’,“申请评分等级”=1
+   		$apply: Apply();
+   		$tempCreditCheck:TempCreditCheck(GBLable=='E'&&applyPointType==1);
 	then
-   		$tempCreditCheck.setIncome($creditCheckActionImpl.MIN($apply.getSalary(),120000)*0.6+$apply.getBnMonthMoney()*12*0.4);
-   		System.out.println("position1"+"   "+$tempCreditCheck.getIncome());
+   		$apply.setBaseQuota(200.0);
+   		System.out.println("baseQuo1"+"   "+$apply.getBaseQuota());
+   		update($tempCreditCheck);
 end
-rule "position2"
-    //ruleflow-group "position"
+rule "baseQuo2"
+    ruleflow-group "baseQuo"
     no-loop true
 	when
-		//“职位”=1
-   		$apply: Apply($apply.getPosition()==1);
-   		$tempCreditCheck:TempCreditCheck();
-   		$creditCheckActionImpl:CreditCheckActionImpl();
+		//“内部变量.GBIE客户标志”=‘E’,“申请评分等级”!=1
+   		$apply: Apply();
+   		$tempCreditCheck:TempCreditCheck(GBLable=='E'&&applyPointType!=1);
 	then
-   		$tempCreditCheck.setIncome($creditCheckActionImpl.MIN($apply.getSalary(),80000)*0.6+$apply.getBnMonthMoney()*12*0.4);
-   		System.out.println("position2"+"   "+$tempCreditCheck.getIncome());
+   		$apply.setBaseQuota(0.0);
+   		System.out.println("baseQuo2"+"   "+$apply.getBaseQuota());
+   		update($tempCreditCheck);
 end
 
-rule "position3"
-    //ruleflow-group "position"
+rule "baseQuo3"
+    ruleflow-group "baseQuo"
     no-loop true
 	when
-		//
-   		$apply: Apply($apply.getPosition()!=2&&$apply.getPosition()!=1);
-   		$tempCreditCheck:TempCreditCheck();
-   		$creditCheckActionImpl:CreditCheckActionImpl();
+		//“内部变量.GBIE客户标志”=‘’I”,“申请评分等级” IN (1,2)
+   		$apply: Apply();
+   		$tempCreditCheck:TempCreditCheck(GBLable=='I'&&(applyPointType==1||applyPointType==2));
 	then
-   		$tempCreditCheck.setIncome($creditCheckActionImpl.MIN($apply.getSalary(),60000)*0.6+$apply.getBnMonthMoney()*12*0.4);
-   		System.out.println("position3"+"   "+$tempCreditCheck.getIncome());
+   		$apply.setBaseQuota(500.0);
+   		System.out.println("baseQuo3"+"   "+$apply.getBaseQuota());
+   		update($tempCreditCheck);
+end
+rule "baseQuo4"
+    ruleflow-group "baseQuo"
+    no-loop true
+	when
+		//“内部变量.GBIE客户标志”=‘’I”,“申请评分等级” not IN (1,2)
+   		$apply: Apply();
+   		$tempCreditCheck:TempCreditCheck(GBLable=='I'&&!(applyPointType==1||applyPointType==2));
+	then
+   		$apply.setBaseQuota(0.0);
+   		System.out.println("baseQuo4"+"   "+$apply.getBaseQuota());
+   		update($tempCreditCheck);
+end
+rule "baseQuo5"
+    ruleflow-group "baseQuo"
+    no-loop true
+	when
+		// “内部变量.GBIE客户标志” not in ('E','I'),‘’内部变量.预估年收入分组”=1,“申请评分等级”=1 
+   		$apply: Apply();
+   		$tempCreditCheck:TempCreditCheck(GBLable!='E'&&GBLable!='I'&&incomeGroup==1&&applyPointType==1);
+	then
+   		$apply.setBaseQuota($tempCreditCheck.getPreIncome()*0.4+100*(Math.random()*2-1));
+   		System.out.println("baseQuo5"+"   "+$apply.getBaseQuota());
+   		update($tempCreditCheck);
+end
+rule "baseQuo6"
+    ruleflow-group "baseQuo"
+    no-loop true
+	when
+		// “内部变量.GBIE客户标志” not in ('E','I'),‘’内部变量.预估年收入分组”=1,“申请评分等级”=2 
+   		$apply: Apply();
+   		$tempCreditCheck:TempCreditCheck(GBLable!='E'&&GBLable!='I'&&incomeGroup==1&&applyPointType==2);
+	then
+   		$apply.setBaseQuota($tempCreditCheck.getPreIncome()*0.2+100*(Math.random()*2-1));
+   		System.out.println("baseQuo6"+"   "+$apply.getBaseQuota());
+   		update($tempCreditCheck);
+end
+rule "baseQuo7"
+    ruleflow-group "baseQuo"
+    no-loop true
+	when
+		// “内部变量.GBIE客户标志” not in ('E','I'),‘’内部变量.预估年收入分组”=1,“申请评分等级”=3 
+   		$apply: Apply();
+   		$tempCreditCheck:TempCreditCheck(GBLable!='E'&&GBLable!='I'&&incomeGroup==1&&applyPointType==3);
+	then
+   		$apply.setBaseQuota(0.0);
+   		System.out.println("baseQuo7"+"   "+$apply.getBaseQuota());
+   		update($tempCreditCheck);
+end
+rule "baseQuo8"
+    ruleflow-group "baseQuo"
+    no-loop true
+	when
+		// “内部变量.GBIE客户标志” not in ('E','I'),‘’内部变量.预估年收入分组”=2,“申请评分等级”=1 
+   		$apply: Apply();
+   		$tempCreditCheck:TempCreditCheck(GBLable!='E'&&GBLable!='I'&&incomeGroup==2&&applyPointType==1);
+	then
+   		$apply.setBaseQuota($tempCreditCheck.getPreIncome()*0.3+100*(Math.random()*2-1));
+   		System.out.println("baseQuo8"+"   "+$apply.getBaseQuota());
+   		update($tempCreditCheck);
+end
+rule "baseQuo9"
+    ruleflow-group "baseQuo"
+    no-loop true
+	when
+		// “内部变量.GBIE客户标志” not in ('E','I'),‘’内部变量.预估年收入分组”=2,“申请评分等级”=2 
+   		$apply: Apply();
+   		$tempCreditCheck:TempCreditCheck(GBLable!='E'&&GBLable!='I'&&incomeGroup==2&&applyPointType==2);
+	then
+   		$apply.setBaseQuota($tempCreditCheck.getPreIncome()*0.15+100*(Math.random()*2-1));
+   		System.out.println("baseQuo9"+"   "+$apply.getBaseQuota());
+   		update($tempCreditCheck);
+end
+rule "baseQuo10"
+    ruleflow-group "baseQuo"
+    no-loop true
+	when
+		// “内部变量.GBIE客户标志” not in ('E','I'),‘’内部变量.预估年收入分组”=2,“申请评分等级”=3 
+   		$apply: Apply();
+   		$tempCreditCheck:TempCreditCheck(GBLable!='E'&&GBLable!='I'&&incomeGroup==2&&applyPointType==3);
+	then
+   		$apply.setBaseQuota(0.0);
+   		System.out.println("baseQuo10"+"   "+$apply.getBaseQuota());
+   		update($tempCreditCheck);
+end
+rule "baseQuo11"
+    ruleflow-group "baseQuo"
+    no-loop true
+	when
+		// “内部变量.GBIE客户标志” not in ('E','I'),‘’内部变量.预估年收入分组” not in (1,2),“申请评分等级”=1 
+   		$apply: Apply();
+   		$tempCreditCheck:TempCreditCheck(GBLable!='E'&&GBLable!='I'&&incomeGroup!=1&&incomeGroup!=2&&applyPointType==1);
+	then
+   		$apply.setBaseQuota($tempCreditCheck.getPreIncome()*0.1+100*(Math.random()*2-1));
+   		System.out.println("baseQuo11"+"   "+$apply.getBaseQuota());
+   		update($tempCreditCheck);
+end
+rule "baseQuo12"
+    ruleflow-group "baseQuo"
+    no-loop true
+	when
+		// “内部变量.GBIE客户标志” not in ('E','I'),‘’内部变量.预估年收入分组” not in (1,2),“申请评分等级”=2 
+   		$apply: Apply();
+   		$tempCreditCheck:TempCreditCheck(GBLable!='E'&&GBLable!='I'&&incomeGroup!=1&&incomeGroup!=2&&applyPointType==2);
+	then
+   		$apply.setBaseQuota(500.0);
+   		System.out.println("baseQuo12"+"   "+$apply.getBaseQuota());
+   		update($tempCreditCheck);
+end
+rule "baseQuo13"
+    ruleflow-group "baseQuo"
+    no-loop true
+	when
+		// “内部变量.GBIE客户标志” not in ('E','I'),‘’内部变量.预估年收入分组” not in (1,2),“申请评分等级”=3 
+   		$apply: Apply();
+   		$tempCreditCheck:TempCreditCheck(GBLable!='E'&&GBLable!='I'&&incomeGroup!=1&&incomeGroup!=2&&applyPointType==3);
+	then
+   		$apply.setBaseQuota(0.0);
+   		System.out.println("baseQuo13"+"   "+$apply.getBaseQuota());
+   		update($tempCreditCheck);
 end

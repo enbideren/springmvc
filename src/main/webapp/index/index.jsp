@@ -19,8 +19,8 @@ body{font:normal 15px/1.5 Arial, Helvetica, Free Sans, sans-serif;color: #222;ba
 <div class="row">
   <div class="eightcol last">
     <!-- Begin Form -->
-    <form id="my-form" method="post" action="<%=request.getContextPath()%>/apply/register.do">
-          <div><label>用户姓名</label><input type="text" id="username" name="userName" value='张34'/></div>
+    <form id="my-form" method="post" action="<%=request.getContextPath()%>/index/register.do">
+          <div><label>用户姓名</label><input type="text" id="username" name="userName" value='张30'/></div>
           <div><label>电话</label><input type="text" name="phoneNum" id="phone" data-ideal="phone" value='13854361231'/></div>
           <div><label>身份证号</label><input type="text" name="idCard" id="idCard" data-ideal="idCard" value='131026197708092331'/></div>
           <div>

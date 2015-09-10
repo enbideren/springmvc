@@ -1,0 +1,29 @@
+vans_client = 'aa801e65-d9d9-4276-a6ea-4647c77200a2';
+if(document.location.protocol == 'http:'){
+		var vans_mapping = '//cm.pos.baidu.com/pixel?dspid=7942470&ext_data=rt__'+vans_client;
+
+		if(typeof(vans_plan_id) == 'string')
+		{
+				vans_mapping = vans_mapping+'__'+vans_plan_id;
+		}
+    vansLog(vans_mapping);
+}
+			
+			
+function vansLog(url){
+    var n = Math.round(Math.random()*10000);
+    var t = (new Date()).getTime();
+    var i = window[t] = new Image();
+    i.onload = (i.onerror=function(){
+    window[t] = null;});
+    i.src = url+'&rnd='+n;
+    i = null;n=null;t=null;url=null;
+}
+
+function vansTransEvent(type){
+    if(!type)return;
+    if(typeof(vans_plan_id) != 'string')return;
+    var vans_url = '';
+    vans_url = vans_http+vans_host+vans_plan_id+'/'+vans_step+'?material='+vans_material_id+'&impurl='+vans_imp_url+'&trans='+type;
+    vansLog(vans_url);
+}

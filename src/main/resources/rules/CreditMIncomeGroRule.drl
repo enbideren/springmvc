@@ -5,7 +5,7 @@ query "end TempCreditCheck"
 end
 
 rule "incomeGroup1"
-    //ruleflow-group "position"
+    ruleflow-group "incomeGroup"
     no-loop true
 	when
 		//内部变量.预估年收入“<40000
@@ -13,9 +13,10 @@ rule "incomeGroup1"
 	then
    		$tempCreditCheck.setIncomeGroup(3);
    		System.out.println("incomeGroup1"+"   "+$tempCreditCheck.getIncomeGroup());
+   		update($tempCreditCheck);
 end
 rule "incomeGroup2"
-    //ruleflow-group "position"
+    ruleflow-group "incomeGroup"
     no-loop true
 	when
 		// 40000<=“预估年收入“<100000
@@ -23,14 +24,16 @@ rule "incomeGroup2"
 	then
    		$tempCreditCheck.setIncomeGroup(2);
    		System.out.println("incomeGroup2"+"   "+$tempCreditCheck.getIncomeGroup());
+   		update($tempCreditCheck);
 end
 
 rule "incomeGroup3"
-    //ruleflow-group "position"
+    ruleflow-group "incomeGroup"
     no-loop true
 	when
 		$tempCreditCheck:TempCreditCheck($tempCreditCheck.getPreIncome()>=100000);
 	then
    		$tempCreditCheck.setIncomeGroup(1);
    		System.out.println("incomeGroup3"+"   "+$tempCreditCheck.getIncomeGroup());
+   		update($tempCreditCheck);
 end

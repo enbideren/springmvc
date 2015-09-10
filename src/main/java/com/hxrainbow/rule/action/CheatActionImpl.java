@@ -26,14 +26,14 @@ public class CheatActionImpl {
 		Apply apply = new Apply();
 		apply.setUuid(uuid);
 		List<Apply> list = applyService.getApplyByCondition(apply);
-		System.out.println(list.size());
+//		System.out.println(list.size());
 		return list.size();
 	}
 	public int getCusts(String phoneNum){
 		Apply apply = new Apply();
 		apply.setPhoneNum(phoneNum);
 		List<Apply> list = applyService.getApplyByCondition(apply);
-		System.out.println(list.size());
+//		System.out.println(list.size());
 		return list.size();
 	}
 	public int getIps(String uuid){
@@ -48,7 +48,7 @@ public class CheatActionImpl {
 		map.put("start", start);
 		map.put("end", end);
 		int result = applyService.getIpCount(map);
-		System.out.println(result);
+//		System.out.println(result);
 		return result;
 	}
 }

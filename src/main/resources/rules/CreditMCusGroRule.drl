@@ -4,8 +4,8 @@ query "end TempCreditCheck"
 	tempCreditCheck:TempCreditCheck()
 end
 
-rule "CusGroup1"
-    //ruleflow-group "position"
+rule "cusGroup1"
+    ruleflow-group "cusGroup"
     no-loop true
 	when
 		//“电商最近1年金额退拒率”>=0.9
@@ -14,9 +14,10 @@ rule "CusGroup1"
 	then
    		$tempCreditCheck.setGBLable("E");
    		System.out.println("CusGroup1"+"   "+$tempCreditCheck.getGBLable());
+   		update($tempCreditCheck);
 end
-rule "CusGroup2"
-    //ruleflow-group "position"
+rule "cusGroup2"
+    ruleflow-group "cusGroup"
     no-loop true
 	when
 		// “电商最近1年的月均成功交易金额”>=50000 OR  “电商最近1年的月均成功交易金额”<100
@@ -25,10 +26,11 @@ rule "CusGroup2"
 	then
    		$tempCreditCheck.setGBLable("I");
    		System.out.println("CusGroup2"+"   "+$tempCreditCheck.getGBLable());
+   		update($tempCreditCheck);
 end
 
-rule "CusGroup3"
-    //ruleflow-group "position"
+rule "cusGroup3"
+    ruleflow-group "cusGroup"
     no-loop true
 	when
 		$apply: Apply(!($apply.getBnMonthMoney()>=50000 || $apply.getBnMonthMoney()<100 || $apply.getBnBackRate()>=0.9));
@@ -36,4 +38,5 @@ rule "CusGroup3"
 	then
    		$tempCreditCheck.setGBLable("GB");
    		System.out.println("CusGroup3"+"   "+$tempCreditCheck.getGBLable());
+   		update($tempCreditCheck);
 end

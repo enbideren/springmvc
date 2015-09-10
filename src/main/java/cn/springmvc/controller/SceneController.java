@@ -254,14 +254,17 @@ public class SceneController  extends BaseController{
 	@RequestMapping("saveEntityList.do")
 	public String saveEntityList(HttpServletResponse response,Model model,String rel,HttpServletRequest request) throws Exception{
 		String[] entityId = request.getParameterValues("entityIds");
-		int [] entityIds = new int[entityId.length];
-		for (int i = 0; i < entityId.length; i++) {
-			entityIds[i] = Integer.parseInt(entityId[i]);
+		int [] entityIds =null;
+		if (entityId!=null) {
+			entityIds = new int[entityId.length];
+			for (int i = 0; i < entityId.length; i++) {
+				entityIds[i] = Integer.parseInt(entityId[i]);
+			}
 		}
 		String sceneId = request.getParameter("sceneId");
-		Result r=new Result();
 		//TODO 校验是否保存成功
 		sceneService.saveSceneEntity(entityIds, Integer.parseInt(sceneId));
+		Result r=new Result();
 		DroolsUtil.removeRuleMap();
 		r.setMessage("关联实体成功！");
 		r.setNavTabId(rel);

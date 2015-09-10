@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.msds.dao.CoreDao">
+  <resultMap id="Core" type="cn.msds.model.Core">
+    <result column="uuid" jdbcType="VARCHAR" property="uuid" />
+	<result column="userName" jdbcType="VARCHAR" property="userName" />
+	<result column="gender" jdbcType="VARCHAR" property="gender" />
+	<result column="phoneNum" jdbcType="VARCHAR" property="phoneNum" />
+	<result column="idCard" jdbcType="VARCHAR" property="idCard" />
+	<result column="email" jdbcType="VARCHAR" property="email" />
+	<result column="industry" jdbcType="VARCHAR" property="industry" />
+	<result column="companyType" jdbcType="VARCHAR" property="companyType" />
+	<result column="position" jdbcType="VARCHAR" property="position" />
+	<result column="education" jdbcType="VARCHAR" property="education" />
+	<result column="contactName" jdbcType="VARCHAR" property="contactName" />
+	<result column="contactPhoneNum" jdbcType="VARCHAR" property="contactPhoneNum" />
+	<result column="loanBalance" jdbcType="VARCHAR" property="loanBalance" />
+	<result column="inCheckLoan" jdbcType="VARCHAR" property="inCheckLoan" />
+	<result column="userType" jdbcType="VARCHAR" property="userType" />
+	<result column="workTime" jdbcType="VARCHAR" property="workTime" />
+	<result column="salary" jdbcType="VARCHAR" property="salary" />
+	<result column="reciveAddr" jdbcType="VARCHAR" property="reciveAddr" />
+	<result column="score" jdbcType="VARCHAR" property="score" />
+	<result column="grade" jdbcType="VARCHAR" property="grade" />
+	<result column="baseQuota" jdbcType="VARCHAR" property="baseQuota" />
+	<result column="enableQuota" jdbcType="VARCHAR" property="enableQuota" />
+	<result column="validTime" jdbcType="VARCHAR" property="validTime" />
+	<result column="validDays" jdbcType="VARCHAR" property="validDays" />
+  </resultMap>
+  <sql id="Core">
+    uuid,userName,gender,phoneNum,idCard,email,industry,companyType,position,education,
+    contactName,contactPhoneNum,loanBalance,inCheckLoan,userType,workTime,salary,reciveAddr,
+    score,grade,baseQuota,enableQuota,validTime,validDays
+  </sql>
+  <insert id="addCore" parameterType="cn.msds.model.Core">
+    insert into  t_core (uuid,userName,gender,phoneNum,idCard,email,industry,companyType,position,
+    education,contactName,contactPhoneNum,loanBalance,inCheckLoan,userType,workTime,salary,reciveAddr,
+    score,grade,baseQuota,enableQuota,validTime,validDays
+      )
+    values (#{uuid},#{userName},#{gender},#{phoneNum},#{idCard},#{email},#{industry},
+    #{companyType},#{position},#{education},#{contactName},#{contactPhoneNum},#{loanBalance},
+    #{inCheckLoan},#{userType},#{workTime},#{salary},#{reciveAddr},#{score},#{grade},
+    #{baseQuota},#{enableQuota},#{validTime},#{validDays})
+  </insert>
+  <select id="getCoreByUuid" resultMap="Core"  parameterType="cn.msds.model.Core">
+		select  <include refid="Core" /> from t_core where true 
+      <if test="uuid != null">
+       and uuid = #{uuid}
+      </if>
+	</select>
+</mapper>

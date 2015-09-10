@@ -96,19 +96,19 @@ public class Apply implements Serializable {
 	/** 反欺诈时间*/
 	private Date cheatTime;
 	/** 信用评分 */
-	private Integer score;
+	private Double score;
 	/** 评分评审结果 		 0-拒绝，1-通过*/
 	private String creditCheckRst;
 	/** 评分等级 */
 	private Integer grade;
 	/** 消费类基本额度  */
-	private Integer baseQuota;
+	private Double baseQuota;
 	/** 消费类可用额度  */
-	private Integer enableQuota;
+	private Double enableQuota;
 	/** 评分时间*/
 	private Date creditCheckTime;
 	/** 评分理论利率 */
-	private Integer creditCheckRate;
+	private Double creditCheckRate;
 	public Integer getId() {
 		return id;
 	}
@@ -295,32 +295,8 @@ public class Apply implements Serializable {
 	public void setFitProduct(String fitProduct) {
 		this.fitProduct = fitProduct;
 	}
-	public Integer getAppleMoney() {
+	public Integer getApplyMoney() {
 		return applyMoney;
-	}
-	public void setAppleMoney(Integer applyMoney) {
-		this.applyMoney = applyMoney;
-	}
-	public Integer getAppleRepayTime() {
-		return applyRepayTime;
-	}
-	public void setAppleRepayTime(Integer applyRepayTime) {
-		this.applyRepayTime = applyRepayTime;
-	}
-	public Integer getAppleRate() {
-		return applyRate;
-	}
-	public void setAppleRate(Integer applyRate) {
-		this.applyRate = applyRate;
-	}
-	public Integer getAppleDeadline() {
-		return applyDeadline;
-	}
-	public void setAppleDeadline(Integer applyDeadline) {
-		this.applyDeadline = applyDeadline;
-	}
-	public Date getApplyTime() {
-		return applyTime;
 	}
 	public void setApplyTime(Date applyTime) {
 		this.applyTime = applyTime;
@@ -361,10 +337,10 @@ public class Apply implements Serializable {
 	public void setCheatTime(Date cheatTime) {
 		this.cheatTime = cheatTime;
 	}
-	public Integer getScore() {
+	public Double getScore() {
 		return score;
 	}
-	public void setScore(Integer score) {
+	public void setScore(Double score) {
 		this.score = score;
 	}
 	public String getCreditCheckRst() {
@@ -379,16 +355,40 @@ public class Apply implements Serializable {
 	public void setGrade(Integer grade) {
 		this.grade = grade;
 	}
-	public Integer getBaseQuota() {
+	public Double getBaseQuota() {
 		return baseQuota;
 	}
-	public void setBaseQuota(Integer baseQuota) {
+	public void setBaseQuota(Double baseQuota) {
 		this.baseQuota = baseQuota;
 	}
-	public Integer getEnableQuota() {
+	public Integer getApplyRepayTime() {
+		return applyRepayTime;
+	}
+	public void setApplyRepayTime(Integer applyRepayTime) {
+		this.applyRepayTime = applyRepayTime;
+	}
+	public Integer getApplyRate() {
+		return applyRate;
+	}
+	public void setApplyRate(Integer applyRate) {
+		this.applyRate = applyRate;
+	}
+	public Integer getApplyDeadline() {
+		return applyDeadline;
+	}
+	public void setApplyDeadline(Integer applyDeadline) {
+		this.applyDeadline = applyDeadline;
+	}
+	public Date getApplyTime() {
+		return applyTime;
+	}
+	public void setApplyMoney(Integer applyMoney) {
+		this.applyMoney = applyMoney;
+	}
+	public Double getEnableQuota() {
 		return enableQuota;
 	}
-	public void setEnableQuota(Integer enableQuota) {
+	public void setEnableQuota(Double enableQuota) {
 		this.enableQuota = enableQuota;
 	}
 	public Date getCreditCheckTime() {
@@ -397,10 +397,10 @@ public class Apply implements Serializable {
 	public void setCreditCheckTime(Date creditCheckTime) {
 		this.creditCheckTime = creditCheckTime;
 	}
-	public Integer getCreditCheckRate() {
+	public Double getCreditCheckRate() {
 		return creditCheckRate;
 	}
-	public void setCreditCheckRate(Integer creditCheckRate) {
+	public void setCreditCheckRate(Double creditCheckRate) {
 		this.creditCheckRate = creditCheckRate;
 	}
 	public Apply(String uuid, String userName, Integer gender,
@@ -416,9 +416,9 @@ public class Apply implements Serializable {
 			Integer applyRepayTime, Integer applyRate, Integer applyDeadline,
 			Date applyTime, Integer preResult, Date preDate, String userType,
 			String cheatType, String cheatContent, Date cheatTime,
-			Integer score, String creditCheckRst, Integer grade,
-			Integer baseQuota, Integer enableQuota, Date creditCheckTime,
-			Integer creditCheckRate) {
+			Double score, String creditCheckRst, Integer grade,
+			Double baseQuota, Double enableQuota, Date creditCheckTime,
+			Double creditCheckRate) {
 		this.uuid = uuid;
 		this.userName = userName;
 		this.gender = gender;

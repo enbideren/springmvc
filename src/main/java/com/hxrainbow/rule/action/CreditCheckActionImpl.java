@@ -1,7 +1,5 @@
 package com.hxrainbow.rule.action;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,7 +11,9 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import cn.msds.model.Apply;
+import cn.msds.model.Core;
 import cn.msds.service.ApplyService;
+import cn.msds.service.CoreService;
 import cn.springmvc.util.DateUtils;
 /**
  * 
@@ -24,19 +24,21 @@ import cn.springmvc.util.DateUtils;
 @Service("CreditCheckAction")
 public class CreditCheckActionImpl {
 	@Resource
-	private ApplyService applyService;	
+	private ApplyService applyService;
+	@Resource
+	private CoreService coreService;
 	public int getPhones(String uuid) {
 		Apply apply = new Apply();
 		apply.setUuid(uuid);
 		List<Apply> list = applyService.getApplyByCondition(apply);
-		System.out.println(list.size());
+//		System.out.println(list.size());
 		return list.size();
 	}
 	public int getCusts(String phoneNum){
 		Apply apply = new Apply();
 		apply.setPhoneNum(phoneNum);
 		List<Apply> list = applyService.getApplyByCondition(apply);
-		System.out.println(list.size());
+//		System.out.println(list.size());
 		return list.size();
 	}
 	public int getIps(String uuid){
@@ -51,7 +53,7 @@ public class CreditCheckActionImpl {
 		map.put("start", start);
 		map.put("end", end);
 		int result = applyService.getIpCount(map);
-		System.out.println(result);
+//		System.out.println(result);
 		return result;
 	}
 	public int MIN(int arg1,int arg2){
@@ -68,21 +70,30 @@ public class CreditCheckActionImpl {
 	}
 	public static int getPreAge(String idCard) throws Exception {
 		Date date = DateUtils.StringToDate(idCard.substring(6, 14), "yyyyMMdd");
-		return DateUtils.dayDist(date)/365;
+		int a = DateUtils.dayDist(date)/365;
+//		System.out.println("年龄中间变量"+a );
+		return a;
 	}
 	public static double getAge(int preAge){
-		return 1-(new Double((60-preAge)/42.0));
+		double a = 1-(new Double((60-preAge)/42.0));
+//		System.out.println("年龄"+a);
+		return a;
 	}
 	public static double dealRate(double bnBackRate){
-		return Math.pow(5, (1-bnBackRate))-1;
+		double a = Math.pow(5, (1-bnBackRate))-1;
+//		System.out.println("电商最终成交率："+a);
+		return a;
 	}
 	public static double getMonthDealRate(double bnMonthMoney){
-		return Math.log10(bnMonthMoney+1);
+		double a = Math.log10(bnMonthMoney+1);
+//		System.out.println("电商月均成功交易金额："+a );
+		return a;
 	}
 	public static double getPrePoint(Apply apply) throws Exception{
 		double prePoint = apply.getIndustry()*0.05+apply.getCompanyType()*0.05+
 						apply.getPosition()*0.05+apply.getEducation()*0.05+apply.getWorkTime()*0.05+getAge(getPreAge(apply.getIdCard()))*0.15+
 						dealRate(apply.getBnBackRate())*0.2+getMonthDealRate(apply.getBnMonthMoney())*0.3+apply.getReciveAddr()*0.1;
+//		System.out.println("评分中间变量："+prePoint);
 		return prePoint;
 	}
 	public double getPointRate(Apply apply){
@@ -92,14 +103,27 @@ public class CreditCheckActionImpl {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+//		System.out.println("评分概率："+pointRate);
 		return pointRate;
 	}
 	public double getApplyPoint(Apply apply){
 		double pointRate = getPointRate(apply);
-		double applyPoint = 540-199*(Math.log10((1-pointRate) /pointRate) / 1.352595093);
+		double applyPoint = 540-199*(Math.log10(pointRate/(1-pointRate)) / 1.352595093);
+//		System.out.println("申请评分："+applyPoint);
 		return applyPoint;
 	}
+	public double getEnableQuota(Apply apply){
+		Core core = new Core();
+		core.setUuid(apply.getUuid());
+		List<Core> cores = coreService.getCoreByUuid(core);
+		if (cores!=null&&cores.size()>0) {
+			core = cores.get(0);
+		}
+		double a = apply.getBaseQuota()==null?0:(apply.getBaseQuota() - (core.getLoanBalance()==null?0:core.getLoanBalance()) - (core.getInCheckLoan()==null?0:core.getInCheckLoan()));
+//		System.out.println("消费类可用额度："+a);
+		return a;
+	}
 	public static void main(String[] args) {
-		System.out.println(new Double(12/42.0));
+		System.out.println();
 	}
 }

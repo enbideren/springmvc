@@ -15,6 +15,7 @@ public class TActionMeta implements Serializable{
 	private Integer id; //主键
 	private String name;//动作类型名称
 	private String methodC;//动作类型对应的方法
+	private String classC;//动作类型对应的类
 	private String description;
 	
 	public Integer getId() {
@@ -40,6 +41,12 @@ public class TActionMeta implements Serializable{
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public String getClassC() {
+		return classC;
+	}
+	public void setClassC(String classC) {
+		this.classC = classC;
 	}
 	
 }

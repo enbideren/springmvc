@@ -36,10 +36,10 @@ function saveActionMeta(){
 		}
 	});
 
-	if(flag == 2){
+	/* if(flag == 2){
 		alertMsg.error("变量标识不能重复");
 		return false;
-	}
+	} */
 	$("#subForm").submit();
 	return true;
 }
@@ -54,7 +54,11 @@ function saveActionMeta(){
 			</p>			
 			<p>
 				<label>动作实现类：</label>
-				<input name="methodC"  type="text" size="30"  alt="请输入动作类型包名称" class="required " />
+				<input name="classC"  type="text" size="30"  alt="请输入动作类型包名称" class="required " />
+			</p>
+			<p>
+				<label>动作实现方法：</label>
+				<input name="methodC"  type="text" size="30"  alt="请输入动作类型方法名称" class="required " />
 			</p>
 			<p>
 				<label>描述：</label>

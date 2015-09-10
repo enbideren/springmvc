@@ -387,7 +387,7 @@ public class RuleEngine implements IRuleEngine {
 		for(TRule rule : ruleList){
 			List<TActionMeta> list = getActionMetaOfRule(rule);
 			for(TActionMeta meta : list){
-				set.add(meta.getMethodC());
+				set.add(meta.getClassC());
 			}
 		}
 		return set;

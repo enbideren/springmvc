@@ -26,6 +26,7 @@
 		<id column="id" property="id" jdbcType="VARCHAR" />
 		<id column="name" property="name" jdbcType="VARCHAR" />
 		<id column="methodC" property="methodC" jdbcType="VARCHAR" />
+		<id column="classC" property="classC" jdbcType="VARCHAR" />
 		<id column="description" property="description" jdbcType="VARCHAR" />
 	</resultMap>
 	<resultMap id="TActionMetaVariable" type="cn.springmvc.model.TActionMetaVariable">

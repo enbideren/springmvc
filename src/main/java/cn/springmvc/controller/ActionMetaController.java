@@ -1,7 +1,6 @@
 package cn.springmvc.controller;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.springmvc.model.TActionMeta;
 import cn.springmvc.model.TActionMetaVariable;
-import cn.springmvc.model.TVariable;
 import cn.springmvc.service.ActionMetaService;
 import cn.springmvc.util.BasePage;
 import cn.springmvc.util.DroolsUtil;
@@ -134,10 +132,12 @@ public class ActionMetaController extends BaseController{
 	 * @created 2013-4-16
 	 */
 	@RequestMapping("viewActionMeta.do")
-	public String viewActionMeta(HttpServletResponse response,Model model,String rel) throws Exception{
+	public String viewActionMeta(HttpServletResponse response,Model model,String rel,TActionMeta actionMeta) throws Exception{
 		actionMeta = actionMetaService.getActionMetaById(actionMeta.getId());
 		variableList = actionMetaService.getActionMetaVariableById(actionMeta.getId());
-		return "view";
+		model.addAttribute("actionMeta",actionMeta);
+		model.addAttribute("variableList",variableList);
+		return "action/viewActionMeta";
 	}	
 	/**
 	 * 修改动作类型

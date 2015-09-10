@@ -14,7 +14,7 @@ rule "assortA"
 	then
    		$apply.setUserType("A");
    		//System.out.println("学历=2且职位>=1,客户预分类=A");
-   		System.out.println("A");
+   		//System.out.println("A");
 end
 
 rule "assortB"
@@ -28,7 +28,7 @@ rule "assortB"
 	then
    		$apply.setUserType("B");
    		//System.out.println("学历=1,职位=0，客户预分类=B");
-   		System.out.println("B");
+   		//System.out.println("B");
 end
 
 rule "assortC"
@@ -42,5 +42,5 @@ rule "assortC"
 	then
    		$apply.setUserType("C");
    		//System.out.println("非上述，客户分类=C");
-   		System.out.println("C");
+   		//System.out.println("C");
 end
