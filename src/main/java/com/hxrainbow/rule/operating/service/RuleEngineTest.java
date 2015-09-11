@@ -30,7 +30,6 @@ public class RuleEngineTest {
 //		} 
 //	}
 
-	@Test
 	public void insertRuleCondition(){
 		TRule rule = new TRule();
 		rule.setId(27);
@@ -39,7 +38,6 @@ public class RuleEngineTest {
 		//System.out.println(ss.toString());
 	}
 	
-	@Test
 	public void executeRuleEngine() throws RuleEngineException{
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		Member member = new Member();

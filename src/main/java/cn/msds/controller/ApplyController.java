@@ -3,7 +3,6 @@ package cn.msds.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -20,16 +19,21 @@ import cn.msds.constant.ConstantRuleResult;
 import cn.msds.model.Apply;
 import cn.msds.model.Business;
 import cn.msds.model.Cheat;
+import cn.msds.model.CreditCheck;
+import cn.msds.model.CreditManage;
+import cn.msds.model.Order;
 import cn.msds.model.User;
+import cn.msds.model.temp.TempCreditCheck;
 import cn.msds.service.ApplyService;
 import cn.msds.service.CheatService;
+import cn.msds.service.CreditCheckService;
+import cn.msds.service.CreditManageService;
+import cn.msds.service.OrderService;
+import cn.msds.util.CheatActionImpl;
+import cn.msds.util.CreditCheckActionImpl;
 import cn.springmvc.util.SpringContextHolder;
 import cn.springmvc.util.TempData;
 import cn.springmvc.util.ruleUtil.RuleUtil;
-
-import com.hxrainbow.rule.action.CheatActionImpl;
-import com.hxrainbow.rule.action.CreditCheckActionImpl;
-import com.hxrainbow.rule.model.TempCreditCheck;
 /**
  * 
  * @author JZR
@@ -43,6 +47,12 @@ public class ApplyController {
 	private ApplyService applyService;
 	@Resource
 	private CheatService cheatService;
+	@Resource
+	private OrderService orderService;
+	@Resource
+	private CreditCheckService creditCheckService;
+	@Resource
+	private CreditManageService creditManageService;
 	@RequestMapping("register.do")
 	public String register(HttpServletResponse response,Model model,User user){
 		String name = user.getUserName();
@@ -62,16 +72,17 @@ public class ApplyController {
 			apply = (Apply)queryResultsRow.get("apply");
 		}
 		session.dispose();
+		//判断初审是否通过
 		if (apply.getPreResult() == 3) {
-			apply = getApply(apply,user,business,name);
-			//TODO 保存apply
-			//TODO 保存core
+			apply = TempData.getApply(apply,user,business,name);
+			apply = applyService.getApplyByCondition(apply).get(0);
 			list.add("rules/CheatRule.drl");
 //			apply = applyService.getApplyByCondition(apply).get(0);
 			CheatActionImpl action = SpringContextHolder.getBean("CheatAction");
 			objects = new Object[]{apply,action};
 			session = RuleUtil.doRuleQuery(null,list, objects);
 			queryResult = session.getQueryResults("end Cheat");
+			//获取规则引擎执行结果
 			for (QueryResultsRow queryResultsRow : queryResult) {
 				apply = (Apply)queryResultsRow.get("apply");
 			}
@@ -83,6 +94,7 @@ public class ApplyController {
 			cheat.setCheatType(apply.getCheatType());
 			cheat.setUuid(apply.getUuid());
 			cheatService.addCheat(cheat);
+			//判断发欺诈模型结果
 			if (StringUtils.isEmpty(apply.getCheatType())) {
 				list.clear();
 				list.add("rules/baseFlow.rf");
@@ -102,10 +114,30 @@ public class ApplyController {
 					apply = (Apply)queryResultsRow.get("apply");
 				}
 				apply.setCreditCheckTime(new Date());
-				//TODO 保存评分记录
+				//保存评分记录
+				CreditCheck creditCheck = new CreditCheck();
+				creditCheck.setApplyId(apply.getId());
+				creditCheck.setBaseQuota(apply.getBaseQuota());
+				creditCheck.setCreditCheckRate(apply.getCreditCheckRate());
+				creditCheck.setCreditCheckRst(apply.getCreditCheckRst());
+				creditCheck.setCreditCheckTime(new Date());
+				creditCheck.setEnableQuota(apply.getEnableQuota());
+				creditCheck.setUuid(apply.getUuid());
+				creditCheck.setGrade(apply.getGrade());
+				creditCheck.setScore(apply.getScore());
+				creditCheckService.addCreditCheck(creditCheck);
 				if (apply.getCreditCheckRst()!=null&&"1".equals(apply.getCreditCheckRst())) {
-					//TODO 保存订单记录
-					
+					//保存订单记录
+					Order order = new Order();
+					order.setOrderCreateTime(new Date());
+					order.setOrderState(ConstantRuleResult.Check_state_1);
+					order.setApplyId(apply.getId());
+					order.setReplyMoney(apply.getEnableQuota());
+					order.setReplyRate(apply.getCreditCheckRate());
+					order.setReplyTimes(apply.getApplyRepayTime());
+					order.setUuid(apply.getUuid());
+					orderService.addOrder(order);
+					model.addAttribute("order", orderService.getOrderByUuid(order).get(0));
 				}
 			}
 		}
@@ -113,80 +145,11 @@ public class ApplyController {
 		model.addAttribute("apply", apply);
 		return "index/report";
 	}
-	@RequestMapping("check.do")
-	public void check(HttpServletResponse response,Model model,User user){
-		
-	}
-	@RequestMapping("testCheat.do")
-	public void testCheat(HttpServletResponse response,Model model,User user){
-		Apply apply = new Apply();
-		apply.setId(user.getGender());
-		apply = applyService.getApplyByCondition(apply).get(0);
-		CheatActionImpl action = SpringContextHolder.getBean("CheatAction");
-		Object [] objects = new Object[]{apply,action};
-		StatefulKnowledgeSession session = RuleUtil.doRuleQuery(null,"rules/CheatRule.drl", objects);
-//		QueryResults queryResult = session.getQueryResults("end Cheat");
-//		for (QueryResultsRow queryResultsRow : queryResult) {
-//			Apply loanMoney = (Apply)queryResultsRow.get("cheat");
-//			System.out.println(loanMoney.getPreResult());
-//			System.out.println(loanMoney.getUserType());
-//		}
-	}
-	@RequestMapping("testCredit.do")
-	public void testCredit(HttpServletResponse response,Model model,User user){
-		TempCreditCheck tempCreditCheck = new TempCreditCheck();
-		Apply apply = new Apply();
-		apply.setId(user.getGender());
-		apply = applyService.getApplyByCondition(apply).get(0);
-		CreditCheckActionImpl action = SpringContextHolder.getBean("CreditCheckAction");
-		Object [] objects = new Object[]{apply,action,tempCreditCheck};
-		List<String> rules = new ArrayList<String>();
-		rules.add("rules/CreditMIndustryRule.drl");
-		rules.add("rules/CreditMPostionRule.drl");
-		rules.add("rules/baseFlow.rf");
-		StatefulKnowledgeSession session = RuleUtil.doRuleQuery("baseFlow",rules, objects);
-//		session = RuleUtil.doRuleQuery("rules/CreditMIndustryRule.drl", objects);
-//		session = RuleUtil.doRuleQuery("rules/CreditMIncomeGroRule.drl", objects);
-//		session = RuleUtil.doRuleQuery("rules/CreditMCusGroRule.drl", objects);
-//		session = RuleUtil.doRuleQuery("rules/CreditMApplyPointRule.drl", objects);
-//		session = RuleUtil.doRuleQuery("rules/CreditMBaseQuoRule.drl", objects);
-//		session = RuleUtil.doRuleQuery("rules/CreditMResultRule.drl", objects);
-//		QueryResults queryResult = session.getQueryResults("end Cheat");
-//		for (QueryResultsRow queryResultsRow : queryResult) {
-//			Apply loanMoney = (Apply)queryResultsRow.get("cheat");
-//			System.out.println(loanMoney.getPreResult());
-//			System.out.println(loanMoney.getUserType());
-//		}
-	}
-	private Apply getApply(Apply apply,User user,Business business,String name){
-		String[] ips = TempData.getIps(name);
-		Apply applys = new Apply(
-				getUuid(user.getIdCard()), user.getUserName(), user.getGender(),
-				user.getPhoneNum(), new Integer(0), user.getIdCard(),
-				user.getIndustry(), user.getCompanyType(), user.getPosition(),
-				user.getEducation(), business.getAddress(), user.getContactName(),
-				user.getContactPhoneNum(), user.getEmail(), ips[1], ips[2],
-				ips[3], user.getWorkTime(), user.getSalary(),
-				business.getBnRegisterTime(), business.getBnOrderNum(), business.getBnRecivePhone(),
-				business.getBnAllTimes(), business.getBnAllMoney(), business.getBnBackRate(),
-				business.getBnMonthMoney(), business.getPrice(), business.getBnAvgPrice(),
-				business.getReciveAddr(), null, user.getApplyMoney(),
-				user.getApplyRepayTime(), null, null,
-				apply.getApplyTime(), apply.getPreResult(), new Date(), apply.getUserType(),
-				null, null, null,
-				null, null, null,
-				null, null, null,
-				null
-				);
-		return applys;
-	}
-	/**
-	 * uuid 生成规则
-	 * @author JZR	
-	 * @param 
-	 * @return
-	 */
-	private String getUuid(String idCard){
-		 return UUID.randomUUID().toString();
+	
+	@RequestMapping("manage.do")
+	public void manage(HttpServletResponse response,Model model,CreditManage creditManage){
+		creditManage.setVerifyTime(new Date());
+		creditManageService.addCreditManage(creditManage);
+		//TODO 添加订单信息
 	}
 }

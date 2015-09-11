@@ -1,6 +1,6 @@
 package cn.msds.model
-import  com.hxrainbow.rule.action.CreditCheckActionImpl;
-import  com.hxrainbow.rule.model.TempCreditCheck;
+import  cn.msds.util.CreditCheckActionImpl;
+import  cn.msds.model.temp.TempCreditCheck;
 query "end TempCreditCheck"
 	tempCreditCheck:TempCreditCheck()
 end

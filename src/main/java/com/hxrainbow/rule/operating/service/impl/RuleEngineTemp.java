@@ -1,4 +1,4 @@
-package cn.springmvc.service.impl;
+package com.hxrainbow.rule.operating.service.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,11 +42,11 @@ import cn.springmvc.util.StringKit;
  * @version 1.0
  * @created 2015-08-12
  */
-@Service("ruleEngine")
+@Service("ruleEngineTemp")
 @Transactional(propagation=Propagation.NOT_SUPPORTED,readOnly=true)
-public class RuleEngine implements IRuleEngine {
+public class RuleEngineTemp implements IRuleEngine {
 
-	private static Logger log = LoggerFactory.getLogger(RuleEngine.class);
+	private static Logger log = LoggerFactory.getLogger(RuleEngineTemp.class);
 	
 	
 	@Resource
@@ -91,11 +91,8 @@ public class RuleEngine implements IRuleEngine {
 	 * @created 2013-5-2
 	 */
 	public List<Map<String,Object>> handleInEngine(Map<String,Object> factMap,String scene) throws RuleEngineException{
-		
-		
-		
-		StringBuffer droolRuleStr = new StringBuffer("package com.hxrainbow.rule").append(";").append("\n");
-		droolRuleStr.append("global java.util.List $result;").append("\n");
+		StringBuffer droolRuleStr = new StringBuffer("package cn.msds.model").append(";").append("\n");
+		//droolRuleStr.append("global java.util.List $result;").append("\n");
 		log.info("------------重新拼装规则串------------");
 		//1.先根据场景标示查询场景信息，得到场景对应的实体以及实体标识对应的实体
 		List<TEntity> entityList = sceneService.getEntityOfSceneByIdentity(scene);
@@ -114,9 +111,9 @@ public class RuleEngine implements IRuleEngine {
 		}
 		log.info("\n" + "-----------------------规则串--------------------------------" + "\n" + droolRuleStr.toString());
 		//5.根据第一步中得到的实体，初始化drools，将实体对象扔进引擎
-		List<Map<String,Object>> resultList = handleInDrools(droolRuleStr,factMap,ruleList,entityList,scene);
+		//List<Map<String,Object>> resultList = handleInDrools(droolRuleStr,factMap,ruleList,entityList,scene);
 		//6.记录
-		return resultList;
+		return null;
 	}
 	
 	/**
@@ -387,7 +384,7 @@ public class RuleEngine implements IRuleEngine {
 		for(TRule rule : ruleList){
 			List<TActionMeta> list = getActionMetaOfRule(rule);
 			for(TActionMeta meta : list){
-				set.add(meta.getClassC());
+				set.add(meta.getMethodC());
 			}
 		}
 		return set;

@@ -17,19 +17,19 @@ public class CreditCheck implements Serializable {
 	/** 客户号 */
 	private String uuid;
 	/** 信用评分 */
-	private Integer score;
+	private Double score;
 	/** 评分评审结果 		 0-拒绝，1-通过*/
 	private String creditCheckRst;
 	/** 评分等级 */
 	private Integer grade;
 	/** 消费类基本额度  */
-	private Integer baseQuota;
+	private Double baseQuota;
 	/** 消费类可用额度  */
-	private Integer enableQuota;
+	private Double enableQuota;
 	/** 评分时间*/
 	private Date creditCheckTime;
 	/** 评分理论利率 */
-	private Integer creditCheckRate;
+	private Double creditCheckRate;
 	public Integer getId() {
 		return id;
 	}
@@ -48,10 +48,10 @@ public class CreditCheck implements Serializable {
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
-	public Integer getScore() {
+	public Double getScore() {
 		return score;
 	}
-	public void setScore(Integer score) {
+	public void setScore(Double score) {
 		this.score = score;
 	}
 	public String getCreditCheckRst() {
@@ -66,16 +66,16 @@ public class CreditCheck implements Serializable {
 	public void setGrade(Integer grade) {
 		this.grade = grade;
 	}
-	public Integer getBaseQuota() {
+	public Double getBaseQuota() {
 		return baseQuota;
 	}
-	public void setBaseQuota(Integer baseQuota) {
+	public void setBaseQuota(Double baseQuota) {
 		this.baseQuota = baseQuota;
 	}
-	public Integer getEnableQuota() {
+	public Double getEnableQuota() {
 		return enableQuota;
 	}
-	public void setEnableQuota(Integer enableQuota) {
+	public void setEnableQuota(Double enableQuota) {
 		this.enableQuota = enableQuota;
 	}
 	public Date getCreditCheckTime() {
@@ -84,11 +84,10 @@ public class CreditCheck implements Serializable {
 	public void setCreditCheckTime(Date creditCheckTime) {
 		this.creditCheckTime = creditCheckTime;
 	}
-	public Integer getCreditCheckRate() {
+	public Double getCreditCheckRate() {
 		return creditCheckRate;
 	}
-	public void setCreditCheckRate(Integer creditCheckRate) {
+	public void setCreditCheckRate(Double creditCheckRate) {
 		this.creditCheckRate = creditCheckRate;
 	}
-	
 }

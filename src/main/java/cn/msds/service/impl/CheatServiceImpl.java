@@ -23,11 +23,25 @@ public class CheatServiceImpl implements CheatService{
 	@Resource
 	private CheatDao cheatDao;
 
+	/**
+	 * 添加反欺诈结果信息
+	 * @see cn.msds.service.CheatService#addCheat(cn.msds.model.Cheat)
+	 * @author JZR	
+	 * @param 
+	 * @return
+	 */
 	@Override
 	public int addCheat(Cheat cheat) {
 		return cheatDao.addCheat(cheat);
 	}
 
+	/**
+	 * 根据uuid查询反欺诈结果
+	 * @see cn.msds.service.CheatService#getCheatByUuid(cn.msds.model.Cheat)
+	 * @author JZR	
+	 * @param 
+	 * @return
+	 */
 	@Override
 	public List<Cheat> getCheatByUuid(Cheat cheat) {
 		return cheatDao.getCheatByUuid(cheat);

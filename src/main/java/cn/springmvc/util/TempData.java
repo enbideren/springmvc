@@ -1,8 +1,10 @@
 package cn.springmvc.util;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.msds.model.Apply;
 import cn.msds.model.Business;
 import cn.msds.model.User;
 
@@ -166,5 +168,32 @@ public class TempData {
 		map.put("张49", new String[]{"张49","123.234.131","173587","37688"});
 		return map.get(key);
 	}
-	
+	/**
+	 * 模拟调取接口获取用户数据
+	 * @author JZR	
+	 * @param 
+	 * @return
+	 */
+	public static Apply getApply(Apply apply,User user,Business business,String name){
+		String[] ips = TempData.getIps(name);
+		Apply applys = new Apply(
+				user.getIdCard(), user.getUserName(), user.getGender(),
+				user.getPhoneNum(), new Integer(0), user.getIdCard(),
+				user.getIndustry(), user.getCompanyType(), user.getPosition(),
+				user.getEducation(), business.getAddress(), user.getContactName(),
+				user.getContactPhoneNum(), user.getEmail(), ips[1], ips[2],
+				ips[3], user.getWorkTime(), user.getSalary(),
+				business.getBnRegisterTime(), business.getBnOrderNum(), business.getBnRecivePhone(),
+				business.getBnAllTimes(), business.getBnAllMoney(), business.getBnBackRate(),
+				business.getBnMonthMoney(), business.getPrice(), business.getBnAvgPrice(),
+				business.getReciveAddr(), null, user.getApplyMoney(),
+				user.getApplyRepayTime(), null, null,
+				apply.getApplyTime(), apply.getPreResult(), new Date(), apply.getUserType(),
+				null, null, null,
+				null, null, null,
+				null, null, null,
+				null
+				);
+		return applys;
+	}
 }

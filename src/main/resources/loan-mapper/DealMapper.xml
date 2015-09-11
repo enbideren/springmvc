@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.msds.dao.DealDao">
+  <resultMap id="Deal" type="cn.msds.model.Deal">
+    <result column="id" jdbcType="VARCHAR" property="id" />
+    <result column="uuid" jdbcType="VARCHAR" property="uuid" />
+	<result column="orderId" jdbcType="VARCHAR" property="orderId" />
+	<result column="serviceId" jdbcType="VARCHAR" property="serviceId" />
+	<result column="handleId" jdbcType="VARCHAR" property="handleId" />
+	<result column="grantId" jdbcType="VARCHAR" property="grantId" />
+	<result column="repayId" jdbcType="VARCHAR" property="repayId" />
+	<result column="startTime" jdbcType="VARCHAR" property="startTime" />
+	<result column="endTime" jdbcType="VARCHAR" property="endTime" />
+	<result column="loanMoney" jdbcType="VARCHAR" property="loanMoney" />
+	<result column="deadline" jdbcType="VARCHAR" property="deadline" />
+	<result column="loanRepayTimes" jdbcType="VARCHAR" property="loanRepayTimes" />
+	<result column="loanRate" jdbcType="VARCHAR" property="loanRate" />
+	<result column="dealTime" jdbcType="VARCHAR" property="dealTime" />
+  </resultMap>
+  <sql id="Deal">
+   id,uuid,orderId,serviceId,handleId,grantId,repayId,startTime,endTime,loanMoney,deadline,loanRepayTimes,loanRate,dealTime
+  </sql>
+  <insert id="addDeal" parameterType="cn.msds.model.Deal">
+    insert into  t_deal (uuid,orderId,serviceId,handleId,grantId,repayId,startTime,endTime,loanMoney,deadline,loanRepayTimes,loanRate,dealTime)
+    values (#{uuid},#{orderId},#{serviceId},#{handleId},#{grantId},#{repayId},#{startTime},#{endTime},
+    #{loanMoney},#{deadline},#{loanRepayTimes},#{loanRate},#{dealTime})
+  </insert>
+  <select id="getDealByUuid" resultMap="Deal"  parameterType="cn.msds.model.Deal">
+		select  <include refid="Deal" /> from t_deal where true 
+      <if test="uuid != null">
+       and uuid = #{uuid}
+      </if>
+	</select>
+</mapper>

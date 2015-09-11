@@ -1,4 +1,4 @@
-package com.hxrainbow.rule.model;
+package cn.msds.model.temp;
 
 import java.io.Serializable;
 

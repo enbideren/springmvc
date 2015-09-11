@@ -161,7 +161,11 @@
 						</tr>
 						<tr>
 							<td>近1年客户金额退拒收率</td>
-							<td>${apply.bnBackRate }</td>
+							<td>
+								<c:if test="${apply.bnBackRate !=null}">
+									<fmt:formatNumber type="number" value="${apply.bnBackRate } " maxFractionDigits="2"/>	
+								</c:if>
+							</td>
 						</tr>
 						<tr>
 							<td>近1年月均交易金额</td>
@@ -292,7 +296,11 @@
 					<tbody>
 						<tr>
 							<td width="50%">评分</td>
-							<td>${apply.score }</td>
+							<td>
+								<c:if test="${apply.creditCheckRate !=null}">
+									<fmt:formatNumber type="number" value="${apply.score } " maxFractionDigits="2"/>	
+								</c:if>
+							</td>
 						</tr>
 						<tr>
 							<td>评分审批结果</td>
@@ -307,11 +315,19 @@
 						</tr>
 						<tr>
 							<td>消费类基本额度</td>
-							<td>${apply.baseQuota }</td>
+							<td>
+								<c:if test="${apply.creditCheckRate !=null}">
+									<fmt:formatNumber type="number" value="${apply.baseQuota } " maxFractionDigits="2"/>	
+								</c:if>
+							</td>
 						</tr>
 						<tr>
 							<td>消费类可用额度</td>
-							<td>${apply.enableQuota }</td>
+							<td>
+								<c:if test="${apply.creditCheckRate !=null}">
+									<fmt:formatNumber type="number" value="${apply.enableQuota } " maxFractionDigits="2"/>	
+								</c:if>
+							</td>
 						</tr>
 						<tr>
 							<td>评分时间</td>
@@ -319,7 +335,11 @@
 						</tr>
 						<tr>
 							<td>评分理论利率</td>
-							<td>${apply.creditCheckRate }</td>
+							<td>
+								<c:if test="${apply.creditCheckRate !=null}">
+									<fmt:formatNumber type="number" value="${apply.creditCheckRate }" maxFractionDigits="2"/>	
+								</c:if>
+							</td>
 						</tr>
 					</tbody>
 				</table>
@@ -330,7 +350,8 @@
 		<div class="box">
 			<div class="tit">人工审核</div>
 			<div class="com">
-			<form action="" method="post">
+			<form action="<%=request.getContextPath()%>/index/manage.do" method="post">
+				<input type="hidden" value="${order.id }" name="orderId">
 				审批阶段：<input type="radio" value="1" name="verifyStep">初审
 						 <input type="radio" value="2" name="verifyStep">抽审
 						 <input type="radio" value="3" name="verifyStep">复审<br><br>

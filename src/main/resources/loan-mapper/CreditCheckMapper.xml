@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.msds.dao.CreditCheckDao">
+  <resultMap id="CreditCheck" type="cn.msds.model.CreditCheck">
+    <result column="id" jdbcType="VARCHAR" property="id" />
+    <result column="uuid" jdbcType="VARCHAR" property="uuid" />
+	<result column="applyId" jdbcType="VARCHAR" property="applyId" />
+	<result column="score" jdbcType="VARCHAR" property="score" />
+	<result column="creditCheckRst" jdbcType="VARCHAR" property="creditCheckRst" />
+	<result column="grade" jdbcType="VARCHAR" property="grade" />
+	<result column="baseQuota" jdbcType="VARCHAR" property="baseQuota" />
+	<result column="enableQuota" jdbcType="VARCHAR" property="enableQuota" />
+	<result column="creditCheckTime" jdbcType="VARCHAR" property="creditCheckTime" />
+	<result column="creditCheckRate" jdbcType="VARCHAR" property="creditCheckRate" />
+  </resultMap>
+  <sql id="CreditCheck">
+   id,uuid,applyId,score,creditCheckRst,grade,baseQuota,enableQuota,creditCheckTime,creditCheckRate
+  </sql>
+  <insert id="addCreditCheck" parameterType="cn.msds.model.CreditCheck">
+    insert into  t_credit_check (uuid,applyId,score,creditCheckRst,grade,baseQuota,enableQuota,creditCheckTime,creditCheckRate)
+    values (#{uuid},#{applyId},#{score},#{creditCheckRst},#{grade},#{baseQuota},#{enableQuota},#{creditCheckTime},#{creditCheckRate})
+  </insert>
+  <select id="getCreditCheckByUuid" resultMap="CreditCheck"  parameterType="cn.msds.model.CreditCheck">
+		select  <include refid="CreditCheck" /> from t_credit_check where true 
+      <if test="uuid != null">
+       and uuid = #{uuid}
+      </if>
+	</select>
+</mapper>

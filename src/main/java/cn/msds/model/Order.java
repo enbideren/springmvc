@@ -17,15 +17,15 @@ public class Order implements Serializable {
 	/** 客户号 */
 	private String uuid;
 	/** 订单状态  1-待初审、2-初审通过、3-初审不通过、4-不需复审、5-待复审、6-待抽审、7-通过可放款、8-拒绝*/
-	private String orderState;
+	private Integer orderState;
 	/** 订单创建时间 */
 	private Date orderCreateTime;
 	/** 申请金额 */
-	private Integer replyMoney;
+	private Double replyMoney;
 	/** 申请期数 */
 	private Integer replyTimes;
 	/** 定价利率 */
-	private Integer replyRate;
+	private Double replyRate;
 	/** 批复期限 */
 	private Integer replyDeadline;
 	public Integer getId() {
@@ -46,10 +46,10 @@ public class Order implements Serializable {
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
-	public String getOrderState() {
+	public Integer getOrderState() {
 		return orderState;
 	}
-	public void setOrderState(String orderState) {
+	public void setOrderState(Integer orderState) {
 		this.orderState = orderState;
 	}
 	public Date getOrderCreateTime() {
@@ -58,10 +58,10 @@ public class Order implements Serializable {
 	public void setOrderCreateTime(Date orderCreateTime) {
 		this.orderCreateTime = orderCreateTime;
 	}
-	public Integer getReplyMoney() {
+	public Double getReplyMoney() {
 		return replyMoney;
 	}
-	public void setReplyMoney(Integer replyMoney) {
+	public void setReplyMoney(Double replyMoney) {
 		this.replyMoney = replyMoney;
 	}
 	public Integer getReplyTimes() {
@@ -70,10 +70,10 @@ public class Order implements Serializable {
 	public void setReplyTimes(Integer replyTimes) {
 		this.replyTimes = replyTimes;
 	}
-	public Integer getReplyRate() {
+	public Double getReplyRate() {
 		return replyRate;
 	}
-	public void setReplyRate(Integer replyRate) {
+	public void setReplyRate(Double replyRate) {
 		this.replyRate = replyRate;
 	}
 	public Integer getReplyDeadline() {

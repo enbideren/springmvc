@@ -14,11 +14,11 @@
    orderId,verifyStep,verifyResult,verifyTime,operateNum,verifyMark,verifyContent
   </sql>
   <insert id="addCreditManage" parameterType="cn.msds.model.CreditManage">
-    insert into  t_creditManage (uuid,applyId,creditManageType,creditManageContent,creditManageTime)
-    values (#{uuid},#{applyId},#{creditManageType},#{creditManageContent},#{creditManageTime})
+    insert into  t_credit_manage (orderId,verifyStep,verifyResult,verifyTime,operateNum,verifyMark,verifyContent)
+    values (#{orderId},#{verifyStep},#{verifyResult},#{verifyTime},#{operateNum},#{verifyMark},#{verifyContent})
   </insert>
   <select id="getCreditManageByOrderId" resultMap="CreditManage"  parameterType="cn.msds.model.CreditManage">
-		select  <include refid="CreditManage" /> from t_creditManage where true 
+		select  <include refid="CreditManage" /> from t_credit_manage where true 
       <if test="uuid != null">
        and orderId = #{orderId}
       </if>

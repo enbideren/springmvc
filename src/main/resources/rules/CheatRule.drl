@@ -1,6 +1,6 @@
 package cn.msds.model
 import cn.msds.constant.ConstantRuleResult;
-import  com.hxrainbow.rule.action.CheatActionImpl;
+import  cn.msds.util.CheatActionImpl;
 query "end Cheat"
 	//cheat:Cheat()
 	apply:Apply()

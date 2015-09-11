@@ -23,17 +23,38 @@ public class ApplyServiceImpl implements ApplyService{
 
 	@Resource
 	private ApplyDao applyDao;
-
+	
+	/**
+	 * 添加进件
+	 * @see cn.msds.service.ApplyService#addApply(cn.msds.model.Apply)
+	 * @author JZR	
+	 * @param 
+	 * @return
+	 */
 	@Override
 	public int addApply(Apply apply) {
 		return applyDao.addApply(apply);
 	}
 
+	/**
+	 * 根据条件查询进件信息
+	 * @see cn.msds.service.ApplyService#getApplyByCondition(cn.msds.model.Apply)
+	 * @author JZR	
+	 * @param 
+	 * @return
+	 */
 	@Override
 	public List<Apply> getApplyByCondition(Apply apply) {
 		return applyDao.getApplyByCondition(apply);
 	}
 
+	/**
+	 * 获取一定时间段内，某个IP的申请次数
+	 * @see cn.msds.service.ApplyService#getIpCount(java.util.Map)
+	 * @author JZR	
+	 * @param 
+	 * @return
+	 */
 	@Override
 	public int getIpCount(Map<String, Object> map) {
 		return applyDao.getIpCount(map);

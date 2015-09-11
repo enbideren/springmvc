@@ -1,5 +1,5 @@
 package cn.msds.model
-import  com.hxrainbow.rule.model.TempCreditCheck;
+import  cn.msds.model.temp.TempCreditCheck;
 query "end TempCreditCheck"
 	apply:Apply()
 end

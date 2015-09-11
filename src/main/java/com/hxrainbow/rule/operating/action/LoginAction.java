@@ -17,6 +17,7 @@ import com.hxrainbow.rule.model.Member;
 import com.hxrainbow.rule.model.TestLog;
 import com.hxrainbow.rule.model.TestUser;
 import com.hxrainbow.rule.operating.service.TestUserService;
+import com.hxrainbow.rule.operating.service.impl.RuleEngineTemp;
 
 /**
  * 
@@ -30,7 +31,8 @@ public class LoginAction extends BaseController{
 	
 	@Resource(name = "testUserService")
 	private TestUserService testUserService;
-	
+	@Resource
+	private RuleEngineTemp ruleEngineTemp;
 	private String userName;
 	private Integer num;
 	private TestUser user;
@@ -39,6 +41,12 @@ public class LoginAction extends BaseController{
 	private String yaoqingName;
 	
 	private List<TestLog> list ;	
+	@RequestMapping("test.do")
+	public String test() throws Exception{
+		String scene = "industry";
+		ruleEngineTemp.handleInEngine(null, scene);
+		return null;
+	}
 	/**
 	 * 登录场景
 	 * 

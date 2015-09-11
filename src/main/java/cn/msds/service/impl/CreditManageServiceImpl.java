@@ -23,11 +23,25 @@ public class CreditManageServiceImpl implements CreditManageService{
 	@Resource
 	private CreditManageDao creditManageDao;
 
+	/**
+	 * 添加信用管理结果
+	 * @see cn.msds.service.CreditManageService#addCreditManage(cn.msds.model.CreditManage)
+	 * @author JZR	
+	 * @param 
+	 * @return
+	 */
 	@Override
 	public int addCreditManage(CreditManage creditManage) {
 		return creditManageDao.addCreditManage(creditManage);
 	}
 
+	/**
+	 * 根据订单号获取信用管理结果
+	 * @see cn.msds.service.CreditManageService#getCreditManageByOrderId(cn.msds.model.CreditManage)
+	 * @author JZR	
+	 * @param 
+	 * @return
+	 */
 	@Override
 	public List<CreditManage> getCreditManageByOrderId(CreditManage creditManage) {
 		return creditManageDao.getCreditManageByOrderId(creditManage);

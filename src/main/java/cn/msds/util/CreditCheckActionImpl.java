@@ -1,4 +1,4 @@
-package com.hxrainbow.rule.action;
+package cn.msds.util;
 
 import java.util.Calendar;
 import java.util.Date;

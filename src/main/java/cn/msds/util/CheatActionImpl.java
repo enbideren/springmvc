@@ -1,4 +1,4 @@
-package com.hxrainbow.rule.action;
+package cn.msds.util;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -22,6 +22,12 @@ import cn.msds.service.ApplyService;
 public class CheatActionImpl {
 	@Resource
 	private ApplyService applyService;	
+	/**
+	 * 同一用户关联手机号数量
+	 * @author JZR	
+	 * @param 
+	 * @return
+	 */
 	public int getPhones(String uuid) {
 		Apply apply = new Apply();
 		apply.setUuid(uuid);
@@ -29,6 +35,12 @@ public class CheatActionImpl {
 //		System.out.println(list.size());
 		return list.size();
 	}
+	/**
+	 * 同一手机号管理用户数量
+	 * @author JZR	
+	 * @param 
+	 * @return
+	 */
 	public int getCusts(String phoneNum){
 		Apply apply = new Apply();
 		apply.setPhoneNum(phoneNum);

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.msds.dao.OrderDao">
+  <resultMap id="Order" type="cn.msds.model.Order">
+    <result column="id" jdbcType="VARCHAR" property="id" />
+    <result column="uuid" jdbcType="VARCHAR" property="uuid" />
+	<result column="applyId" jdbcType="VARCHAR" property="applyId" />
+	<result column="orderState" jdbcType="VARCHAR" property="orderState" />
+	<result column="orderCreateTime" jdbcType="VARCHAR" property="orderCreateTime" />
+	<result column="replyMoney" jdbcType="VARCHAR" property="replyMoney" />
+	<result column="replyTimes" jdbcType="VARCHAR" property="replyTimes" />
+	<result column="replyRate" jdbcType="VARCHAR" property="replyRate" />
+	<result column="replyDeadline" jdbcType="VARCHAR" property="replyDeadline" />
+  </resultMap>
+  <sql id="Order">
+   id,uuid,applyId,orderState,orderCreateTime,replyMoney,replyTimes,replyRate,replyDeadline
+  </sql>
+  <insert id="addOrder" parameterType="cn.msds.model.Order">
+    insert into  t_order (uuid,applyId,orderState,orderCreateTime,replyMoney,replyTimes,replyRate,replyDeadline)
+    values (#{uuid},#{applyId},#{orderState},#{orderCreateTime},#{replyMoney},#{replyTimes},#{replyRate},#{replyDeadline})
+  </insert>
+  <select id="getOrderByUuid" resultMap="Order"  parameterType="cn.msds.model.Order">
+		select  <include refid="Order" /> from t_order where true 
+      <if test="uuid != null">
+       and uuid = #{uuid}
+      </if>
+	</select>
+</mapper>

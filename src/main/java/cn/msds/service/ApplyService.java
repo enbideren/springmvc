@@ -14,12 +14,6 @@ import cn.msds.model.Apply;
  * @created 2015-08-12
  */
 public interface ApplyService {
-	/**
-	 * 添加规则接口，包括初始化条件和动作
-	 * @author JZR	
-	 * @param 
-	 * @return
-	 */
 	public int addApply(Apply apply);
 	public List<Apply> getApplyByCondition(Apply apply);
 	public int getIpCount(Map<String,Object> map);

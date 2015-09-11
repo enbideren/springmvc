@@ -29,13 +29,13 @@ public class Deal implements Serializable {
 	/** 到期日 */
 	private Date endTime; 
 	/**金额 */
-	private Integer loanMoney;
+	private Double loanMoney;
 	/**期限 */
 	private Integer deadline;
 	/**期数 */
 	private Integer loanRepayTimes;
 	/**利率 */
-	private Integer loanRate;
+	private Double loanRate;
 	/**交易生成时间 */
 	private Date dealTime;
 	public Integer getId() {
@@ -92,12 +92,6 @@ public class Deal implements Serializable {
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
-	public Integer getLoanMoney() {
-		return loanMoney;
-	}
-	public void setLoanMoney(Integer loanMoney) {
-		this.loanMoney = loanMoney;
-	}
 	public Integer getDeadline() {
 		return deadline;
 	}
@@ -110,17 +104,23 @@ public class Deal implements Serializable {
 	public void setLoanRepayTimes(Integer loanRepayTimes) {
 		this.loanRepayTimes = loanRepayTimes;
 	}
-	public Integer getLoanRate() {
-		return loanRate;
-	}
-	public void setLoanRate(Integer loanRate) {
-		this.loanRate = loanRate;
-	}
 	public Date getDealTime() {
 		return dealTime;
 	}
 	public void setDealTime(Date dealTime) {
 		this.dealTime = dealTime;
+	}
+	public Double getLoanMoney() {
+		return loanMoney;
+	}
+	public void setLoanMoney(Double loanMoney) {
+		this.loanMoney = loanMoney;
+	}
+	public Double getLoanRate() {
+		return loanRate;
+	}
+	public void setLoanRate(Double loanRate) {
+		this.loanRate = loanRate;
 	}
 	
 }
