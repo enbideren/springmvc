@@ -43,7 +43,7 @@ public class LoginAction extends BaseController{
 	private List<TestLog> list ;	
 	@RequestMapping("test.do")
 	public String test() throws Exception{
-		String scene = "industry";
+		String scene = "position";
 		ruleEngineTemp.handleInEngine(null, scene);
 		return null;
 	}

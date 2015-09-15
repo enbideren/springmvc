@@ -106,7 +106,7 @@ public class RuleEngineTemp implements IRuleEngine {
 		//4.遍历并拼出每个规则的执行drools串
 		for(TRule rule : ruleList){
 			StringBuffer temp = null;
-			temp = getDroolsInfo(rule);
+			temp = getDroolsInfo(rule,scene);
 			droolRuleStr.append(temp);
 		}
 		log.info("\n" + "-----------------------规则串--------------------------------" + "\n" + droolRuleStr.toString());
@@ -132,15 +132,15 @@ public class RuleEngineTemp implements IRuleEngine {
 			droolRuleStr.append("import").append("  ").append(entity.getPackageC()).append(";").append("\n");
 		}
 		//导入基本类
-		droolRuleStr.append("import").append("  ").append("java.lang.String").append(";").append("\n");
-		droolRuleStr.append("import").append("  ").append("java.util.Map").append(";").append("\n");
-		droolRuleStr.append("import").append("  ").append("java.util.List").append(";").append("\n");
+//		droolRuleStr.append("import").append("  ").append("java.lang.String").append(";").append("\n");
+//		droolRuleStr.append("import").append("  ").append("java.util.Map").append(";").append("\n");
+//		droolRuleStr.append("import").append("  ").append("java.util.List").append(";").append("\n");
 		//导入动作类
 		Set<String> set = getAllActionClass(ruleList);
 		for(Iterator<String> it=set.iterator();it.hasNext();){
 		   droolRuleStr.append("import").append("  ").append(it.next()).append(";").append("\n");
 		  }
-		droolRuleStr.append("import").append("  ").append("cn.springmvc.service.IAction").append(";").append("\n");
+		//droolRuleStr.append("import").append("  ").append("cn.springmvc.service.IAction").append(";").append("\n");
 		return droolRuleStr;
 	}
 	/**
@@ -191,14 +191,14 @@ public class RuleEngineTemp implements IRuleEngine {
 	 * @version 1.0
 	 * @created 2013-4-18
 	 */
-	public StringBuffer insertRuleCondition(StringBuffer droolRuleStr,TRule rule){
+	public StringBuffer insertRuleCondition(StringBuffer droolRuleStr,TRule rule,Set<String> set){
 		droolRuleStr.append("when").append("\n");
-		droolRuleStr.append("$map:Map()").append("\n");
+		//droolRuleStr.append("$map:Map()").append("\n");
 		//0.拼接规则动作定义
-		String[] actionIdArr = getActionIdOfRule(rule);
-		for(String actionId : actionIdArr){
-			droolRuleStr.append("$action").append(actionId).append(":").append("IAction()").append("\n");
-		}
+//		String[] actionIdArr = getActionIdOfRule(rule);
+//		for(String actionId : actionIdArr){
+//			droolRuleStr.append("$action").append(actionId).append(":").append("IAction()").append("\n");
+//		}
 		//1.拿到规则的条件
 		if(StringKit.isEmpty(rule.getConditionC())){
 			droolRuleStr.append("eval( true )").append("\n");
@@ -243,6 +243,7 @@ public class RuleEngineTemp implements IRuleEngine {
 						itemDrool.append(clazz);
 						itemDrool.append("(");
 						itemDrool.append(entityItem.getField());
+						set.add(entity.getPackageC());
 					}else{
 						log.info("动态条件变量.............");
 					}
@@ -267,7 +268,7 @@ public class RuleEngineTemp implements IRuleEngine {
 	 * @version 1.0
 	 * @created 2013-4-19
 	 */
-	public StringBuffer insertRuleAction(StringBuffer droolRuleStr,TRule rule){
+	public StringBuffer insertRuleAction(StringBuffer droolRuleStr,TRule rule,Set<String> set){
 		
 		droolRuleStr.append("then").append("\n");
 		String [] arr = getActionIdOfRule(rule);
@@ -384,7 +385,7 @@ public class RuleEngineTemp implements IRuleEngine {
 		for(TRule rule : ruleList){
 			List<TActionMeta> list = getActionMetaOfRule(rule);
 			for(TActionMeta meta : list){
-				set.add(meta.getMethodC());
+				set.add(meta.getClassC());
 			}
 		}
 		return set;
@@ -513,12 +514,20 @@ public class RuleEngineTemp implements IRuleEngine {
 		return null;
 	}
 	
-	public StringBuffer getDroolsInfo(TRule rule){
+	public StringBuffer getDroolsInfo(TRule rule,String scene){
+		Set<String> set = new HashSet<String>();
 		StringBuffer sb = new StringBuffer();
 		sb = insertRuleName(sb,rule);//插入名称
 		sb = insertExpiryDate(sb,rule);//插入有效期信息
-		sb = insertRuleCondition(sb, rule);//插入lhs
-		sb = insertRuleAction(sb, rule);//插入rhs
+		sb = insertRuleFlow(sb,scene);//插入规则组名称和no loop
+		sb = insertRuleCondition(sb, rule,set);//插入lhs
+		sb = insertRuleAction(sb, rule,set);//插入rhs
+		return sb;
+	}
+
+	private StringBuffer insertRuleFlow(StringBuffer sb, String scene) {
+		sb.append("ruleflow-group \""+scene+"\"\n");
+		sb.append("no-loop true\n");
 		return sb;
 	}
 	
