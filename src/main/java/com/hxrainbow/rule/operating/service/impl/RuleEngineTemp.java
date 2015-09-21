@@ -277,6 +277,8 @@ public class RuleEngineTemp implements IRuleEngine {
 			droolRuleStr.append("\n");
 			return droolRuleStr;
 		}else{
+			//存储RHS中引用的action类
+			Set<String> actionSet = new HashSet<String>();
 			for(String actionIdStr :arr){
 				Integer actionId = Integer.parseInt(actionIdStr);
 				TActionMeta actionMeta = ruleDao.getActionMetaByActionId(actionId);
@@ -288,20 +290,25 @@ public class RuleEngineTemp implements IRuleEngine {
 				for(TActionMetaVariable tempObj : variableList){
 					TActionMetaVariable variable = tempObj;
 					TActionVariable middle = tempObj.gettActionVariable();
-					
-					droolRuleStr.append("$map.put(\"" + variable.getIdentify()  + "\",");//map.put(value,
+					droolRuleStr.append(RuleEngineUtil.changeString(middle.getVariableValue(), ruleDao));
+					/*droolRuleStr.append("$").append(RuleEngineUtil.getLastString(actionMeta.getClassC())).append(".").append(actionMeta.getMethodC()).append("(");//map.put(value,
+					//将这个方法所在的类放到set中
+					actionSet.add(RuleEngineUtil.getLastString(actionMeta.getClassC()));
 					String value = middle.getVariableValue();
 					List<String> tempList = StringKit.getParamId(value);
 					if(tempList.size() > 0){//动态变量处理
 						StringBuffer dynamicAction = new StringBuffer();
 						for(String temp : tempList){
-							TEntity entity = conditionDao.getItemAndEntityByItemId(Integer.parseInt(temp));
-							TEntityItem entityItem = entity.gettEntityItem();
-							dynamicAction.append("$").append(entity.getIdentify()).append(".").append(getMethodByProperty(entityItem.getField())).append("()");
-							value = value.replace("$" + temp + "$", dynamicAction.toString());
+							TActionMeta actionMetaTemp = ruleDao.getActionMetaByActionId(Integer.parseInt(temp));
+							dynamicAction.append("$").append(RuleEngineUtil.getLastString(actionMetaTemp.getClassC())).append(".").append(actionMetaTemp.getMethodC()).append("(");
+							dynamicAction.append(middle.getVariableValue());
+							
+							dynamicAction.append(")");
+							//TEntityItem entityItem = entity.gettEntityItem();
+//							dynamicAction.append("$").append(entity.getIdentify()).append(".").append(getMethodByProperty(entityItem.getField())).append("()");
+//							value = value.replace("$" + temp + "$", dynamicAction.toString());
 						}
-					}
-					droolRuleStr.append(value);
+					}*/
 					
 					droolRuleStr.append(")");
 					droolRuleStr.append(";");
